@@ -3,9 +3,30 @@
 <head>
     <title>XApps</title>
 
+    <link href="content/bootstrap.min.css" rel="stylesheet" />
+    <link href="content/font-awesome.min.css" rel="stylesheet" />
+    <link href="content/toastr.css" rel="stylesheet" />
 
 </head>
 <body>
-    <h1>XApps Homepage</h1>
+    <div data-ng-include="'/app/layouts/shell.html'"></div>
+    <p>Loaded</p>
+
+
+    <!-- Scripts -->
+    <script src="scripts/jquery-2.1.0.js"></script>
+    <script src="scripts/angular.js"></script>
+    <script src="scripts/angular-animate.js"></script>
+    <script src="scripts/angular-route.js"></script>
+    <script src="scripts/angular-sanitize.js"></script>
+    <script src="scripts/bootstrap.js"></script>
+    <script src="scripts/toastr.js"></script>
+    <script src="scripts/moment.js"></script>
+
+    <!-- App libraries -->
+    <script src="app/app.js"></script>
+    <script src="app/config.js"></script>
+    <script src="app/config.routes.js"></script>
+
 </body>
 </html>
