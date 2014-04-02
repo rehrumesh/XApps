@@ -1,13 +1,23 @@
-﻿(function () {
-    'use strict';
+﻿var app = angular.module('app', ['ngRoute']);
+app.config(function ($routeProvider) {
 
-    var app = angular.module('app', [
-        'ngAnimate',
-        'ngRoute',
-        'ngSanitize'
-    ]);
+    $routeProvider.when("/", {
+        controller: "dashboard",
+        templateUrl: "app/dashboard/dashboard.html"
+    })
+    .when("/myapps", {
+        controller: "myapps",
+        templateUrl: "app/myapps/myapps.html"
+    })
+    .when("/hotapps", {
+        controller: "hotapps",
+        templateUrl: "app/hotapps/hotapps.html"
+    });
+    $routeProvider.otherwise({ redirectTo: "/" });
 
-    app.run(['$route', function ($route) {
-        // Include $route to kick start the router.
-    }]);
-})();
+});
+
+
+
+//default route is http://localhost:6580/
+// want to make it as http://localhost:6580/#/

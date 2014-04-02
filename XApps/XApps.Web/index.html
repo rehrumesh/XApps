@@ -6,13 +6,6 @@
     <link href="content/bootstrap.min.css" rel="stylesheet" />
     <link href="content/font-awesome.min.css" rel="stylesheet" />
     <link href="content/toastr.css" rel="stylesheet" />
-
-</head>
-<body>
-    <div data-ng-include="'/app/layouts/shell.html'"></div>
-    <p>Loaded</p>
-
-
     <!-- Scripts -->
     <script src="scripts/jquery-2.1.0.js"></script>
     <script src="scripts/angular.js"></script>
@@ -25,8 +18,25 @@
 
     <!-- App libraries -->
     <script src="app/app.js"></script>
-    <script src="app/config.js"></script>
-    <script src="app/config.routes.js"></script>
+
+
+
+    <script src="app/layouts/shell.js"></script>
+    <script src="app/layouts/sidebar.js"></script>
+
+    <script src="app/dashboard/dashboard.js"></script>
+    <script src="app/hotapps/hotapps.js"></script>
+    <script src="app/myapps/myapps.js"></script>
+
+</head>
+<body>
+    <div data-ng-include="'/app/layouts/shell.html'"></div>
+    
+    <h1>Welcome {{name}}!</h1>
+    <input placeholder="type your name..." ng-model="name" />
+    <p>index</p>
+
+    
 
 </body>
 </html>
