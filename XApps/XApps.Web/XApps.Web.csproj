@@ -85,6 +85,8 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\font-awesome.css" />
     <Content Include="Content\font-awesome.min.css" />
+    <Content Include="Content\images\xappIcon.PNG" />
+    <Content Include="Content\styles.css" />
     <Content Include="Content\toastr.css" />
     <Content Include="Content\toastr.min.css" />
     <Content Include="fonts\fontawesome-webfont.svg" />
@@ -391,7 +393,16 @@
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\XApps.Data\XApps.Data.csproj">
+      <Project>{ad169697-3cab-46ae-ac05-102b39867030}</Project>
+      <Name>XApps.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\XApps.Model\XApps.Model.csproj">
+      <Project>{1ce8121d-32cb-493e-adb7-d0760dd5df0c}</Project>
+      <Name>XApps.Model</Name>
+    </ProjectReference>
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
