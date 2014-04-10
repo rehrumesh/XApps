@@ -2,21 +2,25 @@
 <html data-ng-app="app">
 <head>
     <title>XApps</title>
-
+    <link href="content/bootstrap.css" rel="stylesheet" />
     <link href="content/bootstrap.min.css" rel="stylesheet" />
-    <link href="content/bootstrap-theme.min.css" rel="stylesheet" />
+    <!--<link href="content/bootstrap-theme.min.css" rel="stylesheet" />-->
     <link href="content/font-awesome.min.css" rel="stylesheet" />
+    <!--<link href="content/customtheme.css" rel="stylesheet">-->
     <link href="content/toastr.css" rel="stylesheet" />
-    <link href="content/styles.css" rel="stylesheet" />
     
+
 
 </head>
 <body>
-    <div data-ng-include="'/app/layouts/shell.html'"></div>
-    
 
-    
-    
+    <div data-ng-include="'/app/layouts/shell.html'"></div>
+
+    <div data-ng-view></div>
+
+
+
+
     <!-- Scripts -->
     <script src="scripts/jquery-2.1.0.js"></script>
     <script src="scripts/angular.js"></script>
@@ -25,6 +29,7 @@
     <script src="scripts/angular-sanitize.js"></script>
     <script src="scripts/bootstrap.js"></script>
     <script src="scripts/toastr.js"></script>
+    <!--<script src="scripts/ui-bootstrap-tpls-0.10.0.js"></script>-->
     <script src="scripts/moment.js"></script>
 
     <!-- App libraries -->

@@ -12,12 +12,16 @@ app.config(function ($routeProvider) {
     .when("/hotapps", {
         controller: "hotapps",
         templateUrl: "app/hotapps/hotapps.html"
+    })
+    .when("/dashboard", {
+        controller: "dashboard",
+        templateUrl: "app/dashboard/dashboard.html"
     });
-    $routeProvider.otherwise({ redirectTo: "/" });
+    $routeProvider.otherwise({ redirectTo: "/dashboard" });
 
 });
-
-
-
+//
 //default route is http://localhost:6580/
 // want to make it as http://localhost:6580/#/
+// add dynamic routing.
+//default -> dashboard
