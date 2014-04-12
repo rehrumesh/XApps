@@ -1,47 +1,67 @@
 ﻿<!DOCTYPE html>
 <html data-ng-app="app">
 <head>
-    <title>XApps</title>
+    <meta charset="UTF-8">
+    <title>XApps| Dashboard</title>
+    <meta content='width=device-width, initial-scale=0, maximum-scale=0, user-scalable=no' name='viewport'>
     <link href="content/bootstrap.css" rel="stylesheet" />
     <link href="content/bootstrap.min.css" rel="stylesheet" />
     <!--<link href="content/bootstrap-theme.min.css" rel="stylesheet" />-->
     <link href="content/font-awesome.min.css" rel="stylesheet" />
     <!--<link href="content/customtheme.css" rel="stylesheet">-->
     <link href="content/toastr.css" rel="stylesheet" />
-    
+    <!-- Ionicons -->
+    <link href="content/Custom/ionicons.min.css" rel="stylesheet" type="text/css" />
+    <!-- Theme style -->
+    <link href="content/Custom/AdminLTE.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet/less" type="text/css" href="dropdown.less" />
+    <link rel="stylesheet/less" type="text/css" href="header.less" />
+    <link rel="stylesheet/less" type="text/css" href="sidebar.less" />
 
 
 </head>
-<body>
+<body class="skin-blue">
+   
+    <!-- header logo: style can be found in header.less -->
+    <header class="header">
+        <a href="#/dashboard" class="logo">
+             <!--Add the class icon to your logo image or logo icon to add the margining--> 
+            XApps
+        </a>
+       
+        <a href="#" class="navbar-btn sidebar-toggle" data-toggle="offcanvas" role="button">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </a>
+</header>
 
-    <div data-ng-include="'/app/layouts/shell.html'"></div>
-
-    <div data-ng-view></div>
-
-
-
-
-    <!-- Scripts -->
-    <script src="scripts/jquery-2.1.0.js"></script>
-    <script src="scripts/angular.js"></script>
-    <script src="scripts/angular-animate.js"></script>
-    <script src="scripts/angular-route.js"></script>
-    <script src="scripts/angular-sanitize.js"></script>
-    <script src="scripts/bootstrap.js"></script>
-    <script src="scripts/toastr.js"></script>
-    <!--<script src="scripts/ui-bootstrap-tpls-0.10.0.js"></script>-->
-    <script src="scripts/moment.js"></script>
-
-    <!-- App libraries -->
-    <script src="app/app.js"></script>
+         
+            <div data-ng-include="'/app/layouts/shell.html'"></div>
+           
+            <div data-ng-view></div> 
+            
 
 
 
-    <script src="app/layouts/shell.js"></script>
-    <script src="app/layouts/sidebar.js"></script>
-
-    <script src="app/dashboard/dashboard.js"></script>
-    <script src="app/hotapps/hotapps.js"></script>
-    <script src="app/myapps/myapps.js"></script>
+            <!-- Scripts -->
+            <script src="scripts/jquery-2.1.0.js"></script>
+            <script src="scripts/angular.js"></script>
+            <script src="scripts/angular-animate.js"></script>
+            <script src="scripts/angular-route.js"></script>
+            <script src="scripts/angular-sanitize.js"></script>
+            <script src="scripts/bootstrap.js"></script>
+            <script src="scripts/toastr.js"></script>
+            <!--<script src="scripts/ui-bootstrap-tpls-0.10.0.js"></script>-->
+            <!--<script src="scripts/moment.js"></script>-->
+            <script src="scripts/Custom/adminlteapp.js"></script>
+            <!-- App libraries -->
+            <script src="app/app.js"></script>
+            <script src="app/layouts/shell.js"></script>
+            <script src="app/layouts/sidebar.js"></script>
+            <script src="app/dashboard/dashboard.js"></script>
+            <script src="app/hotapps/hotapps.js"></script>
+            <script src="app/myapps/myapps.js"></script>
 </body>
 </html>
