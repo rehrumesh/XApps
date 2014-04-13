@@ -1,46 +1,140 @@
-﻿<section id="dashboard-view" class="mainbar">
-    <div>
-        <header>
-            
-            <style>
-                #report-upload-form {
-                    background-color: #316091;
-                    color: #ddeff1;
-                    font-weight: bold;
-                    margin: 23px auto 0 auto;
-                    border-radius: 10px;
-                    width: 650px;
-                    box-shadow: 0 0 2px 2px #d9d9d9;
-                }
+﻿
+<div class="wrapper row-offcanvas row-offcanvas-left">
+    <aside class="right-side">
+        <!-- Content Header (Page header) -->
+        <!-- Main content -->
+        <section class="content-header">
+            <h1>
+                Dashboard
+            </h1>
+        </section>
+        <section class="content">
+            <div class="row">
+                <div class="col-lg-3 col-xs-9">
 
-                    #report-upload-form label {
-                        padding-left: 26px;
-                        width: 125px;
-                        text-transform: uppercase;
-                    }
+                    <!--can not give 'a' inside another 'a'-->
+                    <div class="small-box bg-aqua">
+                        <div class="inner">
+                            <h1>
+                                App 1
+                            </h1>
+                            <p>
+                                this is a App
+                                <br />
+                                Hellloooo
+                            </p>
 
-                    #report-upload-form input[type=text],
-                    #report-upload-form input[type=file],
-                    #report-upload-form textarea {
-                        width: 305px;
-                    }
-            </style>
-        </header>
+                            <!--change here add star rating-->
 
-        <form id="report-upload-form" method="POST" action="" enctype="multipart/form-data">
-            <p>
-                <label for="id_title">Title:</label>
-                <input id="id_title" type="text" class="input-text" name="title">
-            </p>
-            <p>
-                <label for="id_description">Description:</label>
-                <textarea id="id_description" rows="10" cols="40" name="description"></textarea>
-            </p>
-            <p>
-                <label for="id_report">Upload Report:</label>
-                <input id="id_report" type="file" class="input-file" name="report">
-            </p>
-        </form>
+                        </div>
 
-    </div>
-</section>
+                        <a href="#" class="small-box-footer">
+                            More info <i class="fa fa-arrow-circle-right"></i>
+                        </a>
+                        <div class="small-box-footer">
+                            <div class="rating">
+                                <span>☆</span><span>☆</span><span>☆</span><span>☆</span><span>☆</span>
+                            </div>
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+                <div class="col-lg-3 col-xs-6">
+                    <div class="small-box bg-green">
+                        <div class="inner">
+                            <h1>
+                                App 2
+                            </h1>
+                            <p>
+                                this is a App
+                                <br /><b>cool app</b>
+                            </p>
+                        </div>
+
+                        <a href="#" class="small-box-footer">
+                            More info <i class="fa fa-arrow-circle-right"></i>
+                        </a>
+                        <div class="small-box-footer">
+                            <div class="rating">
+                                <span>☆</span><span>☆</span><span>☆</span><span>☆</span><span>☆</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-xs-6">
+                    <div class="small-box bg-red">
+                        <div class="inner">
+                            <h1>
+                                App 3
+                            </h1>
+                            <p>
+                                this is a App
+                                <br />
+                                balh balh blah
+                            </p>
+                        </div>
+
+                        <a href="#" class="small-box-footer">
+                            More info <i class="fa fa-arrow-circle-right"></i>
+                        </a>
+                        <div class="small-box-footer">
+                            <div class="rating">
+                                <span>☆</span><span>☆</span><span>☆</span><span>☆</span><span>☆</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-xs-6">
+                    <div class="small-box bg-lime">
+                        <div class="inner">
+                            <h1>
+                                App 4
+                            </h1>
+                            <p>
+                                this is a App
+                                <br />
+                                balh balh blah
+                            </p>
+                        </div>
+
+                        <a href="#" class="small-box-footer">
+                            More info <i class="fa fa-arrow-circle-right"></i>
+                        </a>
+                        <div class="small-box-footer">
+                            <div class="rating">
+                                <span>☆</span><span>☆</span><span>☆</span><span>☆</span><span>☆</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-xs-6">
+                    <div class="small-box bg-yellow">
+                        <div class="inner">
+                            <h1>
+                                App 5
+                            </h1>
+                            <p>
+                                this is an App
+                                <br />
+                                balh balh blah
+                            </p>
+                        </div>
+
+                        <a href="#" class="small-box-footer">
+                            More info <i class="fa fa-arrow-circle-right"></i>
+                        </a>
+                        <div class="small-box-footer">
+                            <div class="rating">
+                                <span>☆</span><span>☆</span><span>☆</span><span>☆</span><span>☆</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section><!-- /.content -->
+    </aside><!-- /.right-side -->
+</div>
