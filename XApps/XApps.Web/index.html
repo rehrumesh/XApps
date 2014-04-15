@@ -21,50 +21,44 @@
 
 </head>
 <body class="skin-blue">
-   
+
     <!-- header logo: style can be found in header.less -->
     <header class="header">
         <a href="#/dashboard" class="logo">
-             <!--Add the class icon to your logo image or logo icon to add the margining--> 
+            <!--Add the class icon to your logo image or logo icon to add the margining-->
             XApps
         </a>
-       
-        <a href="#" class="navbar-btn sidebar-toggle" data-toggle="offcanvas" role="button">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-        </a>
-</header>
 
-         
-            <div data-ng-include="'/app/layouts/shell.html'"></div>
-           
-            <div data-ng-view></div> 
-            
+        <div data-ng-include="'/app/layouts/navbar.html'"></div>
+    </header>
+
+    <div class="wrapper row-offcanvas row-offcanvas-left">
+        <div data-ng-include="'/app/layouts/sidebar.html'"></div>
+
+        <div data-ng-view=""></div>
+
+    </div>
 
 
-
-            <!-- Scripts -->
-            <script src="scripts/jquery-2.1.0.js"></script>
-            <script src="scripts/angular.js"></script>
-            <script src="scripts/angular-animate.js"></script>
-            <script src="scripts/angular-route.js"></script>
-            <script src="scripts/angular-sanitize.js"></script>
-            <script src="scripts/bootstrap.js"></script>
-            <script src="scripts/toastr.js"></script>
-            <!--<script src="scripts/ui-bootstrap-tpls-0.10.0.js"></script>-->
-            <!--<script src="scripts/moment.js"></script>-->
-            <script src="scripts/Custom/adminlteapp.js"></script>
-            <!-- App libraries -->
-            <script src="app/app.js"></script>
-            <script src="app/layouts/shell.js"></script>
-            <script src="app/layouts/sidebar.js"></script>
-            <script src="app/dashboard/dashboard.js"></script>
-            <script src="app/hotapps/hotapps.js"></script>
-            <script src="app/myapps/myapps.js"></script>
-            <!--add a js file-->
-            <script src="bootstrap-rating-input.min.js"></script>
+    <!-- Scripts -->
+    <script src="scripts/jquery-2.1.0.js"></script>
+    <script src="scripts/angular.js"></script>
+    <script src="scripts/angular-animate.js"></script>
+    <script src="scripts/angular-route.js"></script>
+    <script src="scripts/angular-sanitize.js"></script>
+    <script src="scripts/bootstrap.js"></script>
+    <script src="scripts/toastr.js"></script>
+    <!--<script src="scripts/ui-bootstrap-tpls-0.10.0.js"></script>-->
+    <!--<script src="scripts/moment.js"></script>-->
+    <script src="scripts/Custom/adminlteapp.js"></script>
+    <!-- App libraries -->
+    <script src="app/app.js"></script>
+    <script src="app/layouts/shell.js"></script>
+    <script src="app/layouts/sidebar.js"></script>
+    <script src="app/dashboard/dashboard.js"></script>
+    <script src="app/hotapps/hotapps.js"></script>
+    <script src="app/myapps/myapps.js"></script>
+    <!--add a js file-->
 
 </body>
 </html>
