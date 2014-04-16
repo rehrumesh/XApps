@@ -57,6 +57,7 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="app\config.route.js" />
     <Content Include="Content\images\app1.jpg" />
     <Content Include="less\header.less" />
     <Content Include="less\sidebar.less" />
