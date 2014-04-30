@@ -407,7 +407,8 @@ body > .header .logo {
   text-align: center;
   padding: 0 10px;
   width: 220px;
-  font-family: 'Kaushan Script', cursive;
+  /*changed ffont family*/
+  /*font-family: 'Kaushan Script', cursive;*/
   font-weight: 500;
   height: 50px;
   display: block;
@@ -2450,6 +2451,10 @@ Component: timeline
     ---------
 */
 /* skin-blue navbar */
+.skin-blue{
+    min-height: 300px;
+}
+
 .skin-blue .navbar {
   background-color: #3c8dbc;
 }
@@ -3464,3 +3469,13 @@ fieldset[disabled] .btn-vk.active {
    content: "\2605";
    position: absolute;
 }
+
+#editor { 
+        margin: 0;
+        position: absolute;
+        top: 100px;
+        bottom: 0;
+        left: 220px;
+        right: 0;
+    }
+

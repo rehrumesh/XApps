@@ -1,9 +1,8 @@
 ﻿    <!-- Left side column. contains the logo and sidebar -->
-    <aside class="left-side sidebar-offcanvas" style="fit-position:left;">
+    <aside class="left-side sidebar-offcanvas bg-gray" style="fit-position:left;">
         <!-- sidebar: style can be found in sidebar.less -->
+        <div id="sidebar1">
         <section class="sidebar">
-
-
             <!-- search form -->
             <form action="#" method="get" class="sidebar-form">
                 <div class="input-group">
@@ -16,7 +15,8 @@
             <!-- /.search form -->
             <!-- sidebar menu: : style can be found in sidebar.less -->
             <ul class="sidebar-menu">
-                <li class="active">
+                <!--changed class="active" to none-->
+                <li>
                     <a href="#/dashboard">
                         <i class="fa fa-dashboard"></i>
                         <span>Dashboard</span>
@@ -34,10 +34,24 @@
                         <i class="fa fa-calendar"></i> <span>Hot Apps</span>
                     </a>
                 </li>
+                <!--added a create app sidebar menu item-->
+                <li>
+                    <a href="#/createnewapp" onsubmit="return hideSidebar()">
+                        <i class="fa fa-edit"></i>
+                        <span>Create New App</span>
+                    </a>
+                </li>
             </ul>
         </section>
+            </div>
         <!-- /.sidebar -->
     </aside>
 <!-- /.right-side -->
 <!-- ./wrapper -->
-    
+
+<script>
+    function hideSidebar() {
+        $(sidebar1).hide();
+    }
+</script>
+
