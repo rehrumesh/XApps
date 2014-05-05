@@ -1,94 +1,124 @@
-﻿    <nav class="navbar navbar-static-top bg-navy" style="margin-left:220px">
-        <div class="navbar-left">
-            <ul class="nav navbar-nav">
-                <li>
-                    <a href="#/createnewapp">
-                        <i class="fa fa-list"></i> <span>Side Menu</span>
-                        
-                    </a>
-                </li>
+﻿<nav class="navbar navbar-static-top bg-navy" role="navigation" style="margin-left:220px">
+    <div class="navbar-left">
+        <ul class="nav navbar-nav">
+            <li>
+                <a href="#/dashboard">
+                    <i class="fa fa-home"></i> <span>Home</span>
 
-                <li class="dropdown" style="cursor:pointer">
-                    <a data-toggle="dropdown" class="dropdown-toggle">File<b class="caret"></b></a>
-                    <ul role="menu" class="dropdown-menu">
-                        <li><a href="#/createnewapp">new app</a></li>
-                        <li><a href="#/createnewapp">open app</a></li>
-                        <li><a href="#/createnewapp">save</a></li>
-                    </ul>
-                </li>
+                </a>
+            </li>
 
-                <li>
-                    <a href="#/createnewapp">
-                        <span>Preview</span>
-                    </a>
-                </li>
+            <!--new item added-->
 
-            </ul>
-        </div>
-    </nav>
-    
+            <li class="dropdown" style="cursor:pointer">
+                <a data-toggle="dropdown" class="dropdown-toggle">File<b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                    <li class="dropdown-submenu">
+                        <a>new file</a>
+                        <ul class="dropdown-menu">
+                            <li id="html"><a>html</a></li>
+                            <li id="css"><a>css</a></li>
+                            <li id="javascript"><a>javascript</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="#/createnewapp">open app</a></li>
+                    <li><a href="#/createnewapp">save</a></li>
+                </ul>
+            </li>
 
-    <aside class="left-side sidebar-offcanvas bg-gray" style="fit-position:left;">
-        <!-- sidebar: style can be found in sidebar.less -->
-        <div id="sidebar2">
-            <section class="sidebar">
-                <!-- search form -->
-                <!--changed class="active" to none-->
-                <div id="main">
-                    <script type="text/javascript">
-                        $(document).ready(function () {
+
+            <!--new item added-->
+
+            <li>
+                <a href="#/createnewapp">
+                    <span>Preview</span>
+                </a>
+            </li>
+
+        </ul>
+    </div>
+</nav>
+
+<aside class="left-side sidebar-offcanvas bg-gray" style="fit-position:left;">
+    <!-- sidebar: style can be found in sidebar.less -->
+    <div id="sidebar2">
+        <section class="sidebar">
+            <!-- search form -->
+            <!--changed class="active" to none-->
+            <div id="main">
+                <script type="text/javascript">
+                    $(document).ready(function () {
+                        $("#browser").treeview({
+                            toggle: function () {
+                                console.log("%s was toggled.", $(this).find(">span").text());
+                            }
+                        });
+                    });
+
+                    $(function () {
+                        $("#browser").treeview();
+                        $("#html").click(function () {
+                            var branches = $("<li><span class='file'>BIZAPP.html</span></li>").appendTo("#htmlfile");
                             $("#browser").treeview({
-                                toggle: function () {
-                                    console.log("%s was toggled.", $(this).find(">span").text());
-                                }
-                            });
-
-                            $("#add").click(function () {
-                                var branches = $("<li><span class='folder'>New Sublist</span><ul>" +
-                                    "<li><span class='file'>Item1</span></li>" +
-                                    "<li><span class='file'>Item2</span></li></ul></li>").appendTo("#browser");
-                                $("#browser").treeview({
-                                    add: branches
-                                });
+                                add: branches
                             });
                         });
-                    </script>
-                    <ul id="browser" class="filetree treeview-famfamfam">
-                        <li>
-                            <span class="folder">AppBuss</span>
-                            <ul>
-                                <li>
-                                    <span class="folder">HTML</span>
-                                    <ul>
-                                        <li><span class="file"><a href="#/createnewapp/html">AppBuss.html</a></span></li>
-                                    </ul>
-                                </li>
-                                <li class="closed">
-                                    <span class="folder">CSS</span>
-                                    <ul>
-                                        <li><span class="file"><a href="#/createnewapp/css">AppBuss.css</a></span></li>
-                                    </ul>
-                                </li>
 
-                                <li class="closed">
-                                    <span class="folder">Javascript</span>
-                                    <ul>
-                                        <li><span class="file"><a href="#/createnewapp/javascript">AppBuss.js</a></span></li>
-                                    </ul>
-                                </li>
-                            </ul>
-                        </li>
-                    </ul>
+                        $("#css").click(function () {
+                            var branches = $("<li><span class='file'>BIZAPP.css</span></li>").appendTo("#cssfile");
+                            $("#browser").treeview({
+                                add: branches
+                            });
+                        });
 
-                </div>
+                        $("#javascript").click(function () {
+                            var branches = $("<li><span class='file'>BIZAPP.js</span></li>").appendTo("#jsfile");
+                            $("#browser").treeview({
+                                add: branches
+                            });
+                        });
+                    })
+                </script>
+                <ul id="browser" class="filetree treeview-famfamfam">
+                    <li>
+                        <span class="folder">AppBuss</span>
+                        <ul>
+                            <li>
+                                <span class="folder">HTML</span>
+                                <ul id="htmlfile">
+                                    <li><span class="file"><a href="#/createnewapp/html">AppBuss.html</a></span></li>
 
-                <!--added a create app sidebar menu item-->
+                                </ul>
+                            </li>
+                            <li>
+                                <span class="folder">CSS</span>
+                                <ul id="cssfile">
+                                    <li><span class="file"><a href="#/createnewapp/css">AppBuss.css</a></span></li>
+                                </ul>
+                            </li>
+
+                            <li>
+                                <span class="folder">Javascript</span>
+                                <ul id="jsfile">
+                                    <li><span class="file"><a href="#/createnewapp/javascript">AppBuss.js</a></span></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+
+            </div>
+
+            <!--added a create app sidebar menu item-->
 
 
-            </section>
-        </div>
-        <!-- /.sidebar -->
-    </aside>
+        </section>
+    </div>
+    <!-- /.sidebar -->
+</aside>
+
+
+
 
 
     <aside class="right-side">
