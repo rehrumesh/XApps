@@ -16,9 +16,9 @@
                     <li class="dropdown-submenu">
                         <a>new file</a>
                         <ul class="dropdown-menu">
-                            <li id="html"><a>html</a></li>
-                            <li id="css"><a>css</a></li>
-                            <li id="javascript"><a>javascript</a></li>
+                            <li id="html"><a ng-click="newHtmlFile()">html</a></li>
+                            <li id="css"><a ng-click="newCssFile()">css</a></li>
+                            <li id="javascript"><a ng-click="newJsFile()">javascript</a></li>
                         </ul>
                     </li>
                     <li><a>open app</a></li>
@@ -30,7 +30,7 @@
             <!--new item added-->
 
             <li>
-                <a href="#/createnewapp">
+                <a >
                     <span>Preview</span>
                 </a>
             </li>
@@ -57,26 +57,24 @@
 
                     $(function () {
                         $("#browser").treeview();
-                        $("#html").click(function () {
-                            var branches = $("<li><span class='file'>BIZAPP.html</span></li>").appendTo("#htmlfile");
-                            $("#browser").treeview({
-                                add: branches
-                            });
-                        });
+                        //$("#html").click(function () {
+                        //    //var fName = prompt("Enter the file name", "myhtml.html");
+                        //    this.getText();
+                        //});
 
-                        $("#css").click(function () {
-                            var branches = $("<li><span class='file'>BIZAPP.css</span></li>").appendTo("#cssfile");
-                            $("#browser").treeview({
-                                add: branches
-                            });
-                        });
+                        //$("#css").click(function () {
+                        //    var branches = $(getText()).appendTo("#cssfile");
+                        //    $("#browser").treeview({
+                        //        add: branches
+                        //    });
+                        //});
 
-                        $("#javascript").click(function () {
-                            var branches = $("<li><span class='file'>BIZAPP.js</span></li>").appendTo("#jsfile");
-                            $("#browser").treeview({
-                                add: branches
-                            });
-                        });
+                        //$("#javascript").click(function () {
+                        //    var branches = $("<li><span class='file'>BIZAPP.js</span></li>").appendTo("#jsfile");
+                        //    $("#browser").treeview({
+                        //        add: branches
+                        //    });
+                        //});
                     });
                 </script>
                 <ul id="browser" class="filetree treeview-famfamfam">
@@ -86,21 +84,21 @@
                             <li>
                                 <span class="folder">HTML</span>
                                 <ul id="htmlfile">
-                                    <li><span class="file"><a href="#/createnewapp/html">AppBuss.html</a></span></li>
+                                    <li><span class="file"><a ng-click="htmlClicked('appbuss.html')">AppBuss.html</a></span></li>
 
                                 </ul>
                             </li>
                             <li>
                                 <span class="folder">CSS</span>
                                 <ul id="cssfile">
-                                    <li><span class="file"><a href="#/createnewapp/css">AppBuss.css</a></span></li>
+                                    <li><span class="file"><a ng-click="cssClicked('appbuss.css')">AppBuss.css</a></span></li>
                                 </ul>
                             </li>
 
                             <li>
                                 <span class="folder">Javascript</span>
                                 <ul id="jsfile">
-                                    <li><span class="file"><a href="#/createnewapp/javascript">AppBuss.js</a></span></li>
+                                    <li><span class="file"><a ng-click="jsClicked('appbuss.js')">AppBuss.js</a></span></li>
                                 </ul>
                             </li>
                         </ul>
@@ -137,6 +135,7 @@
                     enableBasicAutocompletion: true,
                     enableSnippets: true
                 });
+                
             </script>
 
         </section>
