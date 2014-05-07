@@ -28,7 +28,7 @@
             $scope.githubRepoName = repoName;
             var repoObj = {
                 "name": $scope.githubRepoName,
-                "description": "This is your first repository",
+                "description": "Created using XApps",
                 "homepage": "https://github.com",
                 "private": false,
                 "has_issues": true,
