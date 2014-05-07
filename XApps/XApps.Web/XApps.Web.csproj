@@ -60,12 +60,6 @@
     <Content Include="app\config.route.js" />
     <Content Include="app\createnewapp\createnewapp.html" />
     <Content Include="app\createnewapp\createnewapp.js" />
-    <Content Include="app\createnewapp\cssediter\css.html" />
-    <Content Include="app\createnewapp\cssediter\css.js" />
-    <Content Include="app\createnewapp\htmlediter\Htmlpage.html" />
-    <Content Include="app\createnewapp\htmlediter\Htmlpage.js" />
-    <Content Include="app\createnewapp\jsediter\javascript.html" />
-    <Content Include="app\createnewapp\jsediter\JavaScript.js" />
     <Content Include="Content\Custom\treeview\document.png" />
     <Content Include="Content\Custom\treeview\folder-horizontal.png" />
     <Content Include="Content\Custom\treeview\images\ajax-loader.gif" />
