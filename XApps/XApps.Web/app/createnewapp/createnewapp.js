@@ -91,15 +91,18 @@
         }
         commitJSON += "}";
         commitJSON = commitJSON.replace(/\n/g, '\\n');
-        alert(commitJSON);
+        //alert(commitJSON);
         var commitObj = JSON.parse(commitJSON);
-        alert(commitObj);
+        //alert(commitObj);
 
 
         if ($scope.githubRepoName == "") {
             var repoName = prompt("Please enter the App/repository name");
             if (repoName == null) {
-                alert("No repo name provided");
+                makeToast("No repo name provided", 3);
+                return;
+            } else if (repoName == "") {
+                makeToast("No repo name provided", 3);
                 return;
             }
             $scope.githubRepoName = repoName;
@@ -131,8 +134,8 @@
 
                     branch.writeMany(commitObj, message)
                         .then(function () {
-                            alert("Successfully Commited");
-                        });
+                        makeToast("Successfully Commited", 2);
+                    });
 
 
         }
@@ -152,7 +155,7 @@
             var isBinary = false;
             branch.writeMany(commitObj, message)
                         .then(function () {
-                            alert("Successfully Commited");
+                            makeToast("Successfully Commited", 2);
                         });
 
 
@@ -163,19 +166,15 @@
 
 
 
-    function getText() {
-        alert("asdasdasas");
-    };
-
-
-
+    
     $scope.saveFile = function () {
-        alert('C File :' + $scope.currentFile + '  type: ' + $scope.currentFileType);
+        //alert('C File :' + $scope.currentFile + '  type: ' + $scope.currentFileType);
         for (var tmp in $scope.app[0].children[$scope.currentFileType].children) {
-            alert("Search " + $scope.app[0].children[$scope.currentFileType].children[tmp].fileName);
+            //alert("Search " + $scope.app[0].children[$scope.currentFileType].children[tmp].fileName);
             if ($scope.app[0].children[$scope.currentFileType].children[tmp].fileName == $scope.currentFile) {
                 $scope.app[0].children[$scope.currentFileType].children[tmp].context = editor.getValue();
                 $scope.app[0].children[$scope.currentFileType].children[tmp].hasChanged = true;
+                makeToast("File saved successfully", 2);
                 return;
             }
 
@@ -184,7 +183,7 @@
 
     $scope.newHtmlFile = function () {
         var fName = prompt("Enter the file name", "myfile.html");
-        if (fName == null) {
+        if (fName == null || fName == "") {
             return;
         }
         $scope.currentFile = fName;
@@ -203,11 +202,13 @@
         $("#browser").treeview({
             add: branches
         });
+
+        makeToast(fName + " created successfully!", 2);
     };
 
     $scope.newCssFile = function () {
         var fName = prompt("Enter the file name", "myfile.css");
-        if (fName == null) {
+        if (fName == null || fName == "") {
             return;
         }
         $scope.currentFile = fName;
@@ -224,11 +225,12 @@
         $("#browser").treeview({
             add: branches
         });
+        makeToast(fName + " created successfully!", 2);
     };
 
     $scope.newJsFile = function () {
         var fName = prompt("Enter the file name", "myfile.js");
-        if (fName == null) {
+        if (fName == null || fName =="") {
             return;
         }
         $scope.currentFile = fName;
@@ -245,12 +247,14 @@
         $("#browser").treeview({
             add: branches
         });
+        makeToast(fName + " created successfully!", 2);
     };
 
     $scope.htmlClicked = function (tmpFile) {
         //alert(tmpFile);
         $scope.currentFile = tmpFile;
-        alert("Current working file : " + $scope.currentFile);
+        
+        makeToast("Current working file : " + $scope.currentFile,1);
         editor.getSession().setMode("ace/mode/html");
         //search file
         var fileObj = getFileFromApp(tmpFile, 0);
@@ -262,7 +266,7 @@
     $scope.jsClicked = function (tmpFile) {
 
         $scope.currentFile = tmpFile;
-        alert("Current working file : " + $scope.currentFile);
+        makeToast("Current working file : " + $scope.currentFile, 1);
         editor.getSession().setMode("ace/mode/javascript");
         var fileObj = getFileFromApp(tmpFile, 2);
         editor.setValue($scope.app[0].children[2].children[fileObj].context);
@@ -273,7 +277,7 @@
     $scope.cssClicked = function (tmpFile) {
 
         $scope.currentFile = tmpFile;
-        alert("Current working file : " + $scope.currentFile);
+        makeToast("Current working file : " + $scope.currentFile, 1);
         editor.getSession().setMode("ace/mode/css");
         var fileObj = getFileFromApp(tmpFile, 1);
         editor.setValue($scope.app[0].children[1].children[fileObj].context);
@@ -394,6 +398,43 @@
         */
 
     };
+
+
+    // type : 1 info 2 success 3 fail 4 warning
+    function makeToast(text, type) {
+        toastr.options = {
+            "closeButton": true,
+            "debug": false,
+            "positionClass": "toast-bottom-right",
+            "onclick": null,
+            "showDuration": "300",
+            "hideDuration": "1000",
+            "timeOut": "5000",
+            "extendedTimeOut": "1000",
+            "showEasing": "swing",
+            "hideEasing": "linear",
+            "showMethod": "fadeIn",
+            "hideMethod": "fadeOut"
+        };
+
+        switch (type) {
+            case 1:
+                toastr.info(text);
+                break;
+            case 2:
+                toastr.success(text);
+                break;
+            case 3:
+                toastr.error(text);
+                break;
+            case 4:
+                toastr.warning(text);
+                break;
+            default:
+                toastr.info(text);
+                break;
+        }
+    }
 
 });
 

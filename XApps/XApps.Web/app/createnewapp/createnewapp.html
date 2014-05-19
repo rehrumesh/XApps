@@ -124,7 +124,7 @@
         <!-- Content Header (Page header) -->
         <!-- Main content -->
         <section class="content">
-            <div id="editor" ></div>
+            <div id="editor" ng-init="htmlClicked('appindex.html')"></div>
             <script>
                 ace.require("ace/ext/language_tools");
                 var editor = ace.edit("editor");
@@ -138,8 +138,9 @@
                 });
                 
             </script>
-
+            
         </section>
+        
 
     </aside><!-- /.right-side -->
 
