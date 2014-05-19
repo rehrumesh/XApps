@@ -1,11 +1,11 @@
-﻿app.controller('createnewapp', function ($scope,$compile) {
+﻿app.controller('createnewapp', function ($scope, $compile) {
     $scope.devName = "Rumesh";
     $scope.path = "<li><span class='file'>BIZAPP.css</span></li>";
     $scope.githubUserName = "Xapps00";
     $scope.githubPassword = "xapps00xapps00";
     $scope.githubRepoName = "";
     $scope.currentFile = "hello.js";
-    $scope.currentFileType = "js";
+    $scope.currentFileType = 0;     //0 HTML 1 CSS 2 JS
     $scope.currentFilePath = "src/";
     $scope.fileContent = "";
 
@@ -13,19 +13,70 @@
     var editor = ace.edit("editor");
 
 
-    $scope.save = function () {
+    $scope.app = [
+            {
+                appName: "newapp",
+                children: [
+                    {
+                        folderName: "HTML",
+                        children: [
+                            {
+                                fileName: "appindex.html",
+                                context: "<html>",
+                                hasChanged: false,
+                                hash: "",
+                                path: ""
+                            }
+                        ]
+                    },
+
+                    {
+                        folderName: "CSS",
+                        children: []
+                    },
+
+                    {
+                        folderName: "Javascript",
+                        children: []
+                    }
+                ]
+            }
+    ];
+
+    //Filetree : 0 -> HTML
+    //Filetree : 1 -> CSS
+    //Filetree : 2 -> JS
+    function getFileFromApp(fileName, fileTree) {
+        var tmpObj = null;
+        
+        for (var obj in $scope.app[0].children[fileTree].children) {
+            //alert('File Name : ' + fileName+ '   obj.filename : '+obj.fileName);
+            
+            if ($scope.app[0].children[fileTree].children[obj].fileName == fileName) {
+                
+                tmpObj = obj;
+                break;
+            }
+        }
+        return tmpObj;
+
+    }
+
+
+    $scope.saveGit = function () {
         var gh = new Octokit({
             username: $scope.githubUserName,
             password: $scope.githubPassword
         });
 
         if ($scope.githubRepoName == "") {
-            var repoName = prompt("Please enter the repository name");
+            var repoName = prompt("Please enter the App/repository name");
             if (repoName == null) {
                 alert("No repo name provided");
                 return;
             }
             $scope.githubRepoName = repoName;
+            $scope.app.appName = repoName;
             var repoObj = {
                 "name": $scope.githubRepoName,
                 "description": "Created using XApps",
@@ -36,8 +87,8 @@
                 "has_downloads": true,
                 "auto_init": true
             };
-
-
+            alert($scope.app.appName);
+            /*
             var user = gh.getUser();
             user.createRepo(repoName, repoObj).then(
                 function () {
@@ -58,7 +109,7 @@
                         });
                 }
             );
-
+            */
 
         } else {
             var repo = gh.getRepo($scope.githubUserName, $scope.githubRepoName);
@@ -81,7 +132,7 @@
 
     };
 
-    
+
 
     function getText() {
         alert("asdasdasas");
@@ -105,14 +156,35 @@
 			});
     }
 
+    $scope.saveFile = function () {
+        alert('C File :' + $scope.currentFile + '  type: ' + $scope.currentFileType);
+        for (var tmp in $scope.app[0].children[$scope.currentFileType].children) {
+            alert("Search " + $scope.app[0].children[$scope.currentFileType].children[tmp].fileName);
+            if ($scope.app[0].children[$scope.currentFileType].children[tmp].fileName == $scope.currentFile) {
+                $scope.app[0].children[$scope.currentFileType].children[tmp].context = editor.getValue();
+                $scope.app[0].children[$scope.currentFileType].children[tmp].hasChanged = true;
+                return;
+            }
+            
+        }
+    };
+
     $scope.newHtmlFile = function () {
         var fName = prompt("Enter the file name", "myfile.html");
         if (fName == null) {
             return;
         }
         $scope.currentFile = fName;
-        var html = "<li><span class='file'> <a ng-click=\"htmlClicked(\'"+fName+"\')\">" + fName + "</a></span></li>";
+        $scope.app[0].children[0].children.push({
+            fileName: fName,
+            context: "My name is rumesh Eranga",
+            hasChanged: false,
+            hash: "",
+            path: "html/"
+        });
         
+        var html = "<li><span class='file'> <a ng-click=\"htmlClicked(\'" + fName + "\')\">" + fName + "</a></span></li>";
+
         var branches = $compile(html)($scope).appendTo("#htmlfile");
         $("#browser").treeview({
             add: branches
@@ -125,6 +197,13 @@
             return;
         }
         $scope.currentFile = fName;
+        $scope.app[0].children[1].children.push({
+            fileName: fName,
+            context: ".css",
+            hasChanged: false,
+            hash: "",
+            path: "css/"
+        });
         var html = "<li><span class='file'> <a ng-click=\"cssClicked(\'" + fName + "\')\">" + fName + "</a></span></li>";
 
         var branches = $compile(html)($scope).appendTo("#cssfile");
@@ -139,6 +218,13 @@
             return;
         }
         $scope.currentFile = fName;
+        $scope.app[0].children[2].children.push({
+            fileName: fName,
+            context: "//JS Code",
+            hasChanged: false,
+            hash: "",
+            path: "javascript/"
+        });
         var html = "<li><span class='file'> <a ng-click=\"jsClicked(\'" + fName + "\')\">" + fName + "</a></span></li>";
 
         var branches = $compile(html)($scope).appendTo("#jsfile");
@@ -150,32 +236,39 @@
     $scope.htmlClicked = function (tmpFile) {
         //alert(tmpFile);
         $scope.currentFile = tmpFile;
-        alert("Current working file : "+$scope.currentFile);
+        alert("Current working file : " + $scope.currentFile);
         editor.getSession().setMode("ace/mode/html");
-        editor.setValue("");
-        $scope.currentFileType = "html";
+        //search file
+        var fileObj = getFileFromApp(tmpFile,0);
+        editor.setValue($scope.app[0].children[0].children[fileObj].context);
+        $scope.currentFileType = 0;
         $scope.currentFilePath = "html/";
     };
 
     $scope.jsClicked = function (tmpFile) {
-        
+
         $scope.currentFile = tmpFile;
         alert("Current working file : " + $scope.currentFile);
         editor.getSession().setMode("ace/mode/javascript");
-        editor.setValue("");
-        $scope.currentFileType = "js";
+        var fileObj = getFileFromApp(tmpFile, 2);
+        editor.setValue($scope.app[0].children[2].children[fileObj].context);
+        $scope.currentFileType = 2;
         $scope.currentFilePath = "javascript/";
     };
 
     $scope.cssClicked = function (tmpFile) {
-        
+
         $scope.currentFile = tmpFile;
         alert("Current working file : " + $scope.currentFile);
         editor.getSession().setMode("ace/mode/css");
-        editor.setValue("");
-        $scope.currentFileType = "css";
+        var fileObj = getFileFromApp(tmpFile, 1);
+        editor.setValue($scope.app[0].children[1].children[fileObj].context);
+        $scope.currentFileType = 1;
         $scope.currentFilePath = "css/";
     };
+
+    
+
 
     $scope.openRepo = function () {
         var userName = $scope.githubUserName;
@@ -184,7 +277,7 @@
         var filesResponseObj;
         var requestContent;
         var contentResponseObj;
-        
+
         //the following line is to allocate 25mb local storage
         //var fso = new FSO(1024 * 1024 * 25, false);
 
@@ -193,9 +286,9 @@
             var forLoopVar = 0;
 
             for (forLoopVar = 0; forLoopVar < Object.keys(filesResponseObj.tree).length; forLoopVar++) {
-                
+
                 if (filesResponseObj.tree[forLoopVar].type == "blob") {
-                    
+
                     function writeContent() {
                         contentResponseObj = JSON.parse(this.responseText);
                         /*//another baase64 decoding algorithm
@@ -215,7 +308,7 @@
                             }
                             return r;
                         }*/
-                        
+
 
                         function decodeBase64(s) {
                             var e = {}, i, b = 0, c, x, l = 0, a, r = '', w = String.fromCharCode, L = s.length;
@@ -227,17 +320,17 @@
                             }
                             return r;
                         };
-                        
+
                         //writeFile decodeBase64(contentResponseObj.content)
                         //text = filesResponseObj.tree[i].path + " *** " + decodeBase64(contentResponseObj.content);
-                        alert("file content: "+decodeBase64(contentResponseObj.content));
-                        
+                        alert("file content: " + decodeBase64(contentResponseObj.content));
+
                     }
-                    requestContent = new XMLHttpRequest(); 
+                    requestContent = new XMLHttpRequest();
                     requestContent.onload = writeContent;
                     requestContent.open('get', 'https://api.github.com/repos/Xapps00/' + repoName + '/git/blobs/' + filesResponseObj.tree[forLoopVar].sha, true);
                     requestContent.send();
-                    
+
                     // the following method is to check whether the the request is fetched
                     // this writes the fetched http request to the text editor
                     requestContent.onreadystatechange = function () {
@@ -250,7 +343,7 @@
                 }
 
             }
-            
+
         }
         requestFiles = new XMLHttpRequest();
         requestFiles.onload = bringFiles;//.then(function () { alert("came here"); });
