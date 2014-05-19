@@ -23,9 +23,9 @@
                             {
                                 fileName: "appindex.html",
                                 context: "<html>",
-                                hasChanged: false,
+                                hasChanged: true,
                                 hash: "",
-                                path: ""
+                                path: "html/"
                             }
                         ]
                     },
@@ -48,12 +48,12 @@
     //Filetree : 2 -> JS
     function getFileFromApp(fileName, fileTree) {
         var tmpObj = null;
-        
+
         for (var obj in $scope.app[0].children[fileTree].children) {
             //alert('File Name : ' + fileName+ '   obj.filename : '+obj.fileName);
-            
+
             if ($scope.app[0].children[fileTree].children[obj].fileName == fileName) {
-                
+
                 tmpObj = obj;
                 break;
             }
@@ -68,6 +68,33 @@
             username: $scope.githubUserName,
             password: $scope.githubPassword
         });
+
+        //create commite object
+        var commitJSON = "{";
+        var start = 0;
+        for (var i in $scope.app[0].children) {
+            for (var j in $scope.app[0].children[i].children) {
+                if ($scope.app[0].children[i].children[j].hasChanged == true) {
+                    $scope.app[0].children[i].children[j].hasChanged = false;
+                    if (start != 0) {
+                        start++;
+                        commitJSON += ',';
+                    } else if (start == 0) {
+                        start++;
+                    }
+                    commitJSON += '"' + $scope.app[0].children[i].children[j].path + $scope.app[0].children[i].children[j].fileName + '":"' + $scope.app[0].children[i].children[j].context+'"';
+
+                } else {
+
+                }
+            }
+        }
+        commitJSON += "}";
+        commitJSON = commitJSON.replace(/\n/g, '\\n');
+        alert(commitJSON);
+        var commitObj = JSON.parse(commitJSON);
+        alert(commitObj);
+
 
         if ($scope.githubRepoName == "") {
             var repoName = prompt("Please enter the App/repository name");
@@ -87,13 +114,14 @@
                 "has_downloads": true,
                 "auto_init": true
             };
-            alert($scope.app.appName);
-            /*
+
+
             var user = gh.getUser();
             user.createRepo(repoName, repoObj).then(
                 function () {
                     var repo = gh.getRepo($scope.githubUserName, $scope.githubRepoName);
                     var branch = repo.getBranch();
+                    var isBinary = false;
 
                     $scope.fileContent = editor.getValue();
                     var message = prompt("Commit Message");
@@ -101,15 +129,15 @@
                         message = "Default commit message";
                     }
 
-                    var isBinary = false;
-
-                    branch.write($scope.currentFilePath + "" + $scope.currentFile, $scope.fileContent, message, isBinary)
+                    branch.writeMany(commitObj, message)
                         .then(function () {
                             alert("Successfully Commited");
                         });
-                }
+
+
+        }
             );
-            */
+
 
         } else {
             var repo = gh.getRepo($scope.githubUserName, $scope.githubRepoName);
@@ -122,11 +150,12 @@
             }
 
             var isBinary = false;
+            branch.writeMany(commitObj, message)
+                        .then(function () {
+                            alert("Successfully Commited");
+                        });
 
-            branch.write($scope.currentFilePath + "" + $scope.currentFile, $scope.fileContent, message, isBinary)
-                .then(function () {
-                    alert("Successfully Commited");
-                });
+
         }
 
 
@@ -138,23 +167,7 @@
         alert("asdasdasas");
     };
 
-    function commitFiles() {
-        var repo = gh.getRepo($scope.githubUserName, $scope.githubRepoName);
-        var branch = repo.getBranch();
 
-        $scope.fileContent = editor.getValue();
-        var message = prompt("Commit Message");
-        if (message == null) {
-            message = "Default commit message";
-        }
-
-        var isBinary = false;
-
-        branch.write($scope.currentFilePath + "" + $scope.currentFile, $scope.fileContent, message, isBinary)
-			.then(function () {
-			    alert("Successfully Commited");
-			});
-    }
 
     $scope.saveFile = function () {
         alert('C File :' + $scope.currentFile + '  type: ' + $scope.currentFileType);
@@ -165,7 +178,7 @@
                 $scope.app[0].children[$scope.currentFileType].children[tmp].hasChanged = true;
                 return;
             }
-            
+
         }
     };
 
@@ -178,11 +191,12 @@
         $scope.app[0].children[0].children.push({
             fileName: fName,
             context: "My name is rumesh Eranga",
-            hasChanged: false,
+            hasChanged: true,
             hash: "",
             path: "html/"
+            
         });
-        
+
         var html = "<li><span class='file'> <a ng-click=\"htmlClicked(\'" + fName + "\')\">" + fName + "</a></span></li>";
 
         var branches = $compile(html)($scope).appendTo("#htmlfile");
@@ -200,7 +214,7 @@
         $scope.app[0].children[1].children.push({
             fileName: fName,
             context: ".css",
-            hasChanged: false,
+            hasChanged: true,
             hash: "",
             path: "css/"
         });
@@ -221,7 +235,7 @@
         $scope.app[0].children[2].children.push({
             fileName: fName,
             context: "//JS Code",
-            hasChanged: false,
+            hasChanged: true,
             hash: "",
             path: "javascript/"
         });
@@ -239,7 +253,7 @@
         alert("Current working file : " + $scope.currentFile);
         editor.getSession().setMode("ace/mode/html");
         //search file
-        var fileObj = getFileFromApp(tmpFile,0);
+        var fileObj = getFileFromApp(tmpFile, 0);
         editor.setValue($scope.app[0].children[0].children[fileObj].context);
         $scope.currentFileType = 0;
         $scope.currentFilePath = "html/";
@@ -267,7 +281,7 @@
         $scope.currentFilePath = "css/";
     };
 
-    
+
 
 
     $scope.openRepo = function () {

@@ -1,5 +1,5 @@
 (function() {
-  var Octokit, Promise, XMLHttpRequest, allPromises, createGlobalAndAMD, encode, err, injector, makeOctokit, newPromise, _,
+  var Octokit, Promise, XMLHttpRequest, allPromises, createGlobalAndAMD, encode, err, injector, makeOctokit, newPromise, _, _ref,
     _this = this,
     __hasProp = {}.hasOwnProperty,
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
@@ -12,7 +12,7 @@
   };
 
   _.isArray = function(object) {
-    return !!object.slice;
+    return !!(object != null ? object.slice : void 0);
   };
 
   _.defaults = function(object, values) {
@@ -30,6 +30,9 @@
 
   _.each = function(object, fn) {
     var arr, key, _i, _len, _ref, _results;
+    if (!object) {
+      return;
+    }
     if (_.isArray(object)) {
       object.forEach(fn);
     }
@@ -198,6 +201,9 @@
           if ('PATCH' === method && clientOptions.usePostInsteadOfPatch) {
             method = 'POST';
           }
+          if (!/^http/.test(path)) {
+            path = "" + clientOptions.rootURL + path;
+          }
           mimeType = void 0;
           if (options.isBase64) {
             mimeType = 'text/plain; charset=x-user-defined';
@@ -225,7 +231,7 @@
             var ajaxConfig, always, onError, xhrPromise,
               _this = this;
             ajaxConfig = {
-              url: clientOptions.rootURL + path,
+              url: path,
               type: method,
               contentType: 'application/json',
               mimeType: mimeType,
@@ -258,7 +264,7 @@
               return _results;
             };
             xhrPromise.then(function(jqXHR) {
-              var converted, eTag, eTagResponse, i, _i, _ref;
+              var converted, eTag, eTagResponse, i, links, valOptions, _i, _ref;
               always(jqXHR);
               if (304 === jqXHR.status) {
                 if (clientOptions.useETags && _cachedETags[path]) {
@@ -272,6 +278,16 @@
               } else {
                 if (jqXHR.responseText && 'json' === ajaxConfig.dataType) {
                   data = JSON.parse(jqXHR.responseText);
+                  valOptions = {};
+                  links = jqXHR.getResponseHeader('Link');
+                  _.each(links != null ? links.split(',') : void 0, function(part) {
+                    var discard, href, rel, _ref;
+                    _ref = part.match(/<([^>]+)>;\ rel="([^"]+)"/), discard = _ref[0], href = _ref[1], rel = _ref[2];
+                    return valOptions["" + rel + "Page"] = function() {
+                      return _request('GET', href, null, options);
+                    };
+                  });
+                  _.extend(data, valOptions);
                 } else {
                   data = jqXHR.responseText;
                 }
@@ -1327,14 +1343,14 @@
 
   if (typeof exports !== "undefined" && exports !== null) {
     Promise = this.Promise || require('es6-promise').Promise;
-    XMLHttpRequest = require('xmlhttprequest').XMLHttpRequest;
+    XMLHttpRequest = this.XMLHttpRequest || require('xmlhttprequest').XMLHttpRequest;
     newPromise = function(fn) {
       return new Promise(fn);
     };
     allPromises = function(promises) {
       return Promise.all(promises);
     };
-    encode = function(str) {
+    encode = this.btoa || function(str) {
       var buffer;
       buffer = new Buffer(str, 'binary');
       return buffer.toString('base64');
@@ -1355,33 +1371,44 @@
         return _this.Github = Octokit;
       }
     };
-    if (this.Promise) {
+    if (this.Q) {
       newPromise = function(fn) {
-        return new _this.Promise(fn);
+        var deferred, reject, resolve;
+        deferred = _this.Q.defer();
+        resolve = function(val) {
+          return deferred.resolve(val);
+        };
+        reject = function(err) {
+          return deferred.reject(err);
+        };
+        fn(resolve, reject);
+        return deferred.promise;
       };
-      allPromises = this.Promise.all;
+      allPromises = function(promises) {
+        return this.Q.all(promises);
+      };
       createGlobalAndAMD(newPromise, allPromises);
     } else if (this.angular) {
       injector = angular.injector(['ng']);
       injector.invoke(function($q) {
         newPromise = function(fn) {
-          var $promise, reject, resolve;
-          $promise = $q.defer();
+          var deferred, reject, resolve;
+          deferred = $q.defer();
           resolve = function(val) {
-            return $promise.resolve(val);
+            return deferred.resolve(val);
           };
-          reject = function(val) {
-            return $promise.reject(val);
+          reject = function(err) {
+            return deferred.reject(err);
           };
           fn(resolve, reject);
-          return $promise.promise;
+          return deferred.promise;
         };
         allPromises = function(promises) {
           return $q.all(promises);
         };
         return createGlobalAndAMD(newPromise, allPromises);
       });
-    } else if (this.jQuery) {
+    } else if ((_ref = this.jQuery) != null ? _ref.Deferred : void 0) {
       newPromise = function(fn) {
         var promise, reject, resolve;
         promise = _this.jQuery.Deferred();
@@ -1395,13 +1422,25 @@
         return promise.promise();
       };
       allPromises = function(promises) {
-        var _ref;
-        return (_ref = _this.jQuery).when.apply(_ref, promises).then(function() {
+        var _ref1;
+        return (_ref1 = _this.jQuery).when.apply(_ref1, promises).then(function() {
           var promises;
           promises = 1 <= arguments.length ? __slice.call(arguments, 0) : [];
           return promises;
         });
       };
+      createGlobalAndAMD(newPromise, allPromises);
+    } else if (this.Promise) {
+      newPromise = function(fn) {
+        return new _this.Promise(function(resolve, reject) {
+          if (resolve.fulfill) {
+            return fn(resolve.resolve.bind(resolve), resolve.reject.bind(resolve));
+          } else {
+            return fn.apply(null, arguments);
+          }
+        });
+      };
+      allPromises = this.Promise.all;
       createGlobalAndAMD(newPromise, allPromises);
     } else {
       err = function(msg) {
