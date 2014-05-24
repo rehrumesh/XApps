@@ -435,6 +435,10 @@
         * refere ng-show
         *   https://docs.angularjs.org/api/ng/directive/ngShow
         *   http://scotch.io/tutorials/javascript/how-to-use-ngshow-and-nghide
+        *
+        *
+        * Note that there is no connection between the file tree view in the createnewapp.html and $scope.app tree.
+        * please build a connection between them also.
         */
 
     };
