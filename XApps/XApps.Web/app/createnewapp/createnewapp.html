@@ -21,7 +21,7 @@
                             <li id="javascript"><a ng-click="newJsFile()">javascript</a></li>
                         </ul>
                     </li>
-                    <li><a data-ng-click="openRepo()">open app</a></li>
+                    <li><a data-ng-click="testOpen()">open app</a></li>
                     <li><a data-ng-click="saveGit()">save in github</a></li>
                     <li><a data-ng-click="saveFile()">save</a></li>
                 </ul>
@@ -122,8 +122,10 @@
 
     <aside class="right-side">
         <!-- Content Header (Page header) -->
+        
         <!-- Main content -->
         <section class="content">
+            
             <div id="editor" ng-init="htmlClicked('appindex.html')"></div>
             <script>
                 ace.require("ace/ext/language_tools");
