@@ -21,7 +21,7 @@
                             <li id="javascript"><a ng-click="newJsFile()">javascript</a></li>
                         </ul>
                     </li>
-                    <li><a data-ng-click="testOpen()">open app</a></li>
+                    <li><a data-ng-click="loadRepo()">open app</a></li>
                     <li><a data-ng-click="saveGit()">save in github</a></li>
                     <li><a data-ng-click="saveFile()">save</a></li>
                 </ul>
@@ -80,26 +80,26 @@
                 </script>
                 <ul id="browser" class="filetree treeview-famfamfam">
                     <li>
-                        <span class="folder">AppBuss</span>
+                        <span class="folder">{{app.appName}}</span>
                         <ul>
                             <li>
                                 <span class="folder">HTML</span>
                                 <ul id="htmlfile">
-                                    <li><span class="file"><a ng-click="htmlClicked('appindex.html')">appindex.html</a></span></li>
+                                    <li data-ng-repeat="x in app[0].children[0].children"><span class="file"><a ng-click="htmlClicked(x.fileName)">{{x.fileName}}</a></span></li>
 
                                 </ul>
                             </li>
                             <li>
                                 <span class="folder">CSS</span>
                                 <ul id="cssfile">
-                                    
+                                    <li data-ng-repeat="y in app[0].children[1].children"><span class="file"><a ng-click="htmlClicked(y.fileName)">{{y.fileName}}</a></span></li>
                                 </ul>
                             </li>
 
                             <li>
                                 <span class="folder">Javascript</span>
                                 <ul id="jsfile">
-                                    
+                                    <li data-ng-repeat="z in app[0].children[2].children"><span class="file"><a ng-click="htmlClicked(z.fileName)">{{z.fileName}}</a></span></li>
                                 </ul>
                             </li>
                         </ul>
@@ -153,3 +153,13 @@
         $(sidebar).show();
     }
 </script>
+
+<div class="container" ng-show="showDetails" style="width:500px;">
+    <div data-ng-repeat="repo in repoList" class="col-sm-6 col-md-3" > 
+        <div class=" thumbnail tile tile-teal">
+            <a ng-click="openRepo(repo.name); showDetails = !showDetails">
+                <h3>{{repo.name}}</h3>
+            </a>
+        </div>
+    </div>
+</div>
