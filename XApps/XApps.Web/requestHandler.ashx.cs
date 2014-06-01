@@ -40,17 +40,17 @@ namespace XApps.Web
                 var branchTree = octokitClient.GitDatabase.Tree.Get("xapps00", appName, branch.Commit.Sha).Result;
 
 
-                context.Response.Write("Found data" + Environment.NewLine);
+               
 
                 if (Directory.Exists(appPath + appName))
                 {
 
-                    context.Response.Write("Dierctory found : " + appPath + Environment.NewLine);
+                    
                 }
                 else
                 {
                     Directory.CreateDirectory(appPath + appName);
-                    context.Response.Write("Directory Created");
+                    
 
                 }
 
@@ -92,10 +92,7 @@ namespace XApps.Web
                                 }
 
 
-                                context.Response.Write(Environment.NewLine);
-                                context.Response.Write(item.Path + " Encoding : " + tempBlob.Encoding +
-                                                       Environment.NewLine);
-                                context.Response.Write(decodedString);
+                                
                             }
                         }
 
@@ -104,6 +101,7 @@ namespace XApps.Web
                 }
 
                 context.Response.StatusCode = 200;
+                context.Response.Write("{appName:'"+appName+"', appPath");
             }
             catch (Exception e)
             {

@@ -38,7 +38,7 @@ app.config(function ($routeProvider) {
         controller: "dashboard",
         templateUrl: "app/dashboard/dashboard.html"
     });
-    $routeProvider.otherwise({ redirectTo: "http://localhost:6406/requestHandler.ashx" });
+    //$routeProvider.otherwise({ redirectTo: "http://localhost:6406/requestHandler.ashx" });
 
 });
 //
