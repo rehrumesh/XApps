@@ -36,9 +36,9 @@
     </header>
 
     <div class="wrapper row-offcanvas row-offcanvas-left">
-        <div data-ng-include="'/app/layouts/sidebar.html'"></div>
+        <aside class="left-side sidebar-offcanvas bg-gray" style="fit-position:left;" data-ng-include="'/app/layouts/sidebar.html'"></aside>
 
-        <div data-ng-view=""></div>
+        <aside class="right-side"  data-ng-view=""></aside>
 
     </div>
 

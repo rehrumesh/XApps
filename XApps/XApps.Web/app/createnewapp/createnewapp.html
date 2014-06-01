@@ -1,4 +1,4 @@
-﻿<nav class="navbar navbar-static-top bg-navy" role="navigation" style="margin-left:220px">
+﻿<nav class="navbar navbar-static-top bg-navy" role="navigation">
     <div class="navbar-left">
         <ul class="nav navbar-nav">
             <li>
@@ -31,7 +31,7 @@
             <!--new item added-->
 
             <li>
-                <a >
+                <a>
                     <span>Preview</span>
                 </a>
             </li>
@@ -40,112 +40,23 @@
     </div>
 </nav>
 
-<aside class="left-side sidebar-offcanvas bg-gray" style="fit-position:left;">
-    <!-- sidebar: style can be found in sidebar.less -->
-    <div id="sidebar2">
-        <section class="sidebar">
-            <!-- search form -->
-            <!--changed class="active" to none-->
-            <div id="main">
-                <script type="text/javascript">
-                    $(document).ready(function () {
-                        $("#browser").treeview({
-                            toggle: function () {
-                                console.log("%s was toggled.", $(this).find(">span").text());
-                            }
-                        });
-                    });
+<aside>
+    <section class="content">
+        <div id="editor" ng-init="htmlClicked('appindex.html')"></div>
+        <script>
+            ace.require("ace/ext/language_tools");
+            var editor = ace.edit("editor");
+            editor.setTheme("ace/theme/Eclipse");
+            editor.getSession().setMode("ace/mode/javascript");
+            document.getElementById('editor').style.fontSize = '14px';
 
-                    $(function () {
-                        $("#browser").treeview();
-                        //$("#html").click(function () {
-                        //    //var fName = prompt("Enter the file name", "myhtml.html");
-                        //    this.getText();
-                        //});
-
-                        //$("#css").click(function () {
-                        //    var branches = $(getText()).appendTo("#cssfile");
-                        //    $("#browser").treeview({
-                        //        add: branches
-                        //    });
-                        //});
-
-                        //$("#javascript").click(function () {
-                        //    var branches = $("<li><span class='file'>BIZAPP.js</span></li>").appendTo("#jsfile");
-                        //    $("#browser").treeview({
-                        //        add: branches
-                        //    });
-                        //});
-                    });
-                </script>
-                <ul id="browser" class="filetree treeview-famfamfam">
-                    <li>
-                        <span class="folder">{{app.appName}}</span>
-                        <ul>
-                            <li>
-                                <span class="folder">HTML</span>
-                                <ul id="htmlfile">
-                                    <li data-ng-repeat="x in app[0].children[0].children"><span class="file"><a ng-click="htmlClicked(x.fileName)">{{x.fileName}}</a></span></li>
-
-                                </ul>
-                            </li>
-                            <li>
-                                <span class="folder">CSS</span>
-                                <ul id="cssfile">
-                                    <li data-ng-repeat="y in app[0].children[1].children"><span class="file"><a ng-click="htmlClicked(y.fileName)">{{y.fileName}}</a></span></li>
-                                </ul>
-                            </li>
-
-                            <li>
-                                <span class="folder">Javascript</span>
-                                <ul id="jsfile">
-                                    <li data-ng-repeat="z in app[0].children[2].children"><span class="file"><a ng-click="htmlClicked(z.fileName)">{{z.fileName}}</a></span></li>
-                                </ul>
-                            </li>
-                        </ul>
-                    </li>
-                </ul>
-
-            </div>
-
-            <!--added a create app sidebar menu item-->
-
-
-        </section>
-    </div>
-    <!-- /.sidebar -->
+            editor.setOptions({
+                enableBasicAutocompletion: true,
+                enableSnippets: true
+            });
+        </script>
+    </section>
 </aside>
-
-
-
-
-
-    <aside class="right-side">
-        <!-- Content Header (Page header) -->
-        
-        <!-- Main content -->
-        <section class="content">
-            
-            <div id="editor" ng-init="htmlClicked('appindex.html')"></div>
-            <script>
-                ace.require("ace/ext/language_tools");
-                var editor = ace.edit("editor");
-                editor.setTheme("ace/theme/Eclipse");
-                editor.getSession().setMode("ace/mode/javascript");
-                document.getElementById('editor').style.fontSize = '14px';
-
-                editor.setOptions({
-                    enableBasicAutocompletion: true,
-                    enableSnippets: true
-                });
-                
-            </script>
-            
-        </section>
-        
-
-    </aside><!-- /.right-side -->
-
 
 
 <script>
@@ -155,7 +66,7 @@
 </script>
 
 <div class="container" ng-show="showDetails" style="width:500px;">
-    <div data-ng-repeat="repo in repoList" class="col-sm-6 col-md-3" > 
+    <div data-ng-repeat="repo in repoList" class="col-sm-6 col-md-3">
         <div class=" thumbnail tile tile-teal">
             <a ng-click="openRepo(repo.name); showDetails = !showDetails">
                 <h3>{{repo.name}}</h3>

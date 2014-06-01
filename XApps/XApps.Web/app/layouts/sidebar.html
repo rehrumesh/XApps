@@ -1,57 +1,90 @@
-﻿    <!-- Left side column. contains the logo and sidebar -->
-    <aside class="left-side sidebar-offcanvas bg-gray" style="fit-position:left;">
-        <!-- sidebar: style can be found in sidebar.less -->
-        <div id="sidebar1">
-        <section class="sidebar">
-            <!-- search form -->
-            <form action="#" method="get" class="sidebar-form">
-                <div class="input-group">
-                    <input type="text" name="q" class="form-control" placeholder="Search..." />
-                    <span class="input-group-btn">
-                        <button type='submit' name='seach' id='search-btn' class="btn btn-flat"><i class="fa fa-search"></i></button>
-                    </span>
-                </div>
-            </form>
-            <!-- /.search form -->
-            <!-- sidebar menu: : style can be found in sidebar.less -->
-            <ul class="sidebar-menu">
-                <!--changed class="active" to none-->
-                <li>
-                    <a href="#/dashboard">
-                        <i class="fa fa-dashboard"></i>
-                        <span>Dashboard</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="#/myapps">
-                        <!-- link to my app page here -->
-                        <i class="fa fa-th"></i> <span>My Apps</span>
-                    </a>
-                </li>
+﻿<div id="sidebar1">
+    <section class="sidebar">
+        <!-- search form -->
+        <form action="#" method="get" class="sidebar-form">
+            <div class="input-group">
+                <input type="text" name="q" class="form-control" placeholder="Search..." />
+                <span class="input-group-btn">
+                    <button type='submit' name='seach' id='search-btn' class="btn btn-flat"><i class="fa fa-search"></i></button>
+                </span>
+            </div>
+        </form>
+        <!-- /.search form -->
+        <!-- sidebar menu: : style can be found in sidebar.less -->
+        <ul class="sidebar-menu">
+            <!--changed class="active" to none-->
+            <li>
+                <a href="#/dashboard">
+                    <i class="fa fa-dashboard"></i>
+                    <span>Dashboard</span>
+                </a>
+            </li>
+            <li>
+                <a href="#/myapps">
+                    <!-- link to my app page here -->
+                    <i class="fa fa-th"></i> <span>My Apps</span>
+                </a>
+            </li>
 
+            <li>
+                <a href="#/hotapps">
+                    <i class="fa fa-calendar"></i> <span>Hot Apps</span>
+                </a>
+            </li>
+            <!--added a create app sidebar menu item-->
+            <li>
+                <a href="#/createnewapp">
+                    <i class="fa fa-edit"></i>
+                    <span>Create New App</span>
+                </a>
+            </li>
+        </ul>
+    </section>
+</div>
+
+<div id="sidebar2">
+    <section class="sidebar">
+        <div id="main">
+            <script type="text/javascript">
+                $(document).ready(function () {
+                    $("#browser").treeview({
+                        toggle: function () {
+                            console.log("%s was toggled.", $(this).find(">span").text());
+                        }
+                    });
+                });
+
+                $(function () {
+                    $("#browser").treeview();
+                });
+            </script>
+            <ul id="browser" class="filetree treeview-famfamfam">
                 <li>
-                    <a href="#/hotapps">
-                        <i class="fa fa-calendar"></i> <span>Hot Apps</span>
-                    </a>
-                </li>
-                <!--added a create app sidebar menu item-->
-                <li>
-                    <a href="#/createnewapp" onsubmit="return hideSidebar()">
-                        <i class="fa fa-edit"></i>
-                        <span>Create New App</span>
-                    </a>
+                    <span class="folder">{{app.appName}}</span>
+                    <ul>
+                        <li>
+                            <span class="folder">HTML</span>
+                            <ul id="htmlfile">
+                                <li data-ng-repeat="x in app[0].children[0].children"><span class="file"><a ng-click="htmlClicked(x.fileName)">{{x.fileName}}</a></span></li>
+
+                            </ul>
+                        </li>
+                        <li>
+                            <span class="folder">CSS</span>
+                            <ul id="cssfile">
+                                <li data-ng-repeat="y in app[0].children[1].children"><span class="file"><a ng-click="htmlClicked(y.fileName)">{{y.fileName}}</a></span></li>
+                            </ul>
+                        </li>
+
+                        <li>
+                            <span class="folder">Javascript</span>
+                            <ul id="jsfile">
+                                <li data-ng-repeat="z in app[0].children[2].children"><span class="file"><a ng-click="htmlClicked(z.fileName)">{{z.fileName}}</a></span></li>
+                            </ul>
+                        </li>
+                    </ul>
                 </li>
             </ul>
-        </section>
-            </div>
-        <!-- /.sidebar -->
-    </aside>
-<!-- /.right-side -->
-<!-- ./wrapper -->
-
-<script>
-    function hideSidebar() {
-        $(sidebar1).hide();
-    }
-</script>
-
+        </div>
+    </section>
+</div>
