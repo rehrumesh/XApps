@@ -1,0 +1,66 @@
+﻿@model XApps.Models.App
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>App</h4>
+	<hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AuthorID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AuthorID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CategoryID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CategoryID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.UserCount)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.UserCount)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.RepoName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.RepoName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LatestHash)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LatestHash)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.AppID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
