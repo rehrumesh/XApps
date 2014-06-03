@@ -20,7 +20,7 @@ namespace XApps.WebApi.Controllers
         // GET api/App
         public dynamic GetApps()
         {
-            var AppRe = db.Apps.Select(i => new { i.AppID, i.Name, i.AuthorID, i.CategoryID, i.UserCount, i.RepoName, i.LatestHash });
+            var AppRe = db.Apps.Select(i => new { i.AppID, i.Name, i.AuthorID, i.CategoryID, i.UserCount, i.RepoName, i.LatestHash, i.isPublished });
             return AppRe;
         }
 
@@ -28,7 +28,7 @@ namespace XApps.WebApi.Controllers
         [ResponseType(typeof(App))]
         public IHttpActionResult GetApp(int id)
         {
-            var AppRe = db.Apps.Select(i => new { i.AppID, i.Name, i.AuthorID, i.CategoryID, i.UserCount, i.RepoName, i.LatestHash });
+            var AppRe = db.Apps.Select(i => new { i.AppID, i.Name, i.AuthorID, i.CategoryID, i.UserCount, i.RepoName, i.LatestHash, i.isPublished });
             var product = AppRe.FirstOrDefault((p) => p.AppID == id);
             if (product == null)
             {

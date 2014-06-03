@@ -12,6 +12,7 @@ namespace XApps.DAL
     {
         public XAppsDataContext() : base("XAppsDataContext")
         {
+            Database.SetInitializer<XAppsDataContext>(new CreateDatabaseIfNotExists<XAppsDataContext>());
         }
 
         public DbSet<XApps.Models.App> Apps { get; set; }

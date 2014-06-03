@@ -47,7 +47,7 @@ namespace XApps.WebApi.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include="AppID,Name,AuthorID,CategoryID,UserCount,RepoName,LatestHash")] App app)
+        public ActionResult Create([Bind(Include="AppID,Name,AuthorID,CategoryID,UserCount,RepoName,LatestHash,isPublished")] App app)
         {
             if (ModelState.IsValid)
             {
@@ -79,7 +79,7 @@ namespace XApps.WebApi.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include="AppID,Name,AuthorID,CategoryID,UserCount,RepoName,LatestHash")] App app)
+        public ActionResult Edit([Bind(Include="AppID,Name,AuthorID,CategoryID,UserCount,RepoName,LatestHash,isPublished")] App app)
         {
             if (ModelState.IsValid)
             {
