@@ -20,13 +20,13 @@
                     {
                         folderName: "HTML",
                         children: [
-                            {
-                                fileName: "appindex.html",
-                                context: "<html>",
-                                hasChanged: true,
-                                hash: "",
-                                path: "html/"
-                            }
+                            //{
+                            //    fileName: "appindex.html",
+                            //    context: "<html>",
+                            //    hasChanged: true,
+                            //    hash: "",
+                            //    path: "html/"
+                            //}
                         ]
                     },
 
@@ -286,18 +286,18 @@
     };
 
 
-    $scope.loadRepo = function () {
+    $scope.loadRepo = function() {
         $scope.showDetails = true;
         var userName = $scope.githubUserName;
         $scope.repoList;
         $http.get("https://api.github.com/users/" + userName + "/repos")
-            .success(function (data) {
+            .success(function(data) {
                 $scope.repoList = data;
                 //alert(JSON.stringify($scope.repoList));
-            }).error(function () {
+            }).error(function() {
                 alert("error loading repo");
             });
-    }
+    };
 
     $scope.openRepo = function (repo) {
         var userName = $scope.githubUserName;

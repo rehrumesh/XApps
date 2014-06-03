@@ -37,12 +37,83 @@ app.config(function ($routeProvider) {
     .when("/dashboard", {
         controller: "dashboard",
         templateUrl: "app/dashboard/dashboard.html"
+    }).when("/app3", {
+        
+        templateUrl: "app/apps/app3/html/index.html"
     });
     //$routeProvider.otherwise({ redirectTo: "http://localhost:6406/requestHandler.ashx" });
 
 });
-//
-//default route is http://localhost:6580/
-// want to make it as http://localhost:6580/#/
-// add dynamic routing.
-//default -> dashboard
+
+app.factory('dynamics',function($route) {
+
+    var dynamicsMethods = {};
+
+    dynamicsMethods.addRoute = function (path, route) {
+        $route.routes[path] = angular.extend({
+            reloadOnSearch: true
+        },
+        route,
+        path && dynamicsMethods.pathRegExp(path, route));
+        
+        // create redirection for trailing slashes
+        if (path) {
+            var redirectPath = (path[path.length - 1] == '/') ? path.substr(0, path.length - 1) : path + '/';
+            
+            $route.routes[redirectPath] = angular.extend({
+                redirectTo: path
+            },
+
+            dynamicsMethods.pathRegExp(redirectPath, route));
+        }
+
+        return this;
+    };
+
+    dynamicsMethods.pathRegExp = function(path, opts) {
+        var insensitive = opts.caseInsensitiveMatch,
+            ret = {
+                originalPath: path,
+                regexp: path
+            },
+            keys = ret.keys = [];
+
+        path = path.replace(/([().])/g, '\\$1')
+            .replace(/(\/)?:(\w+)([\?\*])?/g, function(_, slash, key, option) {
+                var optional = option === '?' ? option : null;
+                var star = option === '*' ? option : null;
+                keys.push({
+                    name: key,
+                    optional: !!optional
+                });
+                slash = slash || '';
+                return '' + (optional ? '' : slash) + '(?:' + (optional ? slash : '') + (star && '(.+?)' || '([^/]+)') + (optional || '') + ')' + (optional || '');
+            })
+            .replace(/([\/$\*])/g, '\\$1');
+
+        ret.regexp = new RegExp('^' + path + '$', insensitive ? 'i' : '');
+        return ret;
+    };
+
+    return dynamicsMethods;
+});
+
+app.factory('requestFactory', function ($http, $q) {
+
+    var obj = {};
+    obj.data = "abcd";
+    obj.getResponse = function (appid) {
+        var temp = {};
+        var defer = $q.defer();
+        $http.get('requesthandler.ashx?appid='+appid).then(function (data) {
+            alert(JSON.stringify(data));
+            temp = data;
+            defer.resolve(data);
+
+        });
+
+        return defer.promise;
+    };
+
+    return obj;
+});

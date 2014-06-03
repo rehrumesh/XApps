@@ -25,7 +25,9 @@ namespace XApps.Web
                 string appName = context.Request.QueryString.Get("appid");
                 if (appName == null)
                 {
+                    context.Response.StatusCode = 404;
                     context.Response.Write("appid not found");
+                    context.Response.End();
                     return;
                 }
 
