@@ -15,6 +15,7 @@ namespace XApps.Models
         public int UserCount { get; set; }
         public String RepoName { get; set; }
         public String LatestHash { get; set; }
+        public Boolean isPublished { get; set; }
 
         public virtual ICollection<UserApp> UserApps { get; set; }
         public virtual ICollection<Contributor> Contributors { get; set; }
