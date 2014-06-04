@@ -1,4 +1,4 @@
-﻿app.controller('createnewapp', function ($scope, $compile, $q, $http) {
+﻿app.controller('createnewapp', function ($scope, $compile, $q, $http, requestFactory) {
     $scope.devName = "Rumesh";
     $scope.path = "<li><span class='file'>BIZAPP.css</span></li>";
     $scope.githubUserName = "Xapps00";
@@ -444,6 +444,13 @@
 
     };
     // type : 1 info 2 success 3 fail 4 warning
+
+    $scope.publishApp = function() {
+        //modify app details on database
+        //http request to download files
+
+    };
+
     function makeToast(text, type) {
         toastr.options = {
             "closeButton": true,
