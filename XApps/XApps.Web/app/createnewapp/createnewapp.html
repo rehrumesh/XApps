@@ -60,12 +60,18 @@
     });
 </script>
 
-<div class="container" ng-show="showDetails" style="width:500px;">
+<div class="container" ng-show="showDetails" style="width: 500px; max-height: 250px; border: 1px solid blue; overflow: auto;">
     <div data-ng-repeat="repo in repoList" class="col-sm-6 col-md-3">
         <div class=" thumbnail tile tile-teal">
-            <a ng-click="openRepo(repo.name); showDetails = !showDetails">
+            <!--img src="1.jpg" style="width:90%;">
+                </img-->
+            <a ng-click="openRepo(repo.name)">
                 <h3>{{repo.name}}</h3>
             </a>
         </div>
     </div>
+</div>
+
+<div class="container" ng-show="showloading">
+    <img src="loading1.gif">
 </div>
