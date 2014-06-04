@@ -5,7 +5,7 @@
 </section>
 <section class="content">
     <div class="row">
-        <div class="col-lg-3 col-xs-6" ng-repeat="pApp in allapps" ng-click="defineRoute(pApp.Name)">
+        <div class="col-lg-3 col-xs-6" ng-repeat="pApp in allapps" ng-click="defineRoute(pApp.Name)" ng-if="pApp.isPublished" >
 
             <!--can not give 'a' inside another 'a'-->
             <div class="small-box bg-aqua">
