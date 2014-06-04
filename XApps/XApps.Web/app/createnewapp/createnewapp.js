@@ -184,14 +184,14 @@
     };
 
     $scope.newHtmlFile = function () {
-        var fName = prompt("Enter the file name", "myfile.html");
+        var fName = prompt("Enter the file name", "index.html");
         if (fName == null || fName == "") {
             return;
         }
         $scope.currentFile = fName;
         $scope.app[0].children[0].children.push({
             fileName: fName,
-            context: "My name is rumesh Eranga",
+            context: "<html></html>",
             hasChanged: true,
             hash: "",
             path: "html/"
@@ -288,20 +288,20 @@
     };
 
 
-    $scope.loadRepo = function () {
+    $scope.loadRepo = function() {
         $scope.showloading = true;
         var userName = $scope.githubUserName;
         $scope.repoList;
         $http.get("https://api.github.com/users/" + userName + "/repos")
-            .success(function (data) {
+            .success(function(data) {
                 $scope.showloading = false;
                 $scope.repoList = data;
                 $scope.showDetails = true;
                 //alert(JSON.stringify($scope.repoList));
-            }).error(function () {
+            }).error(function() {
                 alert("error loading repo");
             });
-    }
+    };
 
     $scope.openRepo = function (repo) {
         $scope.showDetails = false;
@@ -477,6 +477,8 @@
     $scope.publishApp = function() {
         //modify app details on database
         //http request to download files
+
+        requestFactory.getResponse($scope.githubRepoName,2);
 
     };
 

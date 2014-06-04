@@ -1,4 +1,4 @@
-﻿app.controller('dashboard', function ($scope, $route, $location,  dynamics, requestFactory,$window) {
+﻿app.controller('dashboard', function ($scope, $route, $location, dynamics, publishedAppsFactory) {
 
     $scope.defineRoute = function (appName) {
         //check app isPublished
@@ -27,7 +27,7 @@
 
 
         dynamics.addRoute('/' + appName, {
-            templateUrl: 'app/apps/'+appName+'/html/index.html'
+            templateUrl: 'app/apps/pub/'+appName+'/html/index.html'
         });
 
         //compare hashes
@@ -41,5 +41,7 @@
 
 
     };
+
+    $scope.allapps = publishedAppsFactory.query();
 });
 

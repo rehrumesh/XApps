@@ -1,4 +1,4 @@
-﻿var app = angular.module('app', ['ngRoute']);
+﻿var app = angular.module('app', ['ngRoute','ngResource']);
 app.config(function ($routeProvider) {
 
     $routeProvider.when("/", {
@@ -37,14 +37,14 @@ app.config(function ($routeProvider) {
     .when("/dashboard", {
         controller: "dashboard",
         templateUrl: "app/dashboard/dashboard.html"
-    }).when("/app3", {
-        
-        templateUrl: "app/apps/app3/html/index.html"
     });
     //$routeProvider.otherwise({ redirectTo: "http://localhost:6406/requestHandler.ashx" });
 
 });
 
+app.config(function($httpProvider) {
+    delete $httpProvider.defaults.headers.common['X-Requested-With'];
+});
 app.factory('dynamics',function($route) {
 
     var dynamicsMethods = {};
@@ -102,12 +102,15 @@ app.factory('requestFactory', function ($http, $q) {
 
     var obj = {};
     obj.data = "abcd";
-    obj.getResponse = function (appid) {
+    obj.getResponse = function (appid,mode) {
         var temp = {};
         var defer = $q.defer();
-        $http.get('requesthandler.ashx?appid='+appid).then(function (data) {
-            alert(JSON.stringify(data));
+        $http.get('requesthandler.ashx?appid='+appid+'&mode='+mode).then(function (data) {
+            //alert(JSON.stringify(data));
             temp = data;
+            if (mode == "2") {
+                alert("App published");
+            }
             defer.resolve(data);
 
         });
@@ -116,4 +119,8 @@ app.factory('requestFactory', function ($http, $q) {
     };
 
     return obj;
+});
+
+app.factory('publishedAppsFactory', function($resource) {
+    return $resource('http://localhost:12666/api/App/:id', { id: '@id' },{method:'GET'});
 });
