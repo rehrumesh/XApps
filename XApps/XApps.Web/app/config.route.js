@@ -9,7 +9,7 @@
         routes.forEach(function (r) {
             $routeProvider.when(r.url, r.config);
         });
-        $routeProvider.otherwise({ redirectTo: '/requestHandler.ashx' });
+        $routeProvider.otherwise({ redirectTo: '/dashboard' });
     }
 
 

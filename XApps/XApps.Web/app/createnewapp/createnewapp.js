@@ -1,4 +1,4 @@
-﻿app.controller('createnewapp', function ($scope, $compile, $q, $http) {
+﻿app.controller('createnewapp', function ($scope, $compile, $q, $http, requestFactory) {
     $scope.devName = "Rumesh";
     $scope.path = "<li><span class='file'>BIZAPP.css</span></li>";
     $scope.githubUserName = "Xapps00";
@@ -8,6 +8,8 @@
     $scope.currentFileType = 0;     //0 HTML 1 CSS 2 JS
     $scope.currentFilePath = "src/";
     $scope.fileContent = "";
+    $scope.showDetails = false;
+    $scope.showloading = false;
 
     ace.require("ace/ext/language_tools");
     var editor = ace.edit("editor");
@@ -20,13 +22,13 @@
                     {
                         folderName: "HTML",
                         children: [
-                            {
-                                fileName: "appindex.html",
-                                context: "<html>",
-                                hasChanged: true,
-                                hash: "",
-                                path: "html/"
-                            }
+                            //{
+                            //    fileName: "appindex.html",
+                            //    context: "<html>",
+                            //    hasChanged: true,
+                            //    hash: "",
+                            //    path: "html/"
+                            //}
                         ]
                     },
 
@@ -182,14 +184,14 @@
     };
 
     $scope.newHtmlFile = function () {
-        var fName = prompt("Enter the file name", "myfile.html");
+        var fName = prompt("Enter the file name", "index.html");
         if (fName == null || fName == "") {
             return;
         }
         $scope.currentFile = fName;
         $scope.app[0].children[0].children.push({
             fileName: fName,
-            context: "My name is rumesh Eranga",
+            context: "<html></html>",
             hasChanged: true,
             hash: "",
             path: "html/"
@@ -286,20 +288,28 @@
     };
 
 
-    $scope.loadRepo = function () {
-        $scope.showDetails = true;
+    $scope.loadRepo = function() {
+        $scope.showloading = true;
         var userName = $scope.githubUserName;
         $scope.repoList;
         $http.get("https://api.github.com/users/" + userName + "/repos")
-            .success(function (data) {
+            .success(function(data) {
+                $scope.showloading = false;
                 $scope.repoList = data;
+                $scope.showDetails = true;
                 //alert(JSON.stringify($scope.repoList));
-            }).error(function () {
+            }).error(function() {
                 alert("error loading repo");
             });
-    }
+    };
 
     $scope.openRepo = function (repo) {
+        $scope.showDetails = false;
+        $scope.showloading = true;
+        $scope.app[0].children[0].children = [];
+        $scope.app[0].children[1].children = [];
+        $scope.app[0].children[2].children = [];
+
         var userName = $scope.githubUserName;
         var repoName = repo;
         var filesResponseObj;
@@ -350,10 +360,7 @@
 
         var defer = $q.defer();
         defer.promise.then(function () {
-            //alert("done");
-            $scope.app[0].children[0].children = [];
-            $scope.app[0].children[1].children = [];
-            $scope.app[0].children[2].children = [];
+            
             $scope.app.appName = repoName;
             //alert(JSON.stringify(contentResponseObj));
             for (var i = 0; i < Object.keys(filesResponseObj.tree).length; i++) {
@@ -373,6 +380,12 @@
                                 path: "html/"
 
                             }); //alert(pathDecomposed[0] + " : " + pathDecomposed[1] + " : " + content);
+                            var html = "<li><span class='file'> <a ng-click=\"htmlClicked(\'" + pathDecomposed[1] + "\')\">" + pathDecomposed[1] + "</a></span></li>";
+
+                            var branches = $compile(html)($scope).appendTo("#htmlfile");
+                            $("#browser").treeview({
+                                add: branches
+                            });
                         } else if (pathDecomposed[0] == "javascript" && pathDecomposed.length == 2) {
                             $scope.app[0].children[2].children.push({
                                 fileName: pathDecomposed[1],
@@ -381,6 +394,13 @@
                                 hash: filesResponseObj.tree[i].sha,
                                 path: "javascript/"
                             });//alert(pathDecomposed[0] + " : " + pathDecomposed[1] + " : " + content);
+                            var html = "<li><span class='file'> <a ng-click=\"jsClicked(\'" + pathDecomposed[1] + "\')\">" + pathDecomposed[1] + "</a></span></li>";
+
+                            var branches = $compile(html)($scope).appendTo("#jsfile");
+                            $("#browser").treeview({
+                                add: branches
+                            });
+                           
                         } else if (pathDecomposed[0] == "css" && pathDecomposed.length == 2) {
                             $scope.app[0].children[1].children.push({
                                 fileName: pathDecomposed[1],
@@ -390,15 +410,24 @@
                                 path: "css/"
 
                             });
+                            var html = "<li><span class='file'> <a ng-click=\"cssClicked(\'" + pathDecomposed[1] + "\')\">" + pathDecomposed[1] + "</a></span></li>";
+
+                            var branches = $compile(html)($scope).appendTo("#cssfile");
+                            $("#browser").treeview({
+                                add: branches
+                            });
+                            
                         }
                         
                     }
                 }
             }
+            $scope.showloading = false;
         });
         
 
     };
+        
 
     $scope.testOpen = function() {
         var gh = new Octokit({
@@ -444,6 +473,15 @@
 
     };
     // type : 1 info 2 success 3 fail 4 warning
+
+    $scope.publishApp = function() {
+        //modify app details on database
+        //http request to download files
+
+        requestFactory.getResponse($scope.githubRepoName,2);
+
+    };
+
     function makeToast(text, type) {
         toastr.options = {
             "closeButton": true,

@@ -17,16 +17,38 @@ namespace XApps.Web
     public class requestHandler : IHttpHandler
     {
         private string appPath = "E:/Rumesh/Development/Git/xapps/XApps/XApps.Web/app/apps/";
+        private string appPathDev = "E:/Rumesh/Development/Git/xapps/XApps/XApps.Web/app/apps/dev/";
+        private string appPathPub = "E:/Rumesh/Development/Git/xapps/XApps/XApps.Web/app/apps/pub/";
         public void ProcessRequest(HttpContext context)
         {
             try
             {
                 context.Response.ContentType = "text/plain";
                 string appName = context.Request.QueryString.Get("appid");
-                if (appName == null)
+                string mode = context.Request.QueryString.Get("mode");  //mode 1 dev mode 2 publish
+                if (appName == null )
                 {
+                    context.Response.StatusCode = 404;
                     context.Response.Write("appid not found");
+                    context.Response.End();
                     return;
+                }
+
+                if (mode == null)
+                {
+                    context.Response.StatusCode = 404;
+                    context.Response.Write("mode not found");
+                    context.Response.End();
+                    return;
+                }
+
+                if (mode == "1")
+                {
+                    appPath = appPathDev;
+                }
+                else if (mode == "2")
+                {
+                    appPath = appPathPub;
                 }
 
 
@@ -101,7 +123,7 @@ namespace XApps.Web
                 }
 
                 context.Response.StatusCode = 200;
-                context.Response.Write("{appName:'"+appName+"', appPath");
+                context.Response.Write("{appName:'"+appName+"', appPath:'"+appPath+"'");
             }
             catch (Exception e)
             {

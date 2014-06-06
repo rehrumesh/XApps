@@ -7,18 +7,25 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using System.Web.Http.Cors;
 using System.Web.Http.Description;
 using XApps.WebApi.Models;
 using XApps.WebApi.DataContext;
 
 namespace XApps.WebApi.Controllers
 {
+    [EnableCors(origins: "http://localhost:6406", headers: "*", methods: "*")]
     public class AppController : ApiController
     {
         private XAppsDataContext db = new XAppsDataContext();
 
         // GET api/App
+<<<<<<< HEAD
         public IQueryable GetApps()
+=======
+        
+        public dynamic GetApps()
+>>>>>>> b88575c26ddad45e21335a5eb7c9239850972118
         {
             var AppRe = db.Apps.Select(i => new { i.AppID, i.AppName, i.AuthorID, i.CategoryID, i.UserCount, i.RepoName, i.LatestHash, i.isPublished });
             return AppRe;
@@ -26,6 +33,7 @@ namespace XApps.WebApi.Controllers
 
         // GET api/App/5
         [ResponseType(typeof(App))]
+        
         public IHttpActionResult GetApp(int id)
         {
             var AppRe = db.Apps.Select(i => new { i.AppID, i.AppName, i.AuthorID, i.CategoryID, i.UserCount, i.RepoName, i.LatestHash, i.isPublished });

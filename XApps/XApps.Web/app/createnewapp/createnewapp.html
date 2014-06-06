@@ -2,7 +2,7 @@
     <div class="navbar-left">
         <ul class="nav navbar-nav">
             <li>
-                <a onclick="sidebar1show(), sidebar2hide();" href="#/dashboard">
+                <a onclick="sidebar1show(), sidebar2hide();" href="#/">
                     <i class="fa fa-home"></i> <span>Home</span>
 
                 </a>
@@ -35,13 +35,16 @@
                     <span>Preview</span>
                 </a>
             </li>
+            <li>
+                <a data-ng-click="publishApp()">Publish</a>
+            </li>
 
         </ul>
     </div>
 </nav>
 
 
-<div id="editor" ng-init="htmlClicked('appindex.html')"></div>
+<div id="editor" ></div> <!--ng-init="htmlClicked('appindex.html')"--> 
 <script>
     ace.require("ace/ext/language_tools");
     var editor = ace.edit("editor");
@@ -55,12 +58,18 @@
     });
 </script>
 
-<div class="container" ng-show="showDetails" style="width:500px;">
+<div class="container" ng-show="showDetails" style="width: 500px; max-height: 250px; border: 1px solid blue; overflow: auto;">
     <div data-ng-repeat="repo in repoList" class="col-sm-6 col-md-3">
         <div class=" thumbnail tile tile-teal">
-            <a ng-click="openRepo(repo.name); showDetails = !showDetails">
+            <!--img src="1.jpg" style="width:90%;">
+                </img-->
+            <a ng-click="openRepo(repo.name)">
                 <h3>{{repo.name}}</h3>
             </a>
         </div>
     </div>
+</div>
+
+<div class="container" ng-show="showloading">
+    <img src="loading1.gif">
 </div>
