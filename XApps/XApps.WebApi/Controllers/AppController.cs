@@ -20,12 +20,7 @@ namespace XApps.WebApi.Controllers
         private XAppsDataContext db = new XAppsDataContext();
 
         // GET api/App
-<<<<<<< HEAD
         public IQueryable GetApps()
-=======
-        
-        public dynamic GetApps()
->>>>>>> b88575c26ddad45e21335a5eb7c9239850972118
         {
             var AppRe = db.Apps.Select(i => new { i.AppID, i.AppName, i.AuthorID, i.CategoryID, i.UserCount, i.RepoName, i.LatestHash, i.isPublished });
             return AppRe;
