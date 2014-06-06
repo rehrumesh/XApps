@@ -6,8 +6,8 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
-using XApps.Models;
-using XApps.DAL;
+using XApps.WebApi.Models;
+using XApps.WebApi.DataContext;
 
 namespace XApps.WebApi.Controllers
 {
@@ -18,7 +18,8 @@ namespace XApps.WebApi.Controllers
         // GET: /Apps/
         public ActionResult Index()
         {
-            return View(db.Apps.ToList());
+            var apps = db.Apps.Include(a => a.Category);
+            return View(apps.ToList());
         }
 
         // GET: /Apps/Details/5
@@ -39,6 +40,7 @@ namespace XApps.WebApi.Controllers
         // GET: /Apps/Create
         public ActionResult Create()
         {
+            ViewBag.CategoryID = new SelectList(db.Categories, "CategoryID", "CategoryName");
             return View();
         }
 
@@ -47,7 +49,7 @@ namespace XApps.WebApi.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include="AppID,Name,AuthorID,CategoryID,UserCount,RepoName,LatestHash,isPublished")] App app)
+        public ActionResult Create([Bind(Include="AppID,AppName,AuthorID,CategoryID,UserCount,RepoName,LatestHash,isPublished")] App app)
         {
             if (ModelState.IsValid)
             {
@@ -56,6 +58,7 @@ namespace XApps.WebApi.Controllers
                 return RedirectToAction("Index");
             }
 
+            ViewBag.CategoryID = new SelectList(db.Categories, "CategoryID", "CategoryName", app.CategoryID);
             return View(app);
         }
 
@@ -71,6 +74,7 @@ namespace XApps.WebApi.Controllers
             {
                 return HttpNotFound();
             }
+            ViewBag.CategoryID = new SelectList(db.Categories, "CategoryID", "CategoryName", app.CategoryID);
             return View(app);
         }
 
@@ -79,7 +83,7 @@ namespace XApps.WebApi.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include="AppID,Name,AuthorID,CategoryID,UserCount,RepoName,LatestHash,isPublished")] App app)
+        public ActionResult Edit([Bind(Include="AppID,AppName,AuthorID,CategoryID,UserCount,RepoName,LatestHash,isPublished")] App app)
         {
             if (ModelState.IsValid)
             {
@@ -87,6 +91,7 @@ namespace XApps.WebApi.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
+            ViewBag.CategoryID = new SelectList(db.Categories, "CategoryID", "CategoryName", app.CategoryID);
             return View(app);
         }
 

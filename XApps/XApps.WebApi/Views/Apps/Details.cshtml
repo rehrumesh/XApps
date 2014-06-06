@@ -1,4 +1,4 @@
-﻿@model XApps.Models.App
+﻿@model XApps.WebApi.Models.App
 
 @{
     ViewBag.Title = "Details";
@@ -11,11 +11,19 @@
 	<hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.Name)
+            @Html.DisplayNameFor(model => model.Category.CategoryName)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Name)
+            @Html.DisplayFor(model => model.Category.CategoryName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AppName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AppName)
         </dd>
 
         <dt>
@@ -24,14 +32,6 @@
 
         <dd>
             @Html.DisplayFor(model => model.AuthorID)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.CategoryID)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.CategoryID)
         </dd>
 
         <dt>

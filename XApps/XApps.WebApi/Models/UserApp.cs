@@ -5,17 +5,17 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 
-namespace XApps.Models
+namespace XApps.WebApi.Models
 {
-    public class Rating
+    public class UserApp
     {
-
-        [Key, Column(Order = 0)]
-        public int AppID { get; set; }
-
-        [Key, Column(Order = 1)]
+        [Key]
+        [Column(Order = 0)]
         public int UserID { get; set; }
-        public int Ratings { get; set; }
+
+        [Key]
+        [Column(Order = 1)]
+        public int AppID { get; set; }
 
         public virtual User User { get; set; }
         public virtual App App { get; set; }

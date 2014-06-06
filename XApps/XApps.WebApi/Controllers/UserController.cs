@@ -8,8 +8,8 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
-using XApps.Models;
-using XApps.DAL;
+using XApps.WebApi.Models;
+using XApps.WebApi.DataContext;
 
 namespace XApps.WebApi.Controllers
 {
@@ -18,9 +18,9 @@ namespace XApps.WebApi.Controllers
         private XAppsDataContext db = new XAppsDataContext();
 
         // GET api/User
-        public dynamic GetUsers()
+        public IQueryable GetUsers()
         {
-            var UserRe = db.Users.Select(i => new { i.UserID, i.Name, i.Email, i.Designation, i.Department, i.Contact });
+            var UserRe = db.Users.Select(i => new { i.UserID, i.UserName, i.Email, i.Designation, i.Department, i.Contact });
             return UserRe;
         }
 
@@ -28,7 +28,7 @@ namespace XApps.WebApi.Controllers
         [ResponseType(typeof(User))]
         public IHttpActionResult GetUser(int id)
         {
-            var UserRe = db.Users.Select(i => new { i.UserID, i.Name, i.Email, i.Designation, i.Department, i.Contact });
+            var UserRe = db.Users.Select(i => new { i.UserID, i.UserName, i.Email, i.Designation, i.Department, i.Contact });
             var product = UserRe.FirstOrDefault((p) => p.UserID == id);
             if (product == null)
             {

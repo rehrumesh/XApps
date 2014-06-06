@@ -8,8 +8,8 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
-using XApps.Models;
-using XApps.DAL;
+using XApps.WebApi.Models;
+using XApps.WebApi.DataContext;
 
 namespace XApps.WebApi.Controllers
 {
@@ -18,9 +18,9 @@ namespace XApps.WebApi.Controllers
         private XAppsDataContext db = new XAppsDataContext();
 
         // GET api/App
-        public dynamic GetApps()
+        public IQueryable GetApps()
         {
-            var AppRe = db.Apps.Select(i => new { i.AppID, i.Name, i.AuthorID, i.CategoryID, i.UserCount, i.RepoName, i.LatestHash, i.isPublished });
+            var AppRe = db.Apps.Select(i => new { i.AppID, i.AppName, i.AuthorID, i.CategoryID, i.UserCount, i.RepoName, i.LatestHash, i.isPublished });
             return AppRe;
         }
 
@@ -28,7 +28,7 @@ namespace XApps.WebApi.Controllers
         [ResponseType(typeof(App))]
         public IHttpActionResult GetApp(int id)
         {
-            var AppRe = db.Apps.Select(i => new { i.AppID, i.Name, i.AuthorID, i.CategoryID, i.UserCount, i.RepoName, i.LatestHash, i.isPublished });
+            var AppRe = db.Apps.Select(i => new { i.AppID, i.AppName, i.AuthorID, i.CategoryID, i.UserCount, i.RepoName, i.LatestHash, i.isPublished });
             var product = AppRe.FirstOrDefault((p) => p.AppID == id);
             if (product == null)
             {
