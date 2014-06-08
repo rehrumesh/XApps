@@ -1,4 +1,5 @@
-﻿<nav class="navbar navbar-static-top bg-navy" role="navigation">
+﻿
+<nav class="navbar navbar-static-top bg-navy" role="navigation">
     <div class="navbar-left">
         <ul class="nav navbar-nav">
             <li>
@@ -58,18 +59,31 @@
     });
 </script>
 
-<div class="container" ng-show="showDetails" style="width: 500px; max-height: 250px; border: 1px solid blue; overflow: auto;">
-    <div data-ng-repeat="repo in repoList" class="col-sm-6 col-md-3">
-        <div class=" thumbnail tile tile-teal">
-            <!--img src="1.jpg" style="width:90%;">
-                </img-->
-            <a ng-click="openRepo(repo.name)">
-                <h3>{{repo.name}}</h3>
-            </a>
-        </div>
+
+<div  class="repolist" ng-show="showDetails" >
+    <div data-ng-repeat="repo in repoList" >
+        <a ng-click="openRepo(repo.name)">
+            <h3>{{repo.name}}</h3>
+        </a><br />
+        
+        
     </div>
 </div>
 
-<div class="container" ng-show="showloading">
-    <img src="loading1.gif">
+<div class="loading" ng-show="showloading">
+    <img src="app/createnewapp/loading2.gif" style="height:60px; width:60px;">
 </div>
+
+<div class="popover-markup">
+    <a class="trigger">
+        This link triggers the popover.
+    </a>
+    <div class="head hide">
+        This is the popover title.
+    </div>
+    <div class="content hide">
+        <p>This is the popover content.</p>
+    </div>
+</div>
+
+

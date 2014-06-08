@@ -300,6 +300,7 @@
                 //alert(JSON.stringify($scope.repoList));
             }).error(function() {
                 alert("error loading repo");
+                $scope.showloading = false;
             });
     };
 
@@ -322,6 +323,7 @@
                 repoRequest(data);
             }).error(function () {
                 alert("error loading repo");
+                $scope.showloading = false;
             });
 
         function repoRequest(data) {
@@ -368,7 +370,8 @@
                     
                     if (filesResponseObj.tree[i].sha == contentResponseObj[j].sha) {
                         var path = filesResponseObj.tree[i].path;
-                        var content = decodeBase64(contentResponseObj[j].content);
+                        //var content = decodeBase64(contentResponseObj[j].content);
+                        var content = window.atob(contentResponseObj[j].content);
                         var pathDecomposed = path.split("/");
 
                         if (pathDecomposed[0] == "html" && pathDecomposed.length == 2) {
@@ -517,4 +520,16 @@
         }
     }
 
+});
+
+$('.popover-markup > .trigger').popover({
+    html: true,
+    title: function () {
+        return $(this).parent().find('.head').html();
+    },
+    content: function () {
+        return $(this).parent().find('.content').html();
+    },
+    container: 'body',
+    placement: 'bottom'
 });
