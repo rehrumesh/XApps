@@ -7,12 +7,14 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using System.Web.Http.Cors;
 using System.Web.Http.Description;
 using XApps.Models;
 using XApps.DAL;
 
 namespace XApps.WebApi.Controllers
 {
+    [EnableCors(origins: "http://localhost:6406", headers: "*", methods: "*")]
     public class FeedbackController : ApiController
     {
         private XAppsDataContext db = new XAppsDataContext();
