@@ -364,6 +364,7 @@
         defer.promise.then(function () {
             
             $scope.app.appName = repoName;
+            $scope.githubRepoName = $scope.app.appName;
             //alert(JSON.stringify(contentResponseObj));
             for (var i = 0; i < Object.keys(filesResponseObj.tree).length; i++) {
                 for (var j = 0; j < Object.keys(contentResponseObj).length; j++) {
