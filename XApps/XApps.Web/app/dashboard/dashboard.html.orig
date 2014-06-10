@@ -1,0 +1,45 @@
+﻿<section class="content-header">
+    <h1>
+        Dashboard
+    </h1>
+</section>
+<section class="content">
+    <div class="row">
+        <div class="col-lg-3 col-xs-6" ng-repeat="pApp in allapps" ng-click="defineRoute(pApp.Name)" ng-if="pApp.isPublished" >
+
+            <!--can not give 'a' inside another 'a'-->
+            <div class="small-box bg-aqua">
+                <div class="inner">
+                    <h1>
+                        {{pApp.Name}}
+                    </h1>
+                    <p>
+                        <!--discription-->
+                        Use for documenting
+                        <br />
+                        <!--some introduction-->
+                        Available
+                    </p>
+
+                    <!--change here add star rating-->
+
+                </div>
+
+                <a href="#" class="small-box-footer">
+                    More info <i class="fa fa-arrow-circle-right"></i>
+                </a>
+                <div class="small-box-footer">
+                    <div class="rating">
+                        <span>☆</span><span>☆</span><span>☆</span><span>☆</span><span>☆</span>
+                    </div>
+                </div>
+
+            </div>
+
+
+        </div>
+
+        
+
+    </div>
+</section>

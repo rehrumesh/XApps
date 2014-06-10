@@ -9,8 +9,8 @@ using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Cors;
 using System.Web.Http.Description;
-using XApps.Models;
-using XApps.DAL;
+using XApps.WebApi.Models;
+using XApps.WebApi.DataContext;
 
 namespace XApps.WebApi.Controllers
 {
@@ -20,7 +20,7 @@ namespace XApps.WebApi.Controllers
         private XAppsDataContext db = new XAppsDataContext();
 
         // GET api/Contributor
-        public dynamic GetContributors()
+        public IQueryable GetContributors()
         {
             var ConRe = db.Contributors.Select(i => new { i.AppID, i.UserID });
             return ConRe;

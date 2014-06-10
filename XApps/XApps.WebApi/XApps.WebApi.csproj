@@ -7,7 +7,7 @@
     <ProductVersion>
     </ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{D80E4F87-A420-46FA-9A9D-6EC08A052185}</ProjectGuid>
+    <ProjectGuid>{526F1040-AD76-4F9D-914A-FE0247698238}</ProjectGuid>
     <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
@@ -152,16 +152,31 @@
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="Controllers\AppController.cs" />
     <Compile Include="Controllers\AppsController.cs" />
+    <Compile Include="Controllers\CategoriesController.cs" />
+    <Compile Include="Controllers\CategoryController.cs" />
     <Compile Include="Controllers\ContributorController.cs" />
+    <Compile Include="Controllers\ContributorsController.cs" />
     <Compile Include="Controllers\FeedbackController.cs" />
+    <Compile Include="Controllers\FeedbacksController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\RatingController.cs" />
+    <Compile Include="Controllers\RatingsController.cs" />
     <Compile Include="Controllers\UserAppController.cs" />
+    <Compile Include="Controllers\UserAppsController.cs" />
     <Compile Include="Controllers\UserController.cs" />
+    <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
+    <Compile Include="DataContext\XAppsDataContext.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\App.cs" />
+    <Compile Include="Models\Category.cs" />
+    <Compile Include="Models\Contributor.cs" />
+    <Compile Include="Models\Feedback.cs" />
+    <Compile Include="Models\Rating.cs" />
+    <Compile Include="Models\User.cs" />
+    <Compile Include="Models\UserApp.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -190,7 +205,9 @@
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
@@ -206,18 +223,43 @@
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
+    <Content Include="Views\Categories\Create.cshtml" />
+    <Content Include="Views\Categories\Delete.cshtml" />
+    <Content Include="Views\Categories\Details.cshtml" />
+    <Content Include="Views\Categories\Edit.cshtml" />
+    <Content Include="Views\Categories\Index.cshtml" />
+    <Content Include="Views\Users\Create.cshtml" />
+    <Content Include="Views\Users\Delete.cshtml" />
+    <Content Include="Views\Users\Details.cshtml" />
+    <Content Include="Views\Users\Edit.cshtml" />
+    <Content Include="Views\Users\Index.cshtml" />
     <Content Include="Views\Apps\Create.cshtml" />
     <Content Include="Views\Apps\Delete.cshtml" />
     <Content Include="Views\Apps\Details.cshtml" />
     <Content Include="Views\Apps\Edit.cshtml" />
     <Content Include="Views\Apps\Index.cshtml" />
+    <Content Include="Views\Contributors\Create.cshtml" />
+    <Content Include="Views\Contributors\Delete.cshtml" />
+    <Content Include="Views\Contributors\Details.cshtml" />
+    <Content Include="Views\Contributors\Edit.cshtml" />
+    <Content Include="Views\Contributors\Index.cshtml" />
+    <Content Include="Views\UserApps\Create.cshtml" />
+    <Content Include="Views\UserApps\Delete.cshtml" />
+    <Content Include="Views\UserApps\Details.cshtml" />
+    <Content Include="Views\UserApps\Edit.cshtml" />
+    <Content Include="Views\UserApps\Index.cshtml" />
+    <Content Include="Views\Feedbacks\Create.cshtml" />
+    <Content Include="Views\Feedbacks\Delete.cshtml" />
+    <Content Include="Views\Feedbacks\Details.cshtml" />
+    <Content Include="Views\Feedbacks\Edit.cshtml" />
+    <Content Include="Views\Feedbacks\Index.cshtml" />
+    <Content Include="Views\Ratings\Create.cshtml" />
+    <Content Include="Views\Ratings\Delete.cshtml" />
+    <Content Include="Views\Ratings\Details.cshtml" />
+    <Content Include="Views\Ratings\Edit.cshtml" />
+    <Content Include="Views\Ratings\Index.cshtml" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\XApps.Model\XApps.Model.csproj">
-      <Project>{1ce8121d-32cb-493e-adb7-d0760dd5df0c}</Project>
-      <Name>XApps.Model</Name>
-    </ProjectReference>
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
@@ -241,7 +283,7 @@
         <WebProjectProperties>
           <UseIIS>True</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>12666</DevelopmentServerPort>
+          <DevelopmentServerPort>10786</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
           <IISUrl>http://localhost:12666/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>

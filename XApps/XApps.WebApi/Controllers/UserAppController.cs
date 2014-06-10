@@ -9,8 +9,8 @@ using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Cors;
 using System.Web.Http.Description;
-using XApps.Models;
-using XApps.DAL;
+using XApps.WebApi.Models;
+using XApps.WebApi.DataContext;
 
 namespace XApps.WebApi.Controllers
 {
@@ -20,9 +20,9 @@ namespace XApps.WebApi.Controllers
         private XAppsDataContext db = new XAppsDataContext();
 
         // GET api/UserApp
-        public dynamic GetUserApps()
+        public IQueryable GetUserApps()
         {
-            var UserAppRe = db.Feedbacks.Select(i => new { i.AppID, i.UserID });
+            var UserAppRe = db.UserApps.Select(i => new { i.UserID, i.AppID });
             return UserAppRe;
         }
 
@@ -30,7 +30,7 @@ namespace XApps.WebApi.Controllers
         [ResponseType(typeof(UserApp))]
         public IHttpActionResult GetUserApp(int id)
         {
-            var UserAppRe = db.Feedbacks.Select(i => new { i.AppID, i.UserID });
+            var UserAppRe = db.UserApps.Select(i => new { i.UserID, i.AppID });
             var userapp = UserAppRe.FirstOrDefault((p) => p.UserID == id);
             if (userapp == null)
             {
