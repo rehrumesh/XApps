@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Runtime.Remoting.Channels;
 using System.Security.AccessControl;
 using System.Security.Principal;
 using System.Text;
@@ -16,17 +17,23 @@ namespace XApps.Web
     /// </summary>
     public class requestHandler : IHttpHandler
     {
-        private string appPath = "E:/Rumesh/Development/Git/xapps/XApps/XApps.Web/app/apps/";
-        private string appPathDev = "E:/Rumesh/Development/Git/xapps/XApps/XApps.Web/app/apps/dev/";
-        private string appPathPub = "E:/Rumesh/Development/Git/xapps/XApps/XApps.Web/app/apps/pub/";
+        private string appPath = "";
+        private string appPathDev = "";
+        private string appPathPub = "";
         public void ProcessRequest(HttpContext context)
         {
+            string path = System.Web.HttpContext.Current.Server.MapPath("/");
+            appPath = path + "app\\apps\\";
+            appPathDev = path + "app\\apps\\dev\\";
+            appPathPub = path + "app\\apps\\pub\\";
+            
             try
             {
+
                 context.Response.ContentType = "text/plain";
                 string appName = context.Request.QueryString.Get("appid");
                 string mode = context.Request.QueryString.Get("mode");  //mode 1 dev mode 2 publish
-                if (appName == null )
+                if (appName == null)
                 {
                     context.Response.StatusCode = 404;
                     context.Response.Write("appid not found");
@@ -62,17 +69,17 @@ namespace XApps.Web
                 var branchTree = octokitClient.GitDatabase.Tree.Get("xapps00", appName, branch.Commit.Sha).Result;
 
 
-               
+
 
                 if (Directory.Exists(appPath + appName))
                 {
 
-                    
+
                 }
                 else
                 {
                     Directory.CreateDirectory(appPath + appName);
-                    
+
 
                 }
 
@@ -114,7 +121,7 @@ namespace XApps.Web
                                 }
 
 
-                                
+
                             }
                         }
 
@@ -123,13 +130,13 @@ namespace XApps.Web
                 }
 
                 context.Response.StatusCode = 200;
-                context.Response.Write("{appName:'"+appName+"', appPath:'"+appPath+"'");
+                context.Response.Write("{appName:'" + appName + "', appPath:'" + appPath + "'");
             }
             catch (Exception e)
             {
                 context.Response.StatusCode = 404;
             }
-
+            
         }
 
         public bool IsReusable
