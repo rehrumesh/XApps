@@ -14,6 +14,13 @@ namespace XApps.WebApi
             // Web API routes
             config.MapHttpAttributeRoutes();
 
+            //new route 
+            config.Routes.MapHttpRoute(
+                name: "ActionApi",
+                routeTemplate: "api/{controller}/AppByAppName/{Appname}",
+                defaults: new { Appname = RouteParameter.Optional }
+                );
+
             config.Routes.MapHttpRoute(
                 name: "DefaultApi",
                 routeTemplate: "api/{controller}/{id}",

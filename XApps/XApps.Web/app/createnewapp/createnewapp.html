@@ -46,7 +46,7 @@
 </nav>
 
 
-<div id="editor" ></div> <!--ng-init="htmlClicked('appindex.html')"--> 
+<div id="editor"></div> <!--ng-init="htmlClicked('appindex.html')"-->
 <script>
     ace.require("ace/ext/language_tools");
     var editor = ace.edit("editor");
@@ -61,11 +61,11 @@
 </script>
 
 
-<div  class="repolist" ng-show="showDetails" >
-    <div data-ng-repeat="repo in repoList" >
+<div class="repolist" ng-show="showDetails">
+    <div data-ng-repeat="repo in repoList">
         <a ng-click="openRepo(repo.name)">
             <h3>{{repo.name}}</h3>
-        </a><br />     
+        </a><br />
     </div>
 </div>
 
@@ -80,15 +80,15 @@
             <div class="modal-body">
                 <div class="control-group">
                     <label class="control-label" for="App name">App name</label>
-                    <div class="controls">                        
+                    <div class="controls">
                         <input id="App name" name="App name" type="text" placeholder="" class="input-medium" required="">
                     </div>
                 </div>
 
                 <!-- Button Drop Down -->
-                <div class="control-group">                   
-                    <div class="controls"> 
-                        <label class="control-label" for="buttondropdown">Category</label>       
+                <div class="control-group">
+                    <div class="controls">
+                        <label class="control-label" for="buttondropdown">Category</label>
                         <div class="input-append">
                             <span class="tab-pane"></span>
                             <input id="buttondropdown" name="buttondropdown" class="input-medium" placeholder="" type="text" required="">
