@@ -8,8 +8,9 @@
     $scope.currentFileType = 0;     //0 HTML 1 CSS 2 JS
     $scope.currentFilePath = "src/";
     $scope.fileContent = "";
-    $scope.showDetails = false;
-    $scope.showloading = false;
+    $scope.show_repo_list = false;
+    $scope.showloading_in = false;
+    $scope.showloading_out = false;
 
     ace.require("ace/ext/language_tools");
     var editor = ace.edit("editor");
@@ -288,25 +289,26 @@
     };
 
 
-    $scope.loadRepo = function() {
-        $scope.showloading = true;
+    $scope.loadRepo = function () {
+        $scope.showloading_in = true;
         var userName = $scope.githubUserName;
         $scope.repoList;
         $http.get("https://api.github.com/users/" + userName + "/repos")
-            .success(function(data) {
-                $scope.showloading = false;
+            .success(function (data) {
+                $scope.showloading_in = false;
                 $scope.repoList = data;
-                $scope.showDetails = true;
+                $scope.show_repo_list = true;
                 //alert(JSON.stringify($scope.repoList));
-            }).error(function() {
+
+            }).error(function () {
                 alert("error loading repo");
-                $scope.showloading = false;
+                $scope.showloading_in = false;
             });
     };
 
     $scope.openRepo = function (repo) {
-        $scope.showDetails = false;
-        $scope.showloading = true;
+        $scope.show_repo_list = false;
+        $scope.showloading_out = true;
         $scope.app[0].children[0].children = [];
         $scope.app[0].children[1].children = [];
         $scope.app[0].children[2].children = [];
@@ -317,18 +319,19 @@
         var contentResponseObj = Array();
         var counter1 = 0;
         var counter2 = 0;
-        
+
         $http.get("https://api.github.com/repos/" + userName + "/" + repoName + "/git/trees/master?recursive=1")
             .success(function (data) {
                 repoRequest(data);
             }).error(function () {
                 alert("error loading repo");
-                $scope.showloading = false;
+                $scope.showloading_out = false;
+                makeToast("Failed to open app " + repoName, 3);
             });
 
         function repoRequest(data) {
             filesResponseObj = data;
-            
+
             for (var i = 0; i < Object.keys(filesResponseObj.tree).length; i++) {
 
                 if (filesResponseObj.tree[i].type == "blob") {
@@ -340,13 +343,13 @@
                             alert("error loading content");
                         });
                 }
-            } 
+            }
         }
 
         function contentRequest(data) {
             contentResponseObj.push(data);
             if (++counter2 == counter1) defer.resolve();
-            
+
         }
 
         function decodeBase64(s) {
@@ -362,13 +365,13 @@
 
         var defer = $q.defer();
         defer.promise.then(function () {
-            
+
             $scope.app.appName = repoName;
             $scope.githubRepoName = $scope.app.appName;
             //alert(JSON.stringify(contentResponseObj));
             for (var i = 0; i < Object.keys(filesResponseObj.tree).length; i++) {
                 for (var j = 0; j < Object.keys(contentResponseObj).length; j++) {
-                    
+
                     if (filesResponseObj.tree[i].sha == contentResponseObj[j].sha) {
                         var path = filesResponseObj.tree[i].path;
                         //var content = decodeBase64(contentResponseObj[j].content);
@@ -404,7 +407,7 @@
                             $("#browser").treeview({
                                 add: branches
                             });
-                           
+
                         } else if (pathDecomposed[0] == "css" && pathDecomposed.length == 2) {
                             $scope.app[0].children[1].children.push({
                                 fileName: pathDecomposed[1],
@@ -420,15 +423,16 @@
                             $("#browser").treeview({
                                 add: branches
                             });
-                            
+
                         }
-                        
+
                     }
                 }
             }
-            $scope.showloading = false;
+            $scope.showloading_out = false;
+            makeToast(repoName + " app opened", 2);
         });
-        
+
 
     };
         
@@ -523,14 +527,56 @@
 
 });
 
-$('.popover-markup > .trigger').popover({
-    html: true,
-    title: function () {
-        return $(this).parent().find('.head').html();
-    },
-    content: function () {
-        return $(this).parent().find('.content').html();
-    },
-    container: 'body',
-    placement: 'bottom'
-});
+$scope.getUser = function () {
+    $http.get("https://api.github.com/user")
+            .success(function (data) {
+                $scope.userData = data;
+            }).error(function () {
+                alert("error login");
+            });
+    /*
+    {
+  "login": "octocat",
+  "id": 1,
+  "avatar_url": "https://github.com/images/error/octocat_happy.gif",
+  "gravatar_id": "somehexcode",
+  "url": "https://api.github.com/users/octocat",
+  "html_url": "https://github.com/octocat",
+  "followers_url": "https://api.github.com/users/octocat/followers",
+  "following_url": "https://api.github.com/users/octocat/following{/other_user}",
+  "gists_url": "https://api.github.com/users/octocat/gists{/gist_id}",
+  "starred_url": "https://api.github.com/users/octocat/starred{/owner}{/repo}",
+  "subscriptions_url": "https://api.github.com/users/octocat/subscriptions",
+  "organizations_url": "https://api.github.com/users/octocat/orgs",
+  "repos_url": "https://api.github.com/users/octocat/repos",
+  "events_url": "https://api.github.com/users/octocat/events{/privacy}",
+  "received_events_url": "https://api.github.com/users/octocat/received_events",
+  "type": "User",
+  "site_admin": false,
+  "name": "monalisa octocat",
+  "company": "GitHub",
+  "blog": "https://github.com/blog",
+  "location": "San Francisco",
+  "email": "octocat@github.com",
+  "hireable": false,
+  "bio": "There once was...",
+  "public_repos": 2,
+  "public_gists": 1,
+  "followers": 20,
+  "following": 0,
+  "created_at": "2008-01-14T04:33:35Z",
+  "updated_at": "2008-01-14T04:33:35Z",
+  "total_private_repos": 100,
+  "owned_private_repos": 100,
+  "private_gists": 81,
+  "disk_usage": 10000,
+  "collaborators": 8,
+  "plan": {
+    "name": "Medium",
+    "space": 400,
+    "private_repos": 20,
+    "collaborators": 0
+  }
+}
+    */
+}

@@ -1,25 +1,10 @@
-﻿.loading{
+﻿.loading-out{
 	display:block;
-	position:absolute;
-	top:300px;
-    right:500px;
-	align-content:center;
-	padding-left:10px;
-	padding-right:10px;
+	margin: 0 auto;
 	
 }
-
-.repolist{
-    background-color:lightgray;
-	display:block;
-	position:absolute;
-	top:300px;
-    right:475px;
-	align-content:center;
-	padding-left:10px;
-	padding-right:10px;
-    max-height: 250px; 
-    border: 1px solid blue; 
-    overflow: auto;
+.loading-in{
+	display:table;
+	margin: 0 auto;
 	
 }
