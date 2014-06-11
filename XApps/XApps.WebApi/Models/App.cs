@@ -15,6 +15,7 @@ namespace XApps.WebApi.Models
         public String RepoName { get; set; }
         public String LatestHash { get; set; }
         public Boolean isPublished { get; set; }
+        public String description { get; set; }
 
         public virtual User Author { get; set; }
         public virtual Category Category { get; set; }
