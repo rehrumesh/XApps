@@ -720,12 +720,6 @@
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\XApps.Model\XApps.Model.csproj">
-      <Project>{1ce8121d-32cb-493e-adb7-d0760dd5df0c}</Project>
-      <Name>XApps.Model</Name>
-    </ProjectReference>
-  </ItemGroup>
   <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

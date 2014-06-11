@@ -131,5 +131,17 @@ namespace XApps.WebApi.Controllers
         {
             return db.Apps.Count(e => e.AppID == id) > 0;
         }
+
+        [ActionName("AppByAppName")]
+        public IHttpActionResult GetAppByAppName(String AppName)
+        {
+            var AppRe = db.Apps.Select(i => new { i.AppID, i.AppName, i.AuthorID, i.CategoryID, i.UserCount, i.RepoName, i.LatestHash, i.isPublished, i.description });
+            var product = AppRe.FirstOrDefault((p) => p.AppName == AppName);
+            if (product == null)
+            {
+                return NotFound();
+            }
+            return Ok(product);
+        }
     }
 }
