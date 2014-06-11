@@ -42,7 +42,12 @@
     </section>
 </div>
 
+<<<<<<< HEAD
 <div style="display:none" id="sidebar2" ng-controller="createnewapp">
+
+=======
+<div style="display:none" id="sidebar2">
+>>>>>>> f48b4812a9e78f45ed64d6e34a8e5b478eb1a131
     <section class="sidebar">
         <div id="main">
             <script type="text/javascript">
@@ -60,7 +65,11 @@
             </script>
             <ul id="browser" class="filetree treeview-famfamfam">
                 <li>
+<<<<<<< HEAD
+                    <span class="folder">App</span>
+=======
                     <span class="folder" ng-controller="createnewapp">{{app.appName}}</span>
+>>>>>>> f48b4812a9e78f45ed64d6e34a8e5b478eb1a131
                     <ul>
                         <li>
                             <span class="folder">HTML</span>

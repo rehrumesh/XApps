@@ -5,14 +5,12 @@ using System.Data.Entity;
 using System.Linq;
 using System.Net;
 using System.Web;
-using System.Web.Http.Cors;
 using System.Web.Mvc;
 using XApps.WebApi.Models;
 using XApps.WebApi.DataContext;
 
 namespace XApps.WebApi.Controllers
 {
-    [EnableCors(origins: "http://localhost:6406", headers: "*", methods: "*")]
     public class AppsController : Controller
     {
         private XAppsDataContext db = new XAppsDataContext();
@@ -51,7 +49,7 @@ namespace XApps.WebApi.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include="AppID,AppName,AuthorID,CategoryID,UserCount,RepoName,LatestHash,isPublished")] App app)
+        public ActionResult Create([Bind(Include="AppID,AppName,AuthorID,CategoryID,UserCount,RepoName,LatestHash,isPublished,description")] App app)
         {
             if (ModelState.IsValid)
             {
@@ -85,7 +83,7 @@ namespace XApps.WebApi.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include="AppID,AppName,AuthorID,CategoryID,UserCount,RepoName,LatestHash,isPublished")] App app)
+        public ActionResult Edit([Bind(Include="AppID,AppName,AuthorID,CategoryID,UserCount,RepoName,LatestHash,isPublished,description")] App app)
         {
             if (ModelState.IsValid)
             {

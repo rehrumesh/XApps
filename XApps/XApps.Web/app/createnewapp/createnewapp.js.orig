@@ -8,9 +8,9 @@
     $scope.currentFileType = 0;     //0 HTML 1 CSS 2 JS
     $scope.currentFilePath = "src/";
     $scope.fileContent = "";
-    $scope.show_repo_list = false;
-    $scope.showloading_in = false;
-    $scope.showloading_out = false;
+<<<<<<< HEAD
+    $scope.showDetails = false;
+    $scope.showloading = false;
     $scope.appCategory;
     $scope.tempAppName = "App";
     $scope.tempdir = "Hello";
@@ -38,6 +38,11 @@
 
     $scope.allcategories = categoriesFactory.query();
     $scope.allapps = publishedAppsFactory.query({aName:"slideshare"});
+=======
+    $scope.show_repo_list = false;
+    $scope.showloading_in = false;
+    $scope.showloading_out = false;
+>>>>>>> f48b4812a9e78f45ed64d6e34a8e5b478eb1a131
 
     ace.require("ace/ext/language_tools");
     var editor = ace.edit("editor");
@@ -586,13 +591,7 @@
 
 });
 
-$scope.getUser = function () {
-    $http.get("https://api.github.com/user")
-            .success(function (data) {
-                $scope.userData = data;
-            }).error(function () {
-                alert("error login");
-            });
+<<<<<<< HEAD
 $('.popover-markup > .trigger').popover({
     html: true,
     title: function () {
@@ -606,6 +605,14 @@ $('.popover-markup > .trigger').popover({
 });
 
 //add create new app menu
+=======
+$scope.getUser = function () {
+    $http.get("https://api.github.com/user")
+            .success(function (data) {
+                $scope.userData = data;
+            }).error(function () {
+                alert("error login");
+            });
     /*
     {
   "login": "octocat",
@@ -652,3 +659,4 @@ $('.popover-markup > .trigger').popover({
 }
     */
 }
+>>>>>>> f48b4812a9e78f45ed64d6e34a8e5b478eb1a131

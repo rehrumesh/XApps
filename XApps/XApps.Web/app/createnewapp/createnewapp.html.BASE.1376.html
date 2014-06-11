@@ -1,0 +1,114 @@
+﻿
+<nav class="navbar navbar-static-top bg-navy" role="navigation">
+    <div class="navbar-left">
+        <ul class="nav navbar-nav">
+            <li>
+                <a onclick="sidebar1show(), sidebar2hide();" href="#/">
+                    <i class="fa fa-home"></i> <span>Home</span>
+
+                </a>
+            </li>
+
+            <!--new item added-->
+
+            <li class="dropdown" style="cursor:pointer">
+                <a data-toggle="dropdown" class="dropdown-toggle">File<b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                    <li class="dropdown-submenu">
+                        <a>new file</a>
+                        <ul class="dropdown-menu">
+                            <li id="html"><a ng-click="newHtmlFile()">html</a></li>
+                            <li id="css"><a ng-click="newCssFile()">css</a></li>
+                            <li id="javascript"><a ng-click="newJsFile()">javascript</a></li>
+                        </ul>
+                    </li>
+                    <li><a data-toggle="modal" data-target="#myModal">Edit app Data</a></li>
+                    <li><a data-ng-click="loadRepo()">open app</a></li>
+                    <li><a data-ng-click="saveGit()">save in github</a></li>
+                    <li><a data-ng-click="saveFile()">save</a></li>
+                </ul>
+            </li>
+
+
+            <!--new item added-->
+
+            <li>
+                <a>
+                    <span>Preview</span>
+                </a>
+            </li>
+            <li>
+                <a data-ng-click="publishApp()">Publish</a>
+            </li>
+
+        </ul>
+    </div>
+</nav>
+
+
+<div id="editor" ></div> <!--ng-init="htmlClicked('appindex.html')"--> 
+<script>
+    ace.require("ace/ext/language_tools");
+    var editor = ace.edit("editor");
+    editor.setTheme("ace/theme/Eclipse");
+    editor.getSession().setMode("ace/mode/javascript");
+    document.getElementById('editor').style.fontSize = '12px';
+
+    editor.setOptions({
+        enableBasicAutocompletion: true,
+        enableSnippets: true
+    });
+</script>
+
+
+<div  class="repolist" ng-show="showDetails" >
+    <div data-ng-repeat="repo in repoList" >
+        <a ng-click="openRepo(repo.name)">
+            <h3>{{repo.name}}</h3>
+        </a><br />     
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel">Edit App Data</h4>
+            </div>
+            <div class="modal-body">
+                <div class="control-group">
+                    <label class="control-label" for="App name">App name</label>
+                    <div class="controls">                        
+                        <input id="App name" name="App name" type="text" placeholder="" class="input-medium" required="">
+                    </div>
+                </div>
+
+                <!-- Button Drop Down -->
+                <div class="control-group">                   
+                    <div class="controls"> 
+                        <label class="control-label" for="buttondropdown">Category</label>       
+                        <div class="input-append">
+                            <span class="tab-pane"></span>
+                            <input id="buttondropdown" name="buttondropdown" class="input-medium" placeholder="" type="text" required="">
+                            <div class="btn-group">
+                                <button class="btn dropdown-toggle" data-toggle="dropdown">
+
+                                    <span class="caret"></span>
+                                </button>
+                                <ul class="dropdown-menu">
+                                    <li><a>Management</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
