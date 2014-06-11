@@ -40,6 +40,19 @@ namespace XApps.WebApi.Controllers
             return Ok(product);
         }
 
+        [ResponseType(typeof(App))]
+
+        public IHttpActionResult GetApp(string aName)
+        {
+            var AppRe = db.Apps.Select(i => new { i.AppID, i.AppName, i.AuthorID, i.CategoryID, i.UserCount, i.RepoName, i.LatestHash, i.isPublished });
+            var product = AppRe.FirstOrDefault((p) => p.AppName == aName);
+            if (product == null)
+            {
+                return NotFound();
+            }
+            return Ok(product);
+        }
+
         // PUT api/App/5
         public IHttpActionResult PutApp(int id, App app)
         {

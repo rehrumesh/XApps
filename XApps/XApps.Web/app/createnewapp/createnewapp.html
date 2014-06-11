@@ -14,18 +14,19 @@
             <li class="dropdown" style="cursor:pointer">
                 <a data-toggle="dropdown" class="dropdown-toggle">File<b class="caret"></b></a>
                 <ul class="dropdown-menu">
+                    <li ng-show="!isEditingApp"><a data-toggle="modal" data-target="#myModal2">Create new app</a></li>
                     <li class="dropdown-submenu">
-                        <a>new file</a>
+                        <a>New File</a>
                         <ul class="dropdown-menu">
-                            <li id="html"><a ng-click="newHtmlFile()">html</a></li>
-                            <li id="css"><a ng-click="newCssFile()">css</a></li>
-                            <li id="javascript"><a ng-click="newJsFile()">javascript</a></li>
+                            <li id="html"><a ng-click="newHtmlFile()">HTML</a></li>
+                            <li id="css"><a ng-click="newCssFile()">CSS</a></li>
+                            <li id="javascript"><a ng-click="newJsFile()">JavaScript</a></li>
                         </ul>
                     </li>
-                    <li><a data-toggle="modal" data-target="#myModal">Edit app Data</a></li>
-                    <li><a data-ng-click="loadRepo()">open app</a></li>
-                    <li><a data-ng-click="saveGit()">save in github</a></li>
-                    <li><a data-ng-click="saveFile()">save</a></li>
+                    <li ng-show="isEditingApp"><a data-toggle="modal" data-target="#myModal">Edit App Data</a></li>
+                    <li><a data-ng-click="loadRepo()">Open App</a></li>
+                    <li><a data-ng-click="saveGit()">Save in Github</a></li>
+                    <li><a data-ng-click="saveFile()">Save</a></li>
                 </ul>
             </li>
 
@@ -81,33 +82,55 @@
                 <div class="control-group">
                     <label class="control-label" for="App name">App name</label>
                     <div class="controls">                        
-                        <input id="App name" name="App name" type="text" placeholder="" class="input-medium" required="">
+                        <input id="App name" name="App name" type="text" placeholder="" class="input-medium" required="" value="{{githubRepoName}}">
                     </div>
                 </div>
 
-                <!-- Button Drop Down -->
-                <div class="control-group">                   
-                    <div class="controls"> 
-                        <label class="control-label" for="buttondropdown">Category</label>       
-                        <div class="input-append">
-                            <span class="tab-pane"></span>
-                            <input id="buttondropdown" name="buttondropdown" class="input-medium" placeholder="" type="text" required="">
-                            <div class="btn-group">
-                                <button class="btn dropdown-toggle" data-toggle="dropdown">
-
-                                    <span class="caret"></span>
-                                </button>
-                                <ul class="dropdown-menu">
-                                    <li><a>Management</a></li>
-                                </ul>
-                            </div>
-                        </div>
+                <!-- Select Basic -->
+                <div class="control-group">
+                    <label class="control-label" for="selectbasic">Category</label>
+                    <div class="controls">
+                        <select id="selectbasic" name="selectbasic" class="input-large" ng-options="cat as cat.CategoryName for cat in allcategories " ng-model="appCategory" ng-change="update()"></select>
                     </div>
                 </div>
+                
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-success" data-dismiss="modal">Close</button>
                 <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel">Insert App Data</h4>
+            </div>
+            <div class="modal-body">
+                <div class="control-group">
+                    <label class="control-label" for="App name">App name</label>
+                    <div class="controls">
+                        <input id="App name" name="App name" type="text" placeholder="" class="input-medium" required=""  ng-model="createNewA.AppName">
+                    </div>
+                </div>
+
+                <!-- Select Basic -->
+                <div class="control-group">
+                    <label class="control-label" for="selectbasic">Category</label>
+                    <div class="controls">
+                        <select id="selectbasic" name="selectbasic" class="input-large" ng-options="cat as cat.CategoryName for cat in allcategories " ng-model="appCategory" ng-change="update()"></select>
+                    </div>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" data-ng-click="createNewApp()">Create</button>
             </div>
         </div>
     </div>

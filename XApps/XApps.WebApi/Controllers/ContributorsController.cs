@@ -5,12 +5,14 @@ using System.Data.Entity;
 using System.Linq;
 using System.Net;
 using System.Web;
+using System.Web.Http.Cors;
 using System.Web.Mvc;
 using XApps.WebApi.Models;
 using XApps.WebApi.DataContext;
 
 namespace XApps.WebApi.Controllers
 {
+    [EnableCors(origins: "http://localhost:6406", headers: "*", methods: "*")]
     public class ContributorsController : Controller
     {
         private XAppsDataContext db = new XAppsDataContext();

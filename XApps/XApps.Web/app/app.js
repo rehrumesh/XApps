@@ -1,4 +1,13 @@
-﻿var app = angular.module('app', ['ngRoute','ngResource']);
+﻿var app = angular.module('app', ['ngRoute', 'ngResource']);
+
+//app.run(function ($rootScope, $templateCache) {
+//    $rootScope.$on('$routeChangeStart', function (event, next, current) {
+//        if (typeof (current) !== 'undefined') {
+//            $templateCache.remove(current.templateUrl);
+//        }
+//    });
+//});
+
 app.config(function ($routeProvider) {
 
     $routeProvider.when("/", {
@@ -18,21 +27,7 @@ app.config(function ($routeProvider) {
         controller: "createnewapp",
         templateUrl: "app/createnewapp/createnewapp.html"
     })
-        //newly added
-        .when("/createnewapp/html", {
-            controller: "HTML",
-            templateUrl: "app/createnewapp/htmlediter/Htmlpage.html"
-        })
-
-        .when("/createnewapp/css", {
-            controller: "CSS",
-            templateUrl: "app/createnewapp/cssediter/css.html"
-        })
-
-        .when("/createnewapp/javascript", {
-            controller: "Javascript",
-            templateUrl: "app/createnewapp/jsediter/javascript.html"
-        })
+        
 
     .when("/dashboard", {
         controller: "dashboard",
@@ -45,6 +40,7 @@ app.config(function ($routeProvider) {
 app.config(function($httpProvider) {
     delete $httpProvider.defaults.headers.common['X-Requested-With'];
 });
+
 app.factory('dynamics',function($route) {
 
     var dynamicsMethods = {};
@@ -122,5 +118,13 @@ app.factory('requestFactory', function ($http, $q) {
 });
 
 app.factory('publishedAppsFactory', function($resource) {
-    return $resource('http://localhost:12666/api/App/:id', { id: '@id' },{method:'GET'});
+    return $resource('http://localhost:12666/api/App/:id', { id: '@id' }, { update: { method: 'PUT' } });
+});
+
+app.factory('AppsByNameFactory', function ($resource) {
+    return $resource('http://localhost:12666/api/App/', { id: '@id' }, { update: { method: 'PUT' } });
+});
+
+app.factory('categoriesFactory', function ($resource) {
+    return $resource('http://localhost:12666/api/Category/:id', { id: '@id' }, { update: { method: 'PUT' } });
 });

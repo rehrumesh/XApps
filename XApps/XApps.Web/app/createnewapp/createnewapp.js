@@ -1,4 +1,4 @@
-﻿app.controller('createnewapp', function ($scope, $compile, $q, $http, requestFactory) {
+﻿app.controller('createnewapp', function ($scope, $compile, $q, $http, requestFactory, publishedAppsFactory, categoriesFactory) {
     $scope.devName = "Rumesh";
     $scope.path = "<li><span class='file'>BIZAPP.css</span></li>";
     $scope.githubUserName = "Xapps00";
@@ -10,10 +10,44 @@
     $scope.fileContent = "";
     $scope.showDetails = false;
     $scope.showloading = false;
+    $scope.appCategory;
+    $scope.tempAppName = "App";
+    $scope.tempdir = "Hello";
+
+    $scope.createNewA = {
+        AppName: "App",
+        CategoryID: 1,
+        AuthorID: "1",
+        UserCount: 2,
+        RepoName :"App",
+        LatestHash: "",
+        isPublished: false
+};
+    //$scope.createNewA.AppName = "";
+    //$scope.createNewA.CategoryName = "";
+    //$scope.createNewA.AuthorID = "";
+    //$scope.createNewA.UserCount =2;
+    //$scope.createNewA.RepoName ="";
+    //$scope.createNewA.LatestHash="";
+    //$scope.createNewA.isPublished = false;
+
+
+
+    $scope.isEditingApp = false;
+
+    $scope.allcategories = categoriesFactory.query();
+    $scope.allapps = publishedAppsFactory.query({aName:"slideshare"});
 
     ace.require("ace/ext/language_tools");
     var editor = ace.edit("editor");
 
+    $scope.update = function() {
+        
+        $scope.createNewA.CategoryID = $scope.appCategory.CategoryID;
+        console.log($scope.createNewA.CategoryID + "    " + $scope.createNewA.AppName);
+        //console.log($scope.createNewA.CategoryName);
+        //console.log($scope.allapps);
+    };
 
     $scope.app = [
             {
@@ -48,6 +82,11 @@
     //Filetree : 0 -> HTML
     //Filetree : 1 -> CSS
     //Filetree : 2 -> JS
+
+    
+    
+
+
     function getFileFromApp(fileName, fileTree) {
         var tmpObj = null;
 
@@ -63,6 +102,25 @@
         return tmpObj;
 
     }
+
+    $scope.createNewApp = function() {
+        $scope.isEditingApp = true;
+        //console.log($scope.createNewA);
+        $scope.githubRepoName = $scope.createNewA.AppName;
+        $scope.createNewA.RepoName = $scope.createNewA.AppName;
+        //$scope.createNewA.CategoryName = "News";
+        alert(JSON.stringify($scope.createNewA));
+        publishedAppsFactory.save($scope.createNewA, function() {
+            makeToast("App created successfully", 2);
+            //$('#myModal2').popover('hide');
+
+        }); 
+        
+
+
+    };
+
+    
 
 
     $scope.saveGit = function () {
@@ -165,9 +223,6 @@
 
 
     };
-
-
-
     
     $scope.saveFile = function () {
         //alert('C File :' + $scope.currentFile + '  type: ' + $scope.currentFileType);
@@ -486,6 +541,10 @@
 
     };
 
+    $scope.addAppDetailsToDb = function () { };
+
+    $scope.updateAppDetails = function () { };
+
     function makeToast(text, type) {
         toastr.options = {
             "closeButton": true,
@@ -534,3 +593,5 @@ $('.popover-markup > .trigger').popover({
     container: 'body',
     placement: 'bottom'
 });
+
+//add create new app menu
