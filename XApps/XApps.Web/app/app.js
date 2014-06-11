@@ -118,11 +118,11 @@ app.factory('requestFactory', function ($http, $q) {
 });
 
 app.factory('publishedAppsFactory', function($resource) {
-    return $resource('http://localhost:12666/api/App/:id', { id: '@id' }, { update: { method: 'PUT' } });
+    return $resource('http://localhost:12666/api/App/:id', { id: '@id' }, { update: { method: 'PUT' } });//, query: { method: 'GET' }
 });
 
 app.factory('AppsByNameFactory', function ($resource) {
-    return $resource('http://localhost:12666/api/App/', { id: '@id' }, { update: { method: 'PUT' } });
+    return $resource('http://localhost:12666/api/App/', { id: '@id' }, { update: { method: 'PUT' } });//, query: { method: 'GET', isArray: false } 
 });
 
 app.factory('categoriesFactory', function ($resource) {

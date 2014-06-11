@@ -25,7 +25,7 @@
     <link rel="stylesheet" href="Content/Custom/treeview/screen.css" />
 
 </head>
-<body class="skin-blue">
+<body class="skin-blue" ng-controller="maincontroller">
 
     <!-- header logo: style can be found in header.less -->
     <header class="header">
@@ -38,9 +38,9 @@
     </header>
 
     <div class="wrapper row-offcanvas row-offcanvas-left">
-        <aside class="left-side sidebar-offcanvas bg-gray" style="fit-position:left;" data-ng-include="'/app/layouts/sidebar.html'"></aside>
+        <aside class="left-side sidebar-offcanvas bg-gray" style="fit-position:left;" data-ng-include="'/app/layouts/sidebar.html'" onload="onSideBarLoaded()"></aside>
 
-        <aside class="right-side"  data-ng-view=""></aside>
+        <aside class="right-side" onload="onViewLoaded()" data-ng-view=""></aside>
 
     </div>
 
@@ -60,6 +60,7 @@
     <script src="scripts/octokit/octokit.js"></script>
     <!-- App libraries -->
     <script src="app/app.js"></script>
+    <script src="app/maincontroller.js"></script>
     <script src="app/config.route.js"></script>
     <script src="app/layouts/shell.js"></script>
     <script src="app/layouts/sidebar.js"></script>
@@ -67,7 +68,7 @@
     <script src="app/hotapps/hotapps.js"></script>
     <script src="app/myapps/myapps.js"></script>
     <script src="app/createnewapp/createnewapp.js"></script>
-    
+
     <!--add a js file-->
     <script src="scripts/jquery-2.1.0.min.js"></script>
     <script src="Content/Custom/treeview/jquery.cookie.js"></script>

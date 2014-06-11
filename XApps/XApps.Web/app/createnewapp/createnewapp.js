@@ -39,8 +39,20 @@
     $scope.allcategories = categoriesFactory.query();
     $scope.allapps = publishedAppsFactory.query({aName:"slideshare"});
 
-    ace.require("ace/ext/language_tools");
-    var editor = ace.edit("editor");
+    var editor;
+
+    $scope.onViewLoaded = function () {
+        ace.require("ace/ext/language_tools");
+        editor = ace.edit("editor");
+
+        editor.setTheme("ace/theme/Eclipse");
+        editor.getSession().setMode("ace/mode/javascript");
+
+        editor.setOptions({
+            enableBasicAutocompletion: true,
+            enableSnippets: true
+        });
+    }
 
     $scope.update = function() {
         
@@ -143,7 +155,7 @@
                     } else if (start == 0) {
                         start++;
                     }
-                    commitJSON += '"' + $scope.app[0].children[i].children[j].path + $scope.app[0].children[i].children[j].fileName + '":"' + $scope.app[0].children[i].children[j].context+'"';
+                    commitJSON += '"' + $scope.app[0].children[i].children[j].path + $scope.app[0].children[i].children[j].fileName + '":"' + $scope.app[0].children[i].children[j].context + '"';
 
                 } else {
 
@@ -195,29 +207,67 @@
 
                     branch.writeMany(commitObj, message)
                         .then(function () {
-                        makeToast("Successfully Commited", 2);
-                    });
+                            makeToast("Successfully Commited", 2);
+                        });
 
 
-        }
+                }
             );
 
 
         } else {
             var repo = gh.getRepo($scope.githubUserName, $scope.githubRepoName);
-            var branch = repo.getBranch();
+            //alert(JSON.stringify(repo));
+            //alert(repo.branch);
+            if (repo.branch == null) {
+                var repoObj = {
+                    "name": $scope.githubRepoName,
+                    "description": "Created using XApps",
+                    "homepage": "https://github.com",
+                    "private": false,
+                    "has_issues": true,
+                    "has_wiki": true,
+                    "has_downloads": true,
+                    "auto_init": true
+                };
 
-            $scope.fileContent = editor.getValue();
-            var message = prompt("Commit Message");
-            if (message == null) {
-                message = "Default commit message";
+
+                var user = gh.getUser();
+                user.createRepo($scope.githubRepoName, repoObj).then(
+                    function () {
+                        var repo = gh.getRepo($scope.githubUserName, $scope.githubRepoName);
+                        var branch = repo.getBranch();
+                        var isBinary = false;
+
+                        $scope.fileContent = editor.getValue();
+                        var message = prompt("Commit Message");
+                        if (message == null) {
+                            message = "Default commit message";
+                        }
+
+                        branch.writeMany(commitObj, message)
+                            .then(function () {
+                                makeToast("Successfully Commited", 2);
+                            });
+
+
+                    }
+                );
+            } else {
+                var branch = repo.getBranch();
+
+                $scope.fileContent = editor.getValue();
+                var message = prompt("Commit Message");
+                if (message == null) {
+                    message = "Default commit message";
+                }
+
+                var isBinary = false;
+                branch.writeMany(commitObj, message)
+                            .then(function () {
+                                makeToast("Successfully Commited", 2);
+                            });
             }
-
-            var isBinary = false;
-            branch.writeMany(commitObj, message)
-                        .then(function () {
-                            makeToast("Successfully Commited", 2);
-                        });
 
 
         }
@@ -583,27 +633,27 @@
                 break;
         }
     }
-
+    $scope.getUser = function () {
+        $http.get("https://api.github.com/user")
+                .success(function (data) {
+                    $scope.userData = data;
+                }).error(function () {
+                    alert("error login");
+                });
+        $('.popover-markup > .trigger').popover({
+            html: true,
+            title: function () {
+                return $(this).parent().find('.head').html();
+            },
+            content: function () {
+                return $(this).parent().find('.content').html();
+            },
+            container: 'body',
+            placement: 'bottom'
+        });
+    }
 });
 
-$scope.getUser = function () {
-    $http.get("https://api.github.com/user")
-            .success(function (data) {
-                $scope.userData = data;
-            }).error(function () {
-                alert("error login");
-            });
-$('.popover-markup > .trigger').popover({
-    html: true,
-    title: function () {
-        return $(this).parent().find('.head').html();
-    },
-    content: function () {
-        return $(this).parent().find('.content').html();
-    },
-    container: 'body',
-    placement: 'bottom'
-});
 
 //add create new app menu
     /*
@@ -651,4 +701,3 @@ $('.popover-markup > .trigger').popover({
   }
 }
     */
-}
