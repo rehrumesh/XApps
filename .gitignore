@@ -156,3 +156,7 @@ $RECYCLE.BIN/
 .DS_Store
 
 /XApps/XApps.Web/app/apps/* 
+XApps/XApps.WebApi/App_Data/XAppsDataContext.mdf
+XApps/XApps.WebApi/App_Data/XAppsDataContext.mdf.orig
+XApps/XApps.WebApi/App_Data/XAppsDataContext_log.ldf
+XApps/XApps.WebApi/App_Data/XAppsDataContext_log.ldf.orig

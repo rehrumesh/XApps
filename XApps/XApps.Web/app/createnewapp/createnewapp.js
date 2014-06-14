@@ -41,18 +41,21 @@
 
     var editor;
 
-    $scope.onViewLoaded = function () {
+    $scope.onViewLoaded = function() {
         ace.require("ace/ext/language_tools");
         editor = ace.edit("editor");
 
         editor.setTheme("ace/theme/Eclipse");
         editor.getSession().setMode("ace/mode/javascript");
 
+        editor.setShowPrintMargin(false);
+        editor.setReadOnly(true);
+
         editor.setOptions({
             enableBasicAutocompletion: true,
             enableSnippets: true
         });
-    }
+    };
 
     $scope.update = function() {
         
@@ -125,6 +128,7 @@
         alert(JSON.stringify($scope.createNewA));
         publishedAppsFactory.save($scope.createNewA, function() {
             makeToast("App created successfully", 2);
+            editor.setReadOnly(false);
             //$('#myModal2').popover('hide');
 
         }); 
