@@ -37,6 +37,7 @@ app.config(function ($routeProvider) {
 
 });
 
+//CROS
 app.config(function($httpProvider) {
     delete $httpProvider.defaults.headers.common['X-Requested-With'];
 });
@@ -105,7 +106,7 @@ app.factory('requestFactory', function ($http, $q) {
             //alert(JSON.stringify(data));
             temp = data;
             if (mode == "2") {
-                alert("App published");
+                makeToast("App successfully published",2);
             }
             defer.resolve(data);
 
@@ -117,14 +118,49 @@ app.factory('requestFactory', function ($http, $q) {
     return obj;
 });
 
-app.factory('publishedAppsFactory', function($resource) {
+app.factory('AppsFactory', function($resource) {
     return $resource('http://localhost:12666/api/App/:id', { id: '@id' }, { update: { method: 'PUT' } });//, query: { method: 'GET' }
 });
 
 app.factory('AppsByNameFactory', function ($resource) {
-    return $resource('http://localhost:12666/api/App/', { id: '@id' }, { update: { method: 'PUT' } });//, query: { method: 'GET', isArray: false } 
+    return $resource('http://localhost:12666/api/App/AppByAppName/:appname',null, {'query': { method: 'GET', isArray: false } });//, query: { method: 'GET', isArray: false } 
 });
 
 app.factory('categoriesFactory', function ($resource) {
     return $resource('http://localhost:12666/api/Category/:id', { id: '@id' }, { update: { method: 'PUT' } });
 });
+
+function makeToast(text, type) {
+    toastr.options = {
+        "closeButton": true,
+        "debug": false,
+        "positionClass": "toast-bottom-right",
+        "onclick": null,
+        "showDuration": "300",
+        "hideDuration": "1000",
+        "timeOut": "5000",
+        "extendedTimeOut": "1000",
+        "showEasing": "swing",
+        "hideEasing": "linear",
+        "showMethod": "fadeIn",
+        "hideMethod": "fadeOut"
+    };
+
+    switch (type) {
+        case 1:
+            toastr.info(text);
+            break;
+        case 2:
+            toastr.success(text);
+            break;
+        case 3:
+            toastr.error(text);
+            break;
+        case 4:
+            toastr.warning(text);
+            break;
+        default:
+            toastr.info(text);
+            break;
+    }
+}
