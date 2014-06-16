@@ -27,8 +27,11 @@
                 <li class="dropdown user user-menu">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" >
                         <!--<i class="glyphicon glyphicon-user"></i>-->
-                        <div><img src="{{user.avatar_url}}" width="25" height="25" /></div>
-                        <span>{{user.login}}<i class="caret"></i></span>
+                        <div>
+                            <img src="{{user.avatar_url}}" width="20" height="20" style="display:inline;" ng-show="showLogout" />
+                            <span>{{user.login}}<i class="caret"></i></span>
+                        </div>
+                        
                     </a>
                     <ul class="dropdown-menu">
 
@@ -36,16 +39,16 @@
                         <!-- Menu Footer-->
                         <li class="user-footer">
 
-                            <div class="container" ng-show="true">
-                                <a href="#" class="btn btn-default btn-flat" ng-click="user_authenticate()">Login with Github</a>
+                            <div class="container" ng-show="showLogin">
+                                <a href="#" class="btn btn-default btn-flat" ng-click="user_authenticate()" >Login with Github</a>
                             </div>
 
-                            <div ng-show="false">
+                            <div ng-show="showLogout" >
                                 <div class="pull-left">
                                     <a href="#" class="btn btn-default btn-flat">Profile</a>
                                 </div>
                                 <div class="pull-right">
-                                    <a href="#" class="btn btn-default btn-flat">Sign out</a>
+                                    <a href="#" class="btn btn-default btn-flat" ng-click="user_logout()">Sign out</a>
                                 </div>
                             </div>
 
