@@ -410,7 +410,7 @@
                 //alert(JSON.stringify($scope.repoList));
 
             }).error(function () {
-                makeToast("error loading repo",3);
+                alert("error loading repo");
                 $scope.showloading_in = false;
             });
     };
@@ -433,7 +433,7 @@
             .success(function (data) {
                 repoRequest(data);
             }).error(function () {
-                //alert("error loading repo");
+                alert("error loading repo");
                 $scope.showloading_out = false;
                 makeToast("Failed to open app " + repoName, 3);
             });
@@ -449,7 +449,7 @@
                         .success(function (data) {
                             contentRequest(data);
                         }).error(function () {
-                            makeToast("error loading content", 3);
+                            alert("error loading content");
                         });
                 }
             }
@@ -460,17 +460,6 @@
             if (++counter2 == counter1) defer.resolve();
 
         }
-
-        function decodeBase64(s) {
-            var e = {}, i, b = 0, c, x, l = 0, a, r = '', w = String.fromCharCode, L = s.length;
-            var A = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
-            for (i = 0; i < 64; i++) { e[A.charAt(i)] = i; }
-            for (x = 0; x < L; x++) {
-                c = e[s.charAt(x)]; b = (b << 6) + c; l += 6;
-                while (l >= 8) { ((a = (b >>> (l -= 8)) & 0xff) || (x < (L - 2))) && (r += w(a)); }
-            }
-            return r;
-        };
 
         var defer = $q.defer();
         defer.promise.then(function () {
@@ -625,25 +614,7 @@
     $scope.updateAppDetails = function () { };
 
     
-    $scope.getUser = function() {
-        $http.get("https://api.github.com/user")
-            .success(function(data) {
-                $scope.userData = data;
-            }).error(function() {
-                alert("error login");
-            });
-        $('.popover-markup > .trigger').popover({
-            html: true,
-            title: function() {
-                return $(this).parent().find('.head').html();
-            },
-            content: function() {
-                return $(this).parent().find('.content').html();
-            },
-            container: 'body',
-            placement: 'bottom'
-        });
-    };
+    
 
     $scope.gotoLine = function () {
 
@@ -657,51 +628,3 @@
     
 });
 
-
-
-//add create new app menu
-    /*
-    {
-  "login": "octocat",
-  "id": 1,
-  "avatar_url": "https://github.com/images/error/octocat_happy.gif",
-  "gravatar_id": "somehexcode",
-  "url": "https://api.github.com/users/octocat",
-  "html_url": "https://github.com/octocat",
-  "followers_url": "https://api.github.com/users/octocat/followers",
-  "following_url": "https://api.github.com/users/octocat/following{/other_user}",
-  "gists_url": "https://api.github.com/users/octocat/gists{/gist_id}",
-  "starred_url": "https://api.github.com/users/octocat/starred{/owner}{/repo}",
-  "subscriptions_url": "https://api.github.com/users/octocat/subscriptions",
-  "organizations_url": "https://api.github.com/users/octocat/orgs",
-  "repos_url": "https://api.github.com/users/octocat/repos",
-  "events_url": "https://api.github.com/users/octocat/events{/privacy}",
-  "received_events_url": "https://api.github.com/users/octocat/received_events",
-  "type": "User",
-  "site_admin": false,
-  "name": "monalisa octocat",
-  "company": "GitHub",
-  "blog": "https://github.com/blog",
-  "location": "San Francisco",
-  "email": "octocat@github.com",
-  "hireable": false,
-  "bio": "There once was...",
-  "public_repos": 2,
-  "public_gists": 1,
-  "followers": 20,
-  "following": 0,
-  "created_at": "2008-01-14T04:33:35Z",
-  "updated_at": "2008-01-14T04:33:35Z",
-  "total_private_repos": 100,
-  "owned_private_repos": 100,
-  "private_gists": 81,
-  "disk_usage": 10000,
-  "collaborators": 8,
-  "plan": {
-    "name": "Medium",
-    "space": 400,
-    "private_repos": 20,
-    "collaborators": 0
-  }
-}
-    */

@@ -95,6 +95,7 @@
     <Content Include="Content\Custom\treeview\toggle-small.png" />
     <Content Include="Content\images\404error.png" />
     <Content Include="app\ErrorPage\error.html" />
+    <Content Include="Content\popup.css" />
     <Content Include="Scripts\Custom\src\ace.js" />
     <Content Include="Scripts\Custom\src\ext-beautify.js" />
     <Content Include="Scripts\Custom\src\ext-chromevox.js" />
