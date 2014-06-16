@@ -9,7 +9,7 @@
         routes.forEach(function (r) {
             $routeProvider.when(r.url, r.config);
         });
-        $routeProvider.otherwise({ redirectTo: '/dashboard' });
+        $routeProvider.otherwise({ redirectTo: '/error' });
     }
 
 
