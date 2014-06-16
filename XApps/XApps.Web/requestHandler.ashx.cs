@@ -134,7 +134,7 @@ namespace XApps.Web
             }
             catch (Exception e)
             {
-                context.Response.StatusCode = 404;
+                context.Response.StatusCode = 404;//send error code
             }
             
         }
