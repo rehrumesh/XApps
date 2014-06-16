@@ -51,7 +51,7 @@
         editor.getSession().setMode("ace/mode/javascript");
 
         editor.setShowPrintMargin(false);
-        editor.setReadOnly(true);
+        editor.setReadOnly(false);
 
         editor.setOptions({
             enableBasicAutocompletion: true,
@@ -644,7 +644,19 @@
             placement: 'bottom'
         });
     };
+
+    $scope.gotoLine = function () {
+
+        var lineNumber = prompt("Please enter the line number", "1");
+        editor.gotoLine(lineNumber);
+    }
+
+
+        
+
+    
 });
+
 
 
 //add create new app menu
