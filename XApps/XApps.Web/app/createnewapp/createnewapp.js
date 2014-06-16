@@ -127,7 +127,7 @@
         $scope.githubRepoName = $scope.createNewA.AppName;
         $scope.createNewA.RepoName = $scope.createNewA.AppName;
         //$scope.createNewA.CategoryName = "News";
-        alert(JSON.stringify($scope.createNewA));
+        //alert(JSON.stringify($scope.createNewA));
         AppsFactory.save($scope.createNewA, function() {
             makeToast("App created successfully", 2);
             editor.setReadOnly(false);
@@ -138,10 +138,7 @@
 
 
     };
-
     
-
-
     $scope.saveGit = function () {
         var gh = new Octokit({
             username: $scope.githubUserName,
@@ -254,6 +251,7 @@
                         branch.writeMany(commitObj, message)
                             .then(function () {
                                 makeToast("Successfully Commited", 2);
+
                             });
 
 
@@ -412,7 +410,7 @@
                 //alert(JSON.stringify($scope.repoList));
 
             }).error(function () {
-                alert("error loading repo");
+                makeToast("error loading repo",3);
                 $scope.showloading_in = false;
             });
     };
@@ -435,7 +433,7 @@
             .success(function (data) {
                 repoRequest(data);
             }).error(function () {
-                alert("error loading repo");
+                //alert("error loading repo");
                 $scope.showloading_out = false;
                 makeToast("Failed to open app " + repoName, 3);
             });
@@ -451,7 +449,7 @@
                         .success(function (data) {
                             contentRequest(data);
                         }).error(function () {
-                            alert("error loading content");
+                            makeToast("error loading content", 3);
                         });
                 }
             }

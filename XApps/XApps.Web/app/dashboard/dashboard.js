@@ -1,4 +1,4 @@
-﻿app.controller('dashboard', function ($scope, $route, $location, dynamics, AppsFactory) {
+﻿app.controller('dashboard', function ($scope, $route, $location, dynamics, AppsFactory, categoriesFactory) {
 
     $scope.defineRoute = function (appName) {
         //check app isPublished
@@ -43,5 +43,9 @@
     };
 
     $scope.allapps = AppsFactory.query();
+
+    $scope.allcategories = categoriesFactory.query();
+
+
 });
 

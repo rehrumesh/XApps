@@ -9,115 +9,54 @@
             </section>
 
 <section class="content">
-                <div class="row">
-                    <div class="col-lg-3 col-xs-6">
+    
+    
 
-                        <!--can not give 'a' inside another 'a'-->
-                        <div class="small-box bg-aqua">
-                            <div class="inner">
-                                <h1>
-                                    Office Document
-                                </h1>
-                                <p>
-                                    <!--discription-->
-                                    Use for documenting
-                                    <br />
-                                    <!--some introduction-->
-                                    Available
-                                </p>
+    <div class="row">
+        
+        <div ng-repeat="cat in allcategories" >
+            <div class="row littlebitside">
+                <h1>{{cat.CategoryName}}</h1> <br />
+                <div class="col-lg-3 col-xs-6" ng-repeat="pApp in allapps" ng-show="pApp.isPublished && (pApp.CategoryID == cat.CategoryID)">
 
-                                <!--change here add star rating-->
+                    <!--can not give 'a' inside another 'a'-->
+                    <div class="small-box bg-aqua">
+                        <div class="inner">
+                            <h1>
+                                {{pApp.AppName}} -- {{pApp.CategoryID}}
+                            </h1>
+                            <p>
+                                <!--discription-->
+                                Use for documenting
+                                <br />
+                                <!--some introduction-->
+                                Available
+                            </p>
 
-                            </div>
-
-                            <a href="#" class="small-box-footer">
-                                More info <i class="fa fa-arrow-circle-right"></i>
-                            </a>
-                            <div class="small-box-footer">
-                                <div class="rating">
-                                    <span>☆</span><span>☆</span><span>☆</span><span>☆</span><span>☆</span>
-                                </div>
-                            </div>
+                            <!--change here add star rating-->
 
                         </div>
 
-
-                    </div>
-
-                    <div class="col-lg-3 col-xs-6">
-                        <div class="small-box bg-green">
-                            <div class="inner">
-                                <h1>
-                                    SlideShare
-                                </h1>
-                                <p>
-                                    Share your presentatiton
-                                    <br />
-                                    <!--some introduction-->
-                                    Available
-                                </p>
-                            </div>
-
-                            <a href="#" class="small-box-footer">
-                                More info <i class="fa fa-arrow-circle-right"></i>
-                            </a>
-                            <div class="small-box-footer">
-                                <div class="rating">
-                                    <span>☆</span><span>☆</span><span>☆</span><span>☆</span><span>☆</span>
-                                </div>
+                        <a href="#" class="small-box-footer">
+                            More info <i class="fa fa-arrow-circle-right"></i>
+                        </a>
+                        <div class="small-box-footer">
+                            <div class="rating">
+                                <span>☆</span><span>☆</span><span>☆</span><span>☆</span><span>☆</span>
                             </div>
                         </div>
-                    </div>
-                    <div class="col-lg-3 col-xs-6">
-                        <div class="small-box bg-red">
-                            <div class="inner">
-                                <h1>
-                                    Memo
-                                </h1>
-                                <p>
-                                    Easy way to Write your notes
-                                    <br />
-                                    <!--some introduction-->
-                                    Available
-                                </p>
-                            </div>
 
-                            <a href="#" class="small-box-footer">
-                                More info <i class="fa fa-arrow-circle-right"></i>
-                            </a>
-                            <div class="small-box-footer">
-                                <div class="rating">
-                                    <span>☆</span><span>☆</span><span>☆</span><span>☆</span><span>☆</span>
-                                </div>
-                            </div>
-                        </div>
                     </div>
-                    <div class="col-lg-3 col-xs-6">
-                        <div class="small-box bg-yellow">
-                            <div class="inner">
-                                <h1>
-                                    OpenCal
-                                </h1>
-                                <p>
-                                    Easy calculator
-                                    <br />
-                                    <!--some introduction-->
-                                    Available
-                                </p>
-                            </div>
 
-                            <a href="#" class="small-box-footer">
-                                More info <i class="fa fa-arrow-circle-right"></i>
-                            </a>
-                            <div class="small-box-footer">
-                                <div class="rating">
-                                    <span>☆</span><span>☆</span><span>☆</span><span>☆</span><span>☆</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
 
                 </div>
-            </section>
+            </div>
+        </div>
+
+        
+
+
+    </div>
+</section>
         
 
