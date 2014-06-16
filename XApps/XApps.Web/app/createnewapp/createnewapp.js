@@ -1,4 +1,4 @@
-﻿app.controller('createnewapp', function ($scope, $compile, $q, $http, requestFactory, publishedAppsFactory, categoriesFactory) {
+﻿app.controller('createnewapp', function ($scope, $compile, $q, $http, requestFactory, AppsFactory, categoriesFactory, AppsByNameFactory) {
     $scope.devName = "Rumesh";
     $scope.path = "<li><span class='file'>BIZAPP.css</span></li>";
     $scope.githubUserName = "Xapps00";
@@ -14,6 +14,7 @@
     $scope.appCategory;
     $scope.tempAppName = "App";
     $scope.tempdir = "Hello";
+    $scope.appDetails = {};
 
     $scope.createNewA = {
         AppName: "App",
@@ -37,22 +38,26 @@
     $scope.isEditingApp = false;
 
     $scope.allcategories = categoriesFactory.query();
-    $scope.allapps = publishedAppsFactory.query({aName:"slideshare"});
+    //$scope.allapps = AppsFactory.query({aName:"slideshare"});
+    $scope.allapps = AppsFactory.query();
 
     var editor;
 
-    $scope.onViewLoaded = function () {
+    $scope.onViewLoaded = function() {
         ace.require("ace/ext/language_tools");
         editor = ace.edit("editor");
 
         editor.setTheme("ace/theme/Eclipse");
         editor.getSession().setMode("ace/mode/javascript");
 
+        editor.setShowPrintMargin(false);
+        editor.setReadOnly(true);
+
         editor.setOptions({
             enableBasicAutocompletion: true,
             enableSnippets: true
         });
-    }
+    };
 
     $scope.update = function() {
         
@@ -123,8 +128,9 @@
         $scope.createNewA.RepoName = $scope.createNewA.AppName;
         //$scope.createNewA.CategoryName = "News";
         alert(JSON.stringify($scope.createNewA));
-        publishedAppsFactory.save($scope.createNewA, function() {
+        AppsFactory.save($scope.createNewA, function() {
             makeToast("App created successfully", 2);
+            editor.setReadOnly(false);
             //$('#myModal2').popover('hide');
 
         }); 
@@ -589,9 +595,30 @@
 
     $scope.publishApp = function() {
         //modify app details on database
-        //http request to download files
-
-        requestFactory.getResponse($scope.githubRepoName,2);
+        var a = AppsByNameFactory.query({ appname: $scope.githubRepoName });
+        a.$promise.then(function(obj) {
+            var tempObj = {
+                AppID: obj.AppID,
+                AppName: obj.AppName,
+                AurthorID: obj.AurthorID,
+                CategoryID: obj.CategoryID,
+                UserCount: obj.UserCount,
+                RepoName: obj.RepoName,
+                LatestHash: obj.LatestHash,
+                isPublished: true,
+                description: obj.description
+            };
+            $scope.appDetails = tempObj;
+            //alert(JSON.stringify(tempObj));
+            
+            AppsFactory.update({id: obj.AppID}, tempObj, function() {
+                //makeToast("App details updated", 2);
+                requestFactory.getResponse($scope.githubRepoName, 2);
+            });
+        });
+        
+        //alert(JSON.stringify(a));
+        
 
     };
 
@@ -599,59 +626,26 @@
 
     $scope.updateAppDetails = function () { };
 
-    function makeToast(text, type) {
-        toastr.options = {
-            "closeButton": true,
-            "debug": false,
-            "positionClass": "toast-bottom-right",
-            "onclick": null,
-            "showDuration": "300",
-            "hideDuration": "1000",
-            "timeOut": "5000",
-            "extendedTimeOut": "1000",
-            "showEasing": "swing",
-            "hideEasing": "linear",
-            "showMethod": "fadeIn",
-            "hideMethod": "fadeOut"
-        };
-
-        switch (type) {
-            case 1:
-                toastr.info(text);
-                break;
-            case 2:
-                toastr.success(text);
-                break;
-            case 3:
-                toastr.error(text);
-                break;
-            case 4:
-                toastr.warning(text);
-                break;
-            default:
-                toastr.info(text);
-                break;
-        }
-    }
-    $scope.getUser = function () {
+    
+    $scope.getUser = function() {
         $http.get("https://api.github.com/user")
-                .success(function (data) {
-                    $scope.userData = data;
-                }).error(function () {
-                    alert("error login");
-                });
+            .success(function(data) {
+                $scope.userData = data;
+            }).error(function() {
+                alert("error login");
+            });
         $('.popover-markup > .trigger').popover({
             html: true,
-            title: function () {
+            title: function() {
                 return $(this).parent().find('.head').html();
             },
-            content: function () {
+            content: function() {
                 return $(this).parent().find('.content').html();
             },
             container: 'body',
             placement: 'bottom'
         });
-    }
+    };
 });
 
 
