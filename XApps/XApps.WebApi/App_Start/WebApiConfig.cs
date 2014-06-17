@@ -29,6 +29,12 @@ namespace XApps.WebApi
 
             config.Formatters.XmlFormatter.SupportedMediaTypes.Remove(
                 config.Formatters.XmlFormatter.SupportedMediaTypes.FirstOrDefault(t => t.MediaType == "application/xml"));
+
+            config.Routes.MapHttpRoute(
+                name: "UserActionApi",
+                routeTemplate: "api/{controller}/UserByUserName/{UserName}",
+                defaults: new {UserName = RouteParameter.Optional }
+                );
         }
     }
 }

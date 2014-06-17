@@ -130,6 +130,14 @@ app.factory('categoriesFactory', function ($resource) {
     return $resource('http://localhost:12666/api/Category/:id', { id: '@id' }, { update: { method: 'PUT' } });
 });
 
+app.factory('userFactory', function($resource) {
+    return $resource('http://localhost:12666/api/User/:id', { id: '@id' }, { update: { method: 'PUT' } });
+});
+
+app.factory('userByUserNameFactory', function ($resource) {
+    return $resource('http://localhost:12666/api/App/AppByAppName/slideshare', {}, { 'query': { method: 'GET', isArray: false } });
+});
+
 function makeToast(text, type) {
     toastr.options = {
         "closeButton": true,

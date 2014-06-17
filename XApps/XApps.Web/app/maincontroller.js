@@ -1,4 +1,4 @@
-﻿app.controller('maincontroller', function ($scope,$compile, $http) {
+﻿app.controller('maincontroller', function ($scope, $compile, $http, userFactory) {
     $scope.onSideBarLoaded = function () {
        
             $("#browser").treeview({
@@ -23,23 +23,27 @@
     $scope.user;
     $scope.userAccess = "undefined";
 
-    $scope.user_authenticate = function () {
+    $scope.user_authenticate = function() {
         OAuth.initialize('gVSwp4XmyIU6A-VfLSeA6Njh_2Q');
-        OAuth.popup('github', function (error, result) {
-            
+        OAuth.popup('github', function(error, result) {
+
             $scope.userAccess = result;
-            
+
             $http.get("https://api.github.com/user?access_token=" + $scope.userAccess.access_token)
-                        .success(function (data) {
-                            $scope.user = data;
-                            console.info(JSON.stringify(data));
-                        }).error(function () {
-                            console.error("Error loading user details");
-                        });
+                .success(function(data) {
+                    $scope.user = data;
+                console.log(data.login);
+                    var usr = userFactory.query({ username: data.login });
+                    usr.$promise.then(function(tempdata) {
+                        console.log(tempdata);
+                        console.info(JSON.stringify(data));
+                    });
+                    
+                }).error(function() {
+                    console.error("Error loading user details");
+                });
         });
 
-        
 
-        
-    }
+    };
 });

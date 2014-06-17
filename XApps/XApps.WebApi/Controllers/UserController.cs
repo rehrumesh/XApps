@@ -117,5 +117,17 @@ namespace XApps.WebApi.Controllers
         {
             return db.Users.Count(e => e.UserID == id) > 0;
         }
+
+        [ActionName("UserByUserName")]
+        public IHttpActionResult GetUserByUserName(String UserName)
+        {
+            var UserRe = db.Users.Select(i => new { i.UserID, i.UserName, i.Email, i.Designation, i.Department, i.Contact });
+            var product = UserRe.FirstOrDefault((p) => p.UserName == UserName);
+            if (product == null)
+            {
+                return NotFound();
+            }
+            return Ok(product);
+        }
     }
 }
