@@ -14,6 +14,7 @@ app.config(function ($routeProvider) {
         controller: "dashboard",
         templateUrl: "app/dashboard/dashboard.html"
     })
+
     .when("/myapps", {
         controller: "myapps",
         templateUrl: "app/myapps/myapps.html"
@@ -22,19 +23,24 @@ app.config(function ($routeProvider) {
         controller: "hotapps",
         templateUrl: "app/hotapps/hotapps.html"
     })
+
         //added new view
     .when("/createnewapp", {
         controller: "createnewapp",
         templateUrl: "app/createnewapp/createnewapp.html"
     })
-        
+
 
     .when("/dashboard", {
         controller: "dashboard",
         templateUrl: "app/dashboard/dashboard.html"
-    });
-    //$routeProvider.otherwise({ redirectTo: "http://localhost:6406/requestHandler.ashx" });
+    })
 
+    //$routeProvider.otherwise({ redirectTo: "http://localhost:6406/requestHandler.ashx" });
+    .when("/error", {
+        controller: "error",
+        templateUrl: "app/ErrorPage/error.html"
+    });
 });
 
 //CROS

@@ -24,7 +24,7 @@
                         </ul>
                     </li>
                     <li ng-show="isEditingApp"><a data-toggle="modal" data-target="#myModal">Edit App Data</a></li>
-                    <li><a data-ng-click="loadRepo()">Open App</a></li>
+                    <li><a data-ng-click="loadRepo()" data-toggle="modal" data-target="#repo-list">Open App</a></li>
                     <li><a data-ng-click="saveGit()">Save in Github</a></li>
                     <li><a data-ng-click="saveFile()">Save</a></li>
                 </ul>
@@ -54,6 +54,14 @@
             </li>
 
             <!--new item added-->
+            <li class="dropdown" style="cursor:pointer">
+                <a data-toggle="dropdown" class="dropdown-toggle">Edit<b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                    <li ng-click="gotoLine()"><a data-toggle="modal">Line number</a></li>
+                </ul>
+
+
+</li>
 
             <li>
                 <a>
@@ -78,13 +86,6 @@
 </script>
 
 
-<div  class="repolist" ng-show="showDetails" >
-    <div data-ng-repeat="repo in repoList" >
-        <a ng-click="openRepo(repo.name)">
-            <h3>{{repo.name}}</h3>
-        </a><br />     
-    </div>
-</div>
 
 <!-- Modal -->
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -152,3 +153,37 @@
     </div>
 </div>
 
+<div class="modal fade" id="repo-list">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Your app list</h4>
+            </div>
+            <div class="modal-body">
+
+                <div ng-show="show_repo_list">
+                    <ul class="nav nav-pills nav-stacked">
+                        <li data-ng-repeat="repo in repoList">
+                            <a ng-click="openRepo(repo.name)" data-dismiss="modal">
+                                {{repo.name}}
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="loading-in" ng-show="showloading_in">
+                    <img src="app/createnewapp/loading2.gif" style="height:60px; width:60px;">
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<div class="loading-out" ng-show="showloading_out">
+    <img src="app/createnewapp/loading2.gif" style="height:60px; width:60px;">
+</div>

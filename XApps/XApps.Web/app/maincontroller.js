@@ -20,8 +20,10 @@
     token
     1aac3b3d9eebde2dc2d1d26844cd461071fdf3bb
     */
-    $scope.user;
+    $scope.user = { "login": "Login with Github", "avatar_url": "" };
     $scope.userAccess = "undefined";
+    $scope.showLogin = true;
+    $scope.showLogout = false;
 
     $scope.user_authenticate = function() {
         OAuth.initialize('gVSwp4XmyIU6A-VfLSeA6Njh_2Q');
@@ -32,6 +34,8 @@
             $http.get("https://api.github.com/user?access_token=" + $scope.userAccess.access_token)
                 .success(function(data) {
                     $scope.user = data;
+                            $scope.showLogin = false;
+                            $scope.showLogout = true;
                 console.log(data.login);
                     var usr = userFactory.query({ username: data.login });
                     usr.$promise.then(function(tempdata) {
@@ -46,4 +50,12 @@
 
 
     };
+    }
+
+    $scope.user_logout = function () {
+        $scope.user = { "login": "Login with Github", "avatar_url": "" };
+        $scope.userAccess = "undefined";
+        $scope.showLogin = true;
+        $scope.showLogout = false;
+    }
 });
