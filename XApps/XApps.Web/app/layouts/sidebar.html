@@ -1,4 +1,4 @@
-﻿<div id="sidebar1">
+﻿<div id="sidebar1" ng-controller="maincontroller">
     <section class="sidebar">
         <!-- search form -->
         <form action="#" method="get" class="sidebar-form">
@@ -32,12 +32,19 @@
                 </a>
             </li>
             <!--added a create app sidebar menu item-->
-            <li>
+            <li ng-if="user.login!='Login with Github'">
                 <a onclick="sidebar1hide(),sidebar2show();" href="#/createnewapp">
                     <i class="fa fa-edit"></i>
                     <span>Create New App</span>
                 </a>
             </li>
+            <li ng-if="user.login=='Login with Github'">
+                <a style="white-space: nowrap;" data-container="body" data-toggle="popover" data-placement="right" data-content="Please login first!">
+                    <i class="fa fa-edit"></i>
+                    <span>Create New App</span>
+                </a>
+            </li>
+
         </ul>
     </section>
 </div>
