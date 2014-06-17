@@ -144,6 +144,8 @@ app.factory('userByUserNameFactory', function ($resource) {
     return $resource('http://localhost:12666/api/App/AppByAppName/slideshare', {}, { 'query': { method: 'GET', isArray: false } });
 });
 
+
+// type : 1 info 2 success 3 fail 4 warning
 function makeToast(text, type) {
     toastr.options = {
         "closeButton": true,

@@ -536,49 +536,6 @@
     };
         
 
-    $scope.testOpen = function() {
-        var gh = new Octokit({
-            username: $scope.githubUserName,
-            password: $scope.githubPassword
-        });
-
-        $scope.githubRepoName = "shn";
-        var user = gh.getUser();
-
-        var repo = gh.getRepo($scope.githubUserName, $scope.githubRepoName);
-        var branch = repo.getBranch();
-
-        //list contents of a folder
-        branch.contents('html')
-            .then(function(contents) {
-                alert(JSON.stringify(contents));
-            });
-
-        //read particular file
-        branch.read('html/appindex.html')
-            .then(function (contents) {
-                alert(JSON.stringify(contents));
-            });
-
-        /*
-        * Steps I suggest
-        * from the list contents of a folder part, fill the $scope.app tree. do it for html, javascript, css folders
-        * now you have all the files in the tree.
-        * then for each element in tree, read the files using 'read particular file' code.
-        * all these are promises based calls, so you can block/ or do anythiing as you wish.
-
-
-        *PLEASE ADD A 'Please Wait' or 'Loading..' popup until files are loaded.
-        * refere ng-show
-        *   https://docs.angularjs.org/api/ng/directive/ngShow
-        *   http://scotch.io/tutorials/javascript/how-to-use-ngshow-and-nghide
-        *
-        *
-        * Note that there is no connection between the file tree view in the createnewapp.html and $scope.app tree.
-        * please build a connection between them also.
-        */
-
-    };
     // type : 1 info 2 success 3 fail 4 warning
 
     $scope.publishApp = function() {
@@ -615,8 +572,6 @@
     $scope.updateAppDetails = function () { };
 
     
-    };
-
     $scope.ChangeTheme = function (theme1) {
 
         ace.require("ace/ext/language_tools");
@@ -628,7 +583,7 @@
 
     };
 
-    $scope.Search = function (searchWord) {
+    $scope.Search = function(searchWord) {
 
         ace.require("ace/ext/language_tools");
         editor = ace.edit("editor");
@@ -642,18 +597,15 @@
         editor.findNext();
         editor.findPrevious();
         makeToast(" Search Function!!! " + searchWord, 2);
+    };
 
-    
 
-    $scope.gotoLine = function () {
+    $scope.gotoLine = function() {
 
         var lineNumber = prompt("Please enter the line number", "1");
         editor.gotoLine(lineNumber);
-    }
+    };
 
 
-        
-
-    
 });
 
