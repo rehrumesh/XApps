@@ -1,17 +1,17 @@
 ﻿app.controller('maincontroller', function ($scope, $compile, $http, userFactory) {
-    $scope.onSideBarLoaded = function () {
-       
-            $("#browser").treeview({
-                toggle: function () {
-                    console.log("%s was toggled.", $(this).find(">span").text());
-                }
-            });
-       
-            $("#browser").treeview();
-           
-            $compile($("#browser"))($scope);
-            
-    }
+    $scope.onSideBarLoaded = function() {
+
+        $("#browser").treeview({
+            toggle: function() {
+                console.log("%s was toggled.", $(this).find(">span").text());
+            }
+        });
+
+        $("#browser").treeview();
+
+        $compile($("#browser"))($scope);
+
+    };
     /*
     Client ID
     739ed9983efe3f0260f5
@@ -50,12 +50,12 @@
 
 
     };
-    }
 
-    $scope.user_logout = function () {
+
+    $scope.user_logout = function() {
         $scope.user = { "login": "Login with Github", "avatar_url": "" };
         $scope.userAccess = "undefined";
         $scope.showLogin = true;
         $scope.showLogout = false;
-    }
+    };
 });
