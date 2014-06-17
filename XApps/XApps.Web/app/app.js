@@ -141,7 +141,7 @@ app.factory('userFactory', function($resource) {
 });
 
 app.factory('userByUserNameFactory', function ($resource) {
-    return $resource('http://localhost:12666/api/App/AppByAppName/slideshare', {}, { 'query': { method: 'GET', isArray: false } });
+    return $resource('http://localhost:12666/api/user/userbyusername/:username', null, { 'query': { method: 'GET', isArray: false } });
 });
 
 
