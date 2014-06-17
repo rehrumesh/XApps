@@ -535,9 +535,6 @@
 
     };
         
-
-    // type : 1 info 2 success 3 fail 4 warning
-
     $scope.publishApp = function() {
         //modify app details on database
         var a = AppsByNameFactory.query({ appname: $scope.githubRepoName });
