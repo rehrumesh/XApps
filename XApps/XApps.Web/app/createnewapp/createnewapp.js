@@ -51,7 +51,7 @@
         editor.getSession().setMode("ace/mode/javascript");
 
         editor.setShowPrintMargin(false);
-        editor.setReadOnly(true);
+        editor.setReadOnly(false);
 
         editor.setOptions({
             enableBasicAutocompletion: true,
@@ -643,6 +643,34 @@
             container: 'body',
             placement: 'bottom'
         });
+    };
+
+    $scope.ChangeTheme = function (theme1) {
+
+        ace.require("ace/ext/language_tools");
+        editor = ace.edit("editor");
+        var theme = theme1;
+        editor.setTheme("ace/theme/" + theme);
+        editor.getSession().setMode("ace/mode/javascript");
+        makeToast(" Theme Changed to " + theme + " successfully!", 2);
+
+    };
+
+    $scope.Search = function (searchWord) {
+
+        ace.require("ace/ext/language_tools");
+        editor = ace.edit("editor");
+        editor.find(searchWord, {
+            backwards: false,
+            wrap: false,
+            caseSensitive: false,
+            wholeWord: false,
+            regExp: false
+        });
+        editor.findNext();
+        editor.findPrevious();
+        makeToast(" Search Function!!! " + searchWord, 2);
+
     };
 });
 
