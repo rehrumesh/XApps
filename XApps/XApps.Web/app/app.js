@@ -1,4 +1,4 @@
-﻿var app = angular.module('app', ['ngRoute', 'ngResource']);
+﻿var app = angular.module('app', ['ngRoute', 'ngResource', 'ui.bootstrap']);
 
 //app.run(function ($rootScope, $templateCache) {
 //    $rootScope.$on('$routeChangeStart', function (event, next, current) {

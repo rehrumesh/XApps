@@ -29,9 +29,11 @@
                     More info <i class="fa fa-arrow-circle-right"></i>
                 </a>
                 <div class="small-box-footer">
-                    <div class="rating">
-                        <span>☆</span><span>☆</span><span>☆</span><span>☆</span><span>☆</span>
-                    </div>
+                    <span ng-repeat="rating in ratings">
+                        {{rating.current}} out of
+                        {{rating.max}}
+                        <div star-rating rating-value="rating.current" max="rating.max" on-rating-selected="getSelectedRating(rating)"></div>
+                    </span>
                 </div>
 
             </div>
