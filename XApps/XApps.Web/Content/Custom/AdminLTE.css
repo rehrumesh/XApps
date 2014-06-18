@@ -3455,20 +3455,26 @@ fieldset[disabled] .btn-vk.active {
 
 
 .rating {
-  unicode-bidi: bidi-override;
-  direction: rtl;
-  text-align: center;
+    color: #DFDBDB;
+    margin: 0;
+    padding: 0;
 }
-.rating > span {
-  display: inline-block;
-  position: relative;
-  width: 1.1em;
+ul.rating {
+    display: inline-block;
 }
-.rating > span:hover:before,
-.rating > span:hover ~ span:before {
-   content: "\2605";
-   position: absolute;
+.rating li {
+    list-style-type: none;
+    display: inline-block;
+    padding: 1px;
+    text-align: center;
+    font-weight: bold;
+    cursor: pointer;
 }
+.rating .filled {
+    color: yellow;
+}
+
+/*editor*/
 
 #editor { 
         margin: 0;

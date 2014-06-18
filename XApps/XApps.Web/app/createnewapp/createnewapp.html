@@ -27,6 +27,8 @@
                     <li><a data-ng-click="loadRepo()" data-toggle="modal" data-target="#repo-list">Open App</a></li>
                     <li><a data-ng-click="saveGit()">Save in Github</a></li>
                     <li><a data-ng-click="saveFile()">Save</a></li>
+                    <li><a data-toggle="modal" data-target="#myModal3">App Database</a></li>
+
                 </ul>
             </li>
 
@@ -199,3 +201,95 @@
 <div class="loading-out" ng-show="showloading_out">
     <img src="app/createnewapp/loading2.gif" style="height:60px; width:60px;">
 </div>
+
+
+<div class="modal fade" id="myModal3" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h2 class="modal-title" id="myModalLabel">Database</h2>
+            </div>
+            <div class="modal-body">
+                <h4>Fill the data need to create a new Websql Database</h4>
+                <form name="Form_1" class="form-horizontal">
+                    <fieldset>
+                        <!-- Text input-->
+                        <div class="control-group">
+                            <label class="control-label" for="db_short_Name">Short Name</label>
+                            <div class="controls">
+                                <input size="40" id="db_short_Name" name="db_short_Name" placeholder="Enter database short name" class="input-xlarge" required="" type="text" ng-model="shortname">
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label" for="db_display_Name">Display Name</label>
+                            <div class="controls">
+                                <input size="40" id="db_display_Name" name="db_display_Name" placeholder="Enter database display name" class="input-xlarge" required="" type="text" ng-model="displayname">
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label" for="db_max_Size">Max Size</label>
+                            <div class="controls">
+                                <input size="80" id="db_max_Size" name="db_max_Size" placeholder="Enter maxiumun size" class="input-xlarge" required="" type="number" ng-model="maxsize">
+                            </div>
+                        </div>
+                        <br />
+                        <!-- Button -->
+                        <div class="control-group">
+                            <div class="controls">
+                                <button id="button1_Create" name="button1_Create" class="btn btn-primary" ng-click="create()">Create</button>
+                                <button id="run_query " name="run_query" class="btn btn-primary" data-toggle="modal" data-target="#Query">Query</button>
+                                <!-- <button id="button2_Next" name="button2_Next" class="btn btn-default">Close</button> -->
+                            </div>
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Query form-->
+
+<div class="modal fade" id="Query" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h3 class="modal-title" id="myModalLabel">Query</h3>
+            </div>
+            <div class="modal-body">
+                <form name="Addtable_form" class="form-horizontal">
+                    <fieldset>
+
+                        <!-- Textarea -->
+                        <div class="control-group">
+                            <h4><label class="control-label" for="query">Enter Query</label></h4>
+                            <div class="controls">
+                                <textarea rows="8" cols="80" id="query" name="query" ng-model="mymodel.query"></textarea>
+                            </div>
+                        </div>
+                    </fieldset>
+                </form>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" ng-click="runquery()">Excute</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- CREATE TABLE Persons
+( PersonID int,
+LastName varchar(255),
+FirstName varchar(255),
+Address varchar(255),
+City varchar(255) );  -->
+
+
+<!-- INSERT INTO Persons
+(PersonID ,LastName, FirstName , Address , City )
+VALUES ('123','John', 'Doe','New York','USA');  -->
