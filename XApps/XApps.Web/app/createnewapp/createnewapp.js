@@ -422,6 +422,7 @@
         $scope.app[0].children[0].children = [];
         $scope.app[0].children[1].children = [];
         $scope.app[0].children[2].children = [];
+        //$('#browser').empty().html(branches);
 
         var userName = $scope.githubUserName;
         var repoName = repo;
