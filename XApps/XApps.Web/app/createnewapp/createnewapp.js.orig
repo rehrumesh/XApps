@@ -1,4 +1,4 @@
-﻿app.controller('createnewapp', function ($scope, $compile, $q, $http, requestFactory, publishedAppsFactory, categoriesFactory) {
+﻿app.controller('createnewapp', function ($scope, $compile, $q, $http, requestFactory, AppsFactory, categoriesFactory, AppsByNameFactory) {
     $scope.devName = "Rumesh";
     $scope.path = "<li><span class='file'>BIZAPP.css</span></li>";
     $scope.githubUserName = "Xapps00";
@@ -8,12 +8,13 @@
     $scope.currentFileType = 0;     //0 HTML 1 CSS 2 JS
     $scope.currentFilePath = "src/";
     $scope.fileContent = "";
-<<<<<<< HEAD
-    $scope.showDetails = false;
-    $scope.showloading = false;
+    $scope.show_repo_list = false;
+    $scope.showloading_in = false;
+    $scope.showloading_out = false;
     $scope.appCategory;
     $scope.tempAppName = "App";
     $scope.tempdir = "Hello";
+    $scope.appDetails = {};
 
     $scope.createNewA = {
         AppName: "App",
@@ -37,15 +38,26 @@
     $scope.isEditingApp = false;
 
     $scope.allcategories = categoriesFactory.query();
-    $scope.allapps = publishedAppsFactory.query({aName:"slideshare"});
-=======
-    $scope.show_repo_list = false;
-    $scope.showloading_in = false;
-    $scope.showloading_out = false;
->>>>>>> f48b4812a9e78f45ed64d6e34a8e5b478eb1a131
+    //$scope.allapps = AppsFactory.query({aName:"slideshare"});
+    $scope.allapps = AppsFactory.query();
 
-    ace.require("ace/ext/language_tools");
-    var editor = ace.edit("editor");
+    var editor;
+
+    $scope.onViewLoaded = function() {
+        ace.require("ace/ext/language_tools");
+        editor = ace.edit("editor");
+
+        editor.setTheme("ace/theme/Eclipse");
+        editor.getSession().setMode("ace/mode/javascript");
+
+        editor.setShowPrintMargin(false);
+        editor.setReadOnly(false);
+
+        editor.setOptions({
+            enableBasicAutocompletion: true,
+            enableSnippets: true
+        });
+    };
 
     $scope.update = function() {
         
@@ -115,9 +127,10 @@
         $scope.githubRepoName = $scope.createNewA.AppName;
         $scope.createNewA.RepoName = $scope.createNewA.AppName;
         //$scope.createNewA.CategoryName = "News";
-        alert(JSON.stringify($scope.createNewA));
-        publishedAppsFactory.save($scope.createNewA, function() {
+        //alert(JSON.stringify($scope.createNewA));
+        AppsFactory.save($scope.createNewA, function() {
             makeToast("App created successfully", 2);
+            editor.setReadOnly(false);
             //$('#myModal2').popover('hide');
 
         }); 
@@ -125,10 +138,7 @@
 
 
     };
-
     
-
-
     $scope.saveGit = function () {
         var gh = new Octokit({
             username: $scope.githubUserName,
@@ -148,7 +158,7 @@
                     } else if (start == 0) {
                         start++;
                     }
-                    commitJSON += '"' + $scope.app[0].children[i].children[j].path + $scope.app[0].children[i].children[j].fileName + '":"' + $scope.app[0].children[i].children[j].context+'"';
+                    commitJSON += '"' + $scope.app[0].children[i].children[j].path + $scope.app[0].children[i].children[j].fileName + '":"' + $scope.app[0].children[i].children[j].context + '"';
 
                 } else {
 
@@ -200,29 +210,68 @@
 
                     branch.writeMany(commitObj, message)
                         .then(function () {
-                        makeToast("Successfully Commited", 2);
-                    });
+                            makeToast("Successfully Commited", 2);
+                        });
 
 
-        }
+                }
             );
 
 
         } else {
             var repo = gh.getRepo($scope.githubUserName, $scope.githubRepoName);
-            var branch = repo.getBranch();
+            //alert(JSON.stringify(repo));
+            //alert(repo.branch);
+            if (repo.branch == null) {
+                var repoObj = {
+                    "name": $scope.githubRepoName,
+                    "description": "Created using XApps",
+                    "homepage": "https://github.com",
+                    "private": false,
+                    "has_issues": true,
+                    "has_wiki": true,
+                    "has_downloads": true,
+                    "auto_init": true
+                };
 
-            $scope.fileContent = editor.getValue();
-            var message = prompt("Commit Message");
-            if (message == null) {
-                message = "Default commit message";
+
+                var user = gh.getUser();
+                user.createRepo($scope.githubRepoName, repoObj).then(
+                    function () {
+                        var repo = gh.getRepo($scope.githubUserName, $scope.githubRepoName);
+                        var branch = repo.getBranch();
+                        var isBinary = false;
+
+                        $scope.fileContent = editor.getValue();
+                        var message = prompt("Commit Message");
+                        if (message == null) {
+                            message = "Default commit message";
+                        }
+
+                        branch.writeMany(commitObj, message)
+                            .then(function () {
+                                makeToast("Successfully Commited", 2);
+
+                            });
+
+
+                    }
+                );
+            } else {
+                var branch = repo.getBranch();
+
+                $scope.fileContent = editor.getValue();
+                var message = prompt("Commit Message");
+                if (message == null) {
+                    message = "Default commit message";
+                }
+
+                var isBinary = false;
+                branch.writeMany(commitObj, message)
+                            .then(function () {
+                                makeToast("Successfully Commited", 2);
+                            });
             }
-
-            var isBinary = false;
-            branch.writeMany(commitObj, message)
-                        .then(function () {
-                            makeToast("Successfully Commited", 2);
-                        });
 
 
         }
@@ -412,17 +461,6 @@
 
         }
 
-        function decodeBase64(s) {
-            var e = {}, i, b = 0, c, x, l = 0, a, r = '', w = String.fromCharCode, L = s.length;
-            var A = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
-            for (i = 0; i < 64; i++) { e[A.charAt(i)] = i; }
-            for (x = 0; x < L; x++) {
-                c = e[s.charAt(x)]; b = (b << 6) + c; l += 6;
-                while (l >= 8) { ((a = (b >>> (l -= 8)) & 0xff) || (x < (L - 2))) && (r += w(a)); }
-            }
-            return r;
-        };
-
         var defer = $q.defer();
         defer.promise.then(function () {
 
@@ -544,9 +582,30 @@
 
     $scope.publishApp = function() {
         //modify app details on database
-        //http request to download files
-
-        requestFactory.getResponse($scope.githubRepoName,2);
+        var a = AppsByNameFactory.query({ appname: $scope.githubRepoName });
+        a.$promise.then(function(obj) {
+            var tempObj = {
+                AppID: obj.AppID,
+                AppName: obj.AppName,
+                AurthorID: obj.AurthorID,
+                CategoryID: obj.CategoryID,
+                UserCount: obj.UserCount,
+                RepoName: obj.RepoName,
+                LatestHash: obj.LatestHash,
+                isPublished: true,
+                description: obj.description
+            };
+            $scope.appDetails = tempObj;
+            //alert(JSON.stringify(tempObj));
+            
+            AppsFactory.update({id: obj.AppID}, tempObj, function() {
+                //makeToast("App details updated", 2);
+                requestFactory.getResponse($scope.githubRepoName, 2);
+            });
+        });
+        
+        //alert(JSON.stringify(a));
+        
 
     };
 
@@ -554,109 +613,69 @@
 
     $scope.updateAppDetails = function () { };
 
-    function makeToast(text, type) {
-        toastr.options = {
-            "closeButton": true,
-            "debug": false,
-            "positionClass": "toast-bottom-right",
-            "onclick": null,
-            "showDuration": "300",
-            "hideDuration": "1000",
-            "timeOut": "5000",
-            "extendedTimeOut": "1000",
-            "showEasing": "swing",
-            "hideEasing": "linear",
-            "showMethod": "fadeIn",
-            "hideMethod": "fadeOut"
-        };
-
-        switch (type) {
-            case 1:
-                toastr.info(text);
-                break;
-            case 2:
-                toastr.success(text);
-                break;
-            case 3:
-                toastr.error(text);
-                break;
-            case 4:
-                toastr.warning(text);
-                break;
-            default:
-                toastr.info(text);
-                break;
-        }
-    }
-
-});
-
+    
 <<<<<<< HEAD
-$('.popover-markup > .trigger').popover({
-    html: true,
-    title: function () {
-        return $(this).parent().find('.head').html();
-    },
-    content: function () {
-        return $(this).parent().find('.content').html();
-    },
-    container: 'body',
-    placement: 'bottom'
-});
-
-//add create new app menu
-=======
-$scope.getUser = function () {
-    $http.get("https://api.github.com/user")
-            .success(function (data) {
+    $scope.getUser = function() {
+        $http.get("https://api.github.com/user")
+            .success(function(data) {
                 $scope.userData = data;
-            }).error(function () {
+            }).error(function() {
                 alert("error login");
             });
-    /*
-    {
-  "login": "octocat",
-  "id": 1,
-  "avatar_url": "https://github.com/images/error/octocat_happy.gif",
-  "gravatar_id": "somehexcode",
-  "url": "https://api.github.com/users/octocat",
-  "html_url": "https://github.com/octocat",
-  "followers_url": "https://api.github.com/users/octocat/followers",
-  "following_url": "https://api.github.com/users/octocat/following{/other_user}",
-  "gists_url": "https://api.github.com/users/octocat/gists{/gist_id}",
-  "starred_url": "https://api.github.com/users/octocat/starred{/owner}{/repo}",
-  "subscriptions_url": "https://api.github.com/users/octocat/subscriptions",
-  "organizations_url": "https://api.github.com/users/octocat/orgs",
-  "repos_url": "https://api.github.com/users/octocat/repos",
-  "events_url": "https://api.github.com/users/octocat/events{/privacy}",
-  "received_events_url": "https://api.github.com/users/octocat/received_events",
-  "type": "User",
-  "site_admin": false,
-  "name": "monalisa octocat",
-  "company": "GitHub",
-  "blog": "https://github.com/blog",
-  "location": "San Francisco",
-  "email": "octocat@github.com",
-  "hireable": false,
-  "bio": "There once was...",
-  "public_repos": 2,
-  "public_gists": 1,
-  "followers": 20,
-  "following": 0,
-  "created_at": "2008-01-14T04:33:35Z",
-  "updated_at": "2008-01-14T04:33:35Z",
-  "total_private_repos": 100,
-  "owned_private_repos": 100,
-  "private_gists": 81,
-  "disk_usage": 10000,
-  "collaborators": 8,
-  "plan": {
-    "name": "Medium",
-    "space": 400,
-    "private_repos": 20,
-    "collaborators": 0
-  }
-}
-    */
-}
->>>>>>> f48b4812a9e78f45ed64d6e34a8e5b478eb1a131
+        $('.popover-markup > .trigger').popover({
+            html: true,
+            title: function() {
+                return $(this).parent().find('.head').html();
+            },
+            content: function() {
+                return $(this).parent().find('.content').html();
+            },
+            container: 'body',
+            placement: 'bottom'
+        });
+    };
+
+    $scope.ChangeTheme = function (theme1) {
+
+        ace.require("ace/ext/language_tools");
+        editor = ace.edit("editor");
+        var theme = theme1;
+        editor.setTheme("ace/theme/" + theme);
+        editor.getSession().setMode("ace/mode/javascript");
+        makeToast(" Theme Changed to " + theme + " successfully!", 2);
+
+    };
+
+    $scope.Search = function (searchWord) {
+
+        ace.require("ace/ext/language_tools");
+        editor = ace.edit("editor");
+        editor.find(searchWord, {
+            backwards: false,
+            wrap: false,
+            caseSensitive: false,
+            wholeWord: false,
+            regExp: false
+        });
+        editor.findNext();
+        editor.findPrevious();
+        makeToast(" Search Function!!! " + searchWord, 2);
+
+    };
+});
+=======
+    
+
+    $scope.gotoLine = function () {
+>>>>>>> origin/master
+
+        var lineNumber = prompt("Please enter the line number", "1");
+        editor.gotoLine(lineNumber);
+    }
+
+
+        
+
+    
+});
+

@@ -707,6 +707,7 @@
     <Content Include="Scripts\octokit\octokit.js" />
     <Content Include="Scripts\toastr.js" />
     <Content Include="Scripts\toastr.min.js" />
+    <Content Include="Scripts\ui-bootstrap-tpls-0.11.0.min.js" />
     <Content Include="Web.config" />
     <Content Include="Scripts\version.json" />
     <Content Include="Scripts\jquery-2.1.0.min.map" />
