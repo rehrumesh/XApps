@@ -48,19 +48,30 @@
 
     //rating $scope
 
+
+    
+
     $scope.rating = 0;
     $scope.ratings = [{
-        current: 5,
-        max: 10
-    }, {
-        current: 3,
+        current: 1,
         max: 5
     }];
 
     $scope.getSelectedRating = function (rating) {
         console.log(rating);
     }
+    
+    /*
+    $scope.RatingApp = function () {
+        RatingFactory.save($scope.ratingApp);
+    }
 
+    $scope.ratingApp = {
+        AppID: 1,
+        UserID: 1,
+        Rating: 2
+    };
+    */
     //rating $scope
 
 });

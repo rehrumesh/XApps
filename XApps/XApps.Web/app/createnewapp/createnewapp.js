@@ -24,7 +24,10 @@
         RepoName :"App",
         LatestHash: "",
         isPublished: false
-};
+    };
+
+
+
     //$scope.createNewA.AppName = "";
     //$scope.createNewA.CategoryName = "";
     //$scope.createNewA.AuthorID = "";

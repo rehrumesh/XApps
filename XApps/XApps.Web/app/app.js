@@ -144,7 +144,12 @@ app.factory('userByUserNameFactory', function ($resource) {
     return $resource('http://localhost:12666/api/user/userbyusername/:username', null, { 'query': { method: 'GET', isArray: false } });
 });
 
-
+//new app factory for rating
+/*
+app.factory('RatingFactory', function ($resource) {
+    return $resource('http://localhost:12666/api/rating/:id', { id: '@id' }, { update: { method: 'POST' } });//, query: { method: 'GET' }
+});
+*/
 // type : 1 info 2 success 3 fail 4 warning
 function makeToast(text, type) {
     toastr.options = {
