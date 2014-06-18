@@ -68,7 +68,6 @@
     <Content Include="app\createnewapp\createnewapp.html" />
     <Content Include="app\createnewapp\createnewapp.js" />
     <Content Include="app\maincontroller.js" />
-    <Content Include="Content\Custom\customapps.css" />
     <Content Include="Content\Custom\treeview\document.png" />
     <Content Include="Content\Custom\treeview\folder-horizontal.png" />
     <Content Include="Content\Custom\treeview\images\ajax-loader.gif" />
@@ -93,9 +92,7 @@
     <Content Include="Content\Custom\treeview\screen.css" />
     <Content Include="Content\Custom\treeview\toggle-small-expand.png" />
     <Content Include="Content\Custom\treeview\toggle-small.png" />
-    <Content Include="Content\images\404error.png" />
-    <Content Include="app\ErrorPage\error.html" />
-    <Content Include="Content\popup.css" />
+    <Content Include="Database_form.html" />
     <Content Include="Scripts\Custom\src\ace.js" />
     <Content Include="Scripts\Custom\src\ext-beautify.js" />
     <Content Include="Scripts\Custom\src\ext-chromevox.js" />
@@ -708,10 +705,10 @@
     <None Include="Scripts\jquery-2.1.0.intellisense.js" />
     <Content Include="Scripts\jquery-2.1.0.js" />
     <Content Include="Scripts\jquery-2.1.0.min.js" />
-    <Content Include="Scripts\oauth.js" />
     <Content Include="Scripts\octokit\octokit.js" />
     <Content Include="Scripts\toastr.js" />
     <Content Include="Scripts\toastr.min.js" />
+    <Content Include="Scripts\ui-bootstrap-tpls-0.11.0.min.js" />
     <Content Include="Web.config" />
     <Content Include="Scripts\version.json" />
     <Content Include="Scripts\jquery-2.1.0.min.map" />
@@ -725,6 +722,12 @@
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\XApps.Model\XApps.Model.csproj">
+      <Project>{1ce8121d-32cb-493e-adb7-d0760dd5df0c}</Project>
+      <Name>XApps.Model</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup />
   <PropertyGroup>

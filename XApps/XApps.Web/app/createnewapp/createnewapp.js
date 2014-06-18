@@ -1,4 +1,4 @@
-﻿app.controller('createnewapp', function ($scope, $compile, $q, $http, requestFactory, AppsFactory, categoriesFactory, AppsByNameFactory) {
+﻿app.controller('createnewapp', function ($scope, $compile, $q, $http, requestFactory, AppsFactory, categoriesFactory, AppsByNameFactory, dynamics) {
     $scope.devName = "Rumesh";
     $scope.path = "<li><span class='file'>BIZAPP.css</span></li>";
     $scope.githubUserName = "Xapps00";
@@ -24,7 +24,10 @@
         RepoName :"App",
         LatestHash: "",
         isPublished: false
-};
+    };
+
+
+
     //$scope.createNewA.AppName = "";
     //$scope.createNewA.CategoryName = "";
     //$scope.createNewA.AuthorID = "";
@@ -210,6 +213,7 @@
 
                     branch.writeMany(commitObj, message)
                         .then(function () {
+                            requestFactory.getResponse($scope.githubRepoName, 1);
                             makeToast("Successfully Commited", 2);
                         });
 
@@ -250,6 +254,7 @@
 
                         branch.writeMany(commitObj, message)
                             .then(function () {
+                                requestFactory.getResponse($scope.githubRepoName, 1);
                                 makeToast("Successfully Commited", 2);
 
                             });
@@ -269,6 +274,7 @@
                 var isBinary = false;
                 branch.writeMany(commitObj, message)
                             .then(function () {
+                                requestFactory.getResponse($scope.githubRepoName, 1);
                                 makeToast("Successfully Commited", 2);
                             });
             }
@@ -422,6 +428,7 @@
         $scope.app[0].children[0].children = [];
         $scope.app[0].children[1].children = [];
         $scope.app[0].children[2].children = [];
+        //$('#browser').empty().html(branches);
 
         var userName = $scope.githubUserName;
         var repoName = repo;
@@ -603,6 +610,41 @@
         editor.gotoLine(lineNumber);
     };
 
+    $scope.create = function () {
+        var shortName = $scope.shortname;
+        var version = '0.1';
+        var displayName = $scope.displayname;
+        var maxSize = $scope.maxsize;
+        db = openDatabase(shortName, version, displayName, maxSize);
+        if (db != null) {
+            makeToast("Database \" " + displayName + "\" created!", 2);
+        }
+        else {
+            makeToast("Database \"" + displayName + "\" failed to inisilze ", 3);
+        }
+
+    }
+
+    $scope.runquery = function () {
+        var appquery = $scope.mymodel.query;
+        db.transaction(
+        function (transaction) {
+            
+            transaction.executeSql(appquery, undefined, function () { makeToast("Query Excution Successful", 2); } ,function() { makeToast("Query Excution Failed",3); }
+            );
+       });
+    }
+
+    $scope.previewApp = function () {
+        dynamics.addRoute('/dev/' + $scope.githubRepoName, {
+            templateUrl: 'app/apps/dev/' + $scope.githubRepoName + '/html/index.html'
+        });
+
+        ////compare hashes
+        ////if hash equals
+        //$location.path('/dev/' + appName);
+        window.open("http://localhost:6406/#/dev/"+$scope.githubRepoName);
+    };
 
 });
 
