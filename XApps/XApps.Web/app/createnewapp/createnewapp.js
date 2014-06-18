@@ -1,4 +1,4 @@
-﻿app.controller('createnewapp', function ($scope, $compile, $q, $http, requestFactory, AppsFactory, categoriesFactory, AppsByNameFactory) {
+﻿app.controller('createnewapp', function ($scope, $compile, $q, $http, requestFactory, AppsFactory, categoriesFactory, AppsByNameFactory, dynamics) {
     $scope.devName = "Rumesh";
     $scope.path = "<li><span class='file'>BIZAPP.css</span></li>";
     $scope.githubUserName = "Xapps00";
@@ -213,6 +213,7 @@
 
                     branch.writeMany(commitObj, message)
                         .then(function () {
+                            requestFactory.getResponse($scope.githubRepoName, 1);
                             makeToast("Successfully Commited", 2);
                         });
 
@@ -253,6 +254,7 @@
 
                         branch.writeMany(commitObj, message)
                             .then(function () {
+                                requestFactory.getResponse($scope.githubRepoName, 1);
                                 makeToast("Successfully Commited", 2);
 
                             });
@@ -272,6 +274,7 @@
                 var isBinary = false;
                 branch.writeMany(commitObj, message)
                             .then(function () {
+                                requestFactory.getResponse($scope.githubRepoName, 1);
                                 makeToast("Successfully Commited", 2);
                             });
             }
@@ -631,6 +634,17 @@
             );
        });
     }
+
+    $scope.previewApp = function () {
+        dynamics.addRoute('/dev/' + $scope.githubRepoName, {
+            templateUrl: 'app/apps/dev/' + $scope.githubRepoName + '/html/index.html'
+        });
+
+        ////compare hashes
+        ////if hash equals
+        //$location.path('/dev/' + appName);
+        window.open("http://localhost:6406/#/dev/"+$scope.githubRepoName);
+    };
 
 });
 
