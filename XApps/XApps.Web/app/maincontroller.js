@@ -22,8 +22,8 @@
     */
     $rootScope.user = { "login": "Login with Github", "avatar_url": "" };
     $rootScope.userAccess = "undefined";
-    $scope.showLogin = true;
-    $scope.showLogout = false;
+    $rootScope.showLogin = true;
+    $rootScope.showLogout = false;
 
     $rootScope.user_authenticate = function () {
         OAuth.initialize('gVSwp4XmyIU6A-VfLSeA6Njh_2Q');
@@ -33,10 +33,10 @@
 
             $http.get("https://api.github.com/user?access_token=" + $scope.userAccess.access_token)
                 .success(function(data) {
-                    $scope.user = data;
+                    $rootScope.user = data;
                             $scope.showLogin = false;
                             $scope.showLogout = true;
-                            console.log(data.login);
+                            console.log(JSON.stringify(data));
                             var usr = userByUserNameFactory.query({ username: data.login });
 
                 //console.log(usr);
@@ -72,9 +72,9 @@
 
 
     $rootScope.user_logout = function () {
-        $scope.user = { "login": "Login with Github", "avatar_url": "" };
-        $scope.userAccess = "undefined";
-        $scope.showLogin = true;
-        $scope.showLogout = false;
+        $rootScope.user = { "login": "Login with Github", "avatar_url": "" };
+        $rootScope.userAccess = "undefined";
+        $rootScope.showLogin = true;
+        $rootScope.showLogout = false;
     };
 });
