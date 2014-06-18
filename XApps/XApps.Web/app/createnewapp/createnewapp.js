@@ -603,6 +603,30 @@
         editor.gotoLine(lineNumber);
     };
 
+    $scope.create = function () {
+        var shortName = $scope.shortname;
+        var version = '0.1';
+        var displayName = $scope.displayname;
+        var maxSize = $scope.maxsize;
+        db = openDatabase(shortName, version, displayName, maxSize);
+        if (db != null) {
+            makeToast("Database \" " + displayName + "\" created!", 2);
+        }
+        else {
+            makeToast("Database \"" + displayName + "\" failed to inisilze ", 3);
+        }
+
+    }
+
+    $scope.runquery = function () {
+        var appquery = $scope.mymodel.query;
+        db.transaction(
+        function (transaction) {
+            
+            transaction.executeSql(appquery, undefined, function () { makeToast("Query Excution Successful", 2); } ,function() { makeToast("Query Excution Failed",3); }
+            );
+       });
+    }
 
 });
 
