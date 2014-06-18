@@ -1,8 +1,8 @@
 ﻿app.controller('maincontroller', function ($scope, $compile, $http, userFactory, userByUserNameFactory, $rootScope) {
-    $scope.onSideBarLoaded = function() {
+    $scope.onSideBarLoaded = function () {
 
         $("#browser").treeview({
-            toggle: function() {
+            toggle: function () {
                 console.log("%s was toggled.", $(this).find(">span").text());
             }
         });
@@ -27,24 +27,24 @@
 
     $rootScope.user_authenticate = function () {
         OAuth.initialize('gVSwp4XmyIU6A-VfLSeA6Njh_2Q');
-        OAuth.popup('github', function(error, result) {
+        OAuth.popup('github', function (error, result) {
 
             $scope.userAccess = result;
 
             $http.get("https://api.github.com/user?access_token=" + $scope.userAccess.access_token)
-                .success(function(data) {
+                .success(function (data) {
                     $rootScope.user = data;
-                            $scope.showLogin = false;
-                            $scope.showLogout = true;
-                            console.log(JSON.stringify(data));
-                            var usr = userByUserNameFactory.query({ username: data.login });
+                    $rootScope.showLogin = false;
+                    $rootScope.showLogout = true;
+                    console.log(JSON.stringify(data));
+                    var usr = userByUserNameFactory.query({ username: data.login });
 
-                //console.log(usr);
-                    usr.$promise.then(function(tempdata) {
+                    //console.log(usr);
+                    usr.$promise.then(function (tempdata) {
                         console.log(tempdata);
                         console.info(JSON.stringify(data));
-                        makeToast("Hi "+data.login +".",1);
-                    }, function(reason) {
+                        makeToast("Hi " + data.login + ".", 1);
+                    }, function (reason) {
                         console.log("User not found. Adding to database");
                         var usrObj = {
                             "UserID": 1,
@@ -55,14 +55,14 @@
                             "Contact": null
                         };
                         var userInsert = userFactory.save(usrObj);
-                        userInsert.$promise.then(function(result) {
+                        userInsert.$promise.then(function (result) {
                             makeToast("Hi " + data.login + ". Welcome to XApps. Please update your profile", 2);
-                        }, function(result) {
+                        }, function (result) {
                             makeToast("Could not create an account for you", 4);
                         });
                     });
-                    
-                }).error(function() {
+
+                }).error(function () {
                     console.error("Error loading user details");
                 });
         });
