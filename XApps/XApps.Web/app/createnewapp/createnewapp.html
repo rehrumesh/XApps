@@ -64,9 +64,32 @@
 
 
             </li>
+            
+            <li class="dropdown" style="cursor:pointer">
+                <a data-toggle="dropdown" class="dropdown-toggle">Font Size<b class="caret"></b></a>
+                <ul class="dropdown-menu scrollable-menu" role="menu">
+                    <li><a data-ng-click="ChangeSize('12')">12</a></li>
+                    <li><a data-ng-click="ChangeSize('14')">14</a></li>
+                    <li><a data-ng-click="ChangeSize('16')">16</a></li>
+                    <li><a data-ng-click="ChangeSize('18')">18</a></li>
+                    <li><a data-ng-click="ChangeSize('20')">20</a></li>
+                    <li><a data-ng-click="ChangeSize('22')">22</a></li>
+                    <li><a data-ng-click="ChangeSize('24')">24</a></li>
+
+
+                </ul>
+            </li>
+            
+            <li>
+                <a data-ng-click="Comment()">Comment</a>
+            </li>
 
             <li>
-                <a data-ng-click="previewApp()">
+                <a data-ng-click="Indent()">Indent</a>
+            </li>
+
+            <li>
+                <a ng-if="isRepoOnGitHub" data-ng-click="previewApp()">
                     Preview
                 </a>
             </li>
@@ -135,7 +158,8 @@
 </div>
 
 <!-- Modal -->
-<div class="modal fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal fade" id="
+     " tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">

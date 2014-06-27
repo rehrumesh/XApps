@@ -5,11 +5,11 @@
 </section>
 <section class="content">
     <div class="row">
-        <div class="col-lg-3 col-xs-6" ng-repeat="pApp in allapps" ng-click="defineRoute(pApp.AppName)" ng-if="pApp.isPublished" >
-            
+        <div class="col-lg-3 col-xs-6" ng-repeat="pApp in allapps" ng-if="pApp.isPublished">
+
             <!--can not give 'a' inside another 'a'-->
             <div class="small-box bg-aqua">
-                <div class="inner">
+                <div class="inner" ng-click="defineRoute(pApp.AppName)">
                     <h1>
                         {{pApp.AppName}}
                     </h1>
@@ -20,29 +20,51 @@
                         <!--some introduction-->
                         Available
                     </p>
-
                     <!--change here add star rating-->
 
                 </div>
 
-                <a href="#" class="small-box-footer">
-                    More info <i class="fa fa-arrow-circle-right"></i>
+                <a data-toggle="modal" data-target="#popup" class="small-box-footer">
+                    More Info.. <i class="fa fa-arrow-circle-right"></i>
                 </a>
                 <div class="small-box-footer">
-                    <!--<span ng-repeat="rating in ratings">
-                        <div star-rating rating-value="rating.current" max="rating.max" on-rating-selected="getSelectedRating(rating)"></div>
-                    </span>-->
                     <div class="rating">
                         <span>☆</span><span>☆</span><span>☆</span><span>☆</span><span>☆</span>
                     </div>
                 </div>
+            </div>
+            <div class="modal fade" id="popup" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                            <h4 class="modal-title" id="H1">App Info</h4>
+                        </div>
+                        <div class="modal-body">
+                            App Name :   {{pApp.AppName}}
+                            <br />
+                            Rate App
 
+
+                            <div class="rating">
+                                <span>☆</span><span>☆</span><span>☆</span><span>☆</span><span>☆</span>
+                            </div>
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
             </div>
 
 
         </div>
 
-        
 
     </div>
+
+
+
+    
 </section>

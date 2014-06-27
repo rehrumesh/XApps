@@ -1,4 +1,4 @@
-﻿app.controller('createnewapp', function ($scope, $compile, $q, $http, requestFactory, AppsFactory, categoriesFactory, AppsByNameFactory, dynamics) {
+﻿app.controller('createnewapp', function ($scope, $compile, $q, $http,$location, requestFactory, AppsFactory, categoriesFactory, AppsByNameFactory, dynamics) {
     $scope.devName = "Rumesh";
     $scope.path = "<li><span class='file'>BIZAPP.css</span></li>";
     $scope.githubUserName = "Xapps00";
@@ -15,13 +15,15 @@
     $scope.tempAppName = "App";
     $scope.tempdir = "Hello";
     $scope.appDetails = {};
+    $scope.isRepoOnGitHub = false;
+
 
     $scope.createNewA = {
         AppName: "App",
         CategoryID: 1,
         AuthorID: "1",
         UserCount: 2,
-        RepoName :"App",
+        RepoName: "App",
         LatestHash: "",
         isPublished: false
     };
@@ -46,7 +48,7 @@
 
     var editor;
 
-    $scope.onViewLoaded = function() {
+    $scope.onViewLoaded = function () {
         ace.require("ace/ext/language_tools");
         editor = ace.edit("editor");
 
@@ -62,8 +64,8 @@
         });
     };
 
-    $scope.update = function() {
-        
+    $scope.update = function () {
+
         $scope.createNewA.CategoryID = $scope.appCategory.CategoryID;
         console.log($scope.createNewA.CategoryID + "    " + $scope.createNewA.AppName);
         //console.log($scope.createNewA.CategoryName);
@@ -104,8 +106,8 @@
     //Filetree : 1 -> CSS
     //Filetree : 2 -> JS
 
-    
-    
+
+
 
 
     function getFileFromApp(fileName, fileTree) {
@@ -124,30 +126,33 @@
 
     }
 
-    $scope.createNewApp = function() {
+    $scope.createNewApp = function () {
         $scope.isEditingApp = true;
         //console.log($scope.createNewA);
         $scope.githubRepoName = $scope.createNewA.AppName;
         $scope.createNewA.RepoName = $scope.createNewA.AppName;
         //$scope.createNewA.CategoryName = "News";
         //alert(JSON.stringify($scope.createNewA));
-        AppsFactory.save($scope.createNewA, function() {
+        AppsFactory.save($scope.createNewA, function () {
             makeToast("App created successfully", 2);
             editor.setReadOnly(false);
-            //$('#myModal2').popover('hide');
+            $('#myModal2').popover('hide');
 
-        }); 
-        
+
+        });
+
 
 
     };
-    
+
+
+
     $scope.saveGit = function () {
         var gh = new Octokit({
             username: $scope.githubUserName,
             password: $scope.githubPassword
         });
-
+        console.log("savegit : 1");
         //create commite object
         var commitJSON = "{";
         var start = 0;
@@ -174,7 +179,7 @@
         var commitObj = JSON.parse(commitJSON);
         //alert(commitObj);
 
-
+        console.log("savegit: 2");
         if ($scope.githubRepoName == "") {
             var repoName = prompt("Please enter the App/repository name");
             if (repoName == null) {
@@ -210,10 +215,11 @@
                     if (message == null) {
                         message = "Default commit message";
                     }
-
+                    $scope.showloading_in = true;
                     branch.writeMany(commitObj, message)
                         .then(function () {
                             requestFactory.getResponse($scope.githubRepoName, 1);
+                            $scope.showloading_in = false;
                             makeToast("Successfully Commited", 2);
                         });
 
@@ -223,9 +229,11 @@
 
 
         } else {
+            console.log("savegit: 3");
             var repo = gh.getRepo($scope.githubUserName, $scope.githubRepoName);
             //alert(JSON.stringify(repo));
             //alert(repo.branch);
+            console.log("savegit: 4");
             if (repo.branch == null) {
                 var repoObj = {
                     "name": $scope.githubRepoName,
@@ -240,8 +248,32 @@
 
 
                 var user = gh.getUser();
-                user.createRepo($scope.githubRepoName, repoObj).then(
+                console.log("savegit: 5");
+
+
+
+                if ($scope.isRepoOnGitHub) {
+                    var branch = repo.getBranch();
+                    console.log("savegit: 8");
+                    $scope.fileContent = editor.getValue();
+                    var message = prompt("Commit Message");
+                    if (message == null) {
+                        message = "Default commit message";
+                    }
+
+                    var isBinary = false;
+                    $scope.showloading_in = true;
+                    branch.writeMany(commitObj, message)
+                                .then(function () {
+                                    console.log("savegit: 9");
+                                    requestFactory.getResponse($scope.githubRepoName, 1);
+                                    $scope.showloading_in = false;
+                                    makeToast("Successfully Commited", 2);
+                                });
+                } else {
+                    user.createRepo($scope.githubRepoName, repoObj).then(
                     function () {
+                        console.log("savegit: 6");
                         var repo = gh.getRepo($scope.githubUserName, $scope.githubRepoName);
                         var branch = repo.getBranch();
                         var isBinary = false;
@@ -251,10 +283,12 @@
                         if (message == null) {
                             message = "Default commit message";
                         }
-
+                        console.log("savegit: 7");
+                        $scope.showloading_in = true;
                         branch.writeMany(commitObj, message)
                             .then(function () {
                                 requestFactory.getResponse($scope.githubRepoName, 1);
+                                $scope.showloading_in = false;
                                 makeToast("Successfully Commited", 2);
 
                             });
@@ -262,9 +296,12 @@
 
                     }
                 );
+                }
+
+                
             } else {
                 var branch = repo.getBranch();
-
+                console.log("savegit: 8");
                 $scope.fileContent = editor.getValue();
                 var message = prompt("Commit Message");
                 if (message == null) {
@@ -272,9 +309,12 @@
                 }
 
                 var isBinary = false;
+                $scope.showloading_in = true;
                 branch.writeMany(commitObj, message)
                             .then(function () {
+                                console.log("savegit: 9");
                                 requestFactory.getResponse($scope.githubRepoName, 1);
+                                $scope.showloading_in = false;
                                 makeToast("Successfully Commited", 2);
                             });
             }
@@ -284,7 +324,7 @@
 
 
     };
-    
+
     $scope.saveFile = function () {
         //alert('C File :' + $scope.currentFile + '  type: ' + $scope.currentFileType);
         for (var tmp in $scope.app[0].children[$scope.currentFileType].children) {
@@ -311,7 +351,7 @@
             hasChanged: true,
             hash: "",
             path: "html/"
-            
+
         });
 
         var html = "<li><span class='file'> <a ng-click=\"htmlClicked(\'" + fName + "\')\">" + fName + "</a></span></li>";
@@ -348,7 +388,7 @@
 
     $scope.newJsFile = function () {
         var fName = prompt("Enter the file name", "myfile.js");
-        if (fName == null || fName =="") {
+        if (fName == null || fName == "") {
             return;
         }
         $scope.currentFile = fName;
@@ -371,8 +411,8 @@
     $scope.htmlClicked = function (tmpFile) {
         //alert(tmpFile);
         $scope.currentFile = tmpFile;
-        
-        makeToast("Current working file : " + $scope.currentFile,1);
+
+        makeToast("Current working file : " + $scope.currentFile, 1);
         editor.getSession().setMode("ace/mode/html");
         //search file
         var fileObj = getFileFromApp(tmpFile, 0);
@@ -417,7 +457,7 @@
 
             }).error(function () {
                 alert("error loading repo");
-                makeToast("error loading repo",3);
+                makeToast("error loading repo", 3);
                 $scope.showloading_in = false;
             });
     };
@@ -439,6 +479,8 @@
 
         $http.get("https://api.github.com/repos/" + userName + "/" + repoName + "/git/trees/master?recursive=1")
             .success(function (data) {
+                $scope.githubRepoName = repoName;
+                $scope.isRepoOnGitHub = true;
                 repoRequest(data);
             }).error(function () {
                 //alert("error loading repo");
@@ -541,11 +583,11 @@
 
 
     };
-        
-    $scope.publishApp = function() {
+
+    $scope.publishApp = function () {
         //modify app details on database
         var a = AppsByNameFactory.query({ appname: $scope.githubRepoName });
-        a.$promise.then(function(obj) {
+        a.$promise.then(function (obj) {
             var tempObj = {
                 AppID: obj.AppID,
                 AppName: obj.AppName,
@@ -559,15 +601,15 @@
             };
             $scope.appDetails = tempObj;
             //alert(JSON.stringify(tempObj));
-            
-            AppsFactory.update({id: obj.AppID}, tempObj, function() {
+
+            AppsFactory.update({ id: obj.AppID }, tempObj, function () {
                 //makeToast("App details updated", 2);
                 requestFactory.getResponse($scope.githubRepoName, 2);
             });
         });
-        
+
         //alert(JSON.stringify(a));
-        
+
 
     };
 
@@ -575,7 +617,7 @@
 
     $scope.updateAppDetails = function () { };
 
-    
+
     $scope.ChangeTheme = function (theme1) {
 
         ace.require("ace/ext/language_tools");
@@ -587,7 +629,7 @@
 
     };
 
-    $scope.Search = function(searchWord) {
+    $scope.Search = function (searchWord) {
 
         ace.require("ace/ext/language_tools");
         editor = ace.edit("editor");
@@ -604,13 +646,13 @@
     };
 
 
-    $scope.gotoLine = function() {
+    $scope.gotoLine = function () {
 
         var lineNumber = prompt("Please enter the line number", "1");
         editor.gotoLine(lineNumber);
     };
 
-    $scope.create = function () {
+    $scope.create = function() {
         var shortName = $scope.shortname;
         var version = '0.1';
         var displayName = $scope.displayname;
@@ -618,32 +660,50 @@
         db = openDatabase(shortName, version, displayName, maxSize);
         if (db != null) {
             makeToast("Database \" " + displayName + "\" created!", 2);
-        }
-        else {
+        } else {
             makeToast("Database \"" + displayName + "\" failed to inisilze ", 3);
         }
 
-    }
+    };
 
-    $scope.runquery = function () {
+    $scope.runquery = function() {
         var appquery = $scope.mymodel.query;
         db.transaction(
-        function (transaction) {
-            
-            transaction.executeSql(appquery, undefined, function () { makeToast("Query Excution Successful", 2); } ,function() { makeToast("Query Excution Failed",3); }
-            );
-       });
-    }
+            function(transaction) {
+
+                transaction.executeSql(appquery, undefined, function() { makeToast("Query Excution Successful", 2); }, function() { makeToast("Query Excution Failed", 3); }
+                );
+            });
+    };
 
     $scope.previewApp = function () {
-        dynamics.addRoute('/dev/' + $scope.githubRepoName, {
-            templateUrl: 'app/apps/dev/' + $scope.githubRepoName + '/html/index.html'
-        });
+        //dynamics.addRoute('/dev/' + $scope.githubRepoName, {
+        //    templateUrl: 'app/apps/dev/' + $scope.githubRepoName + '/html/index.html'
+        //});
 
         ////compare hashes
         ////if hash equals
-        //$location.path('/dev/' + appName);
-        window.open("http://localhost:6406/#/dev/"+$scope.githubRepoName);
+        
+        var re = $scope.githubRepoName;
+        window.open("http://localhost:6406/#/dev/" + $scope.githubRepoName);
+        //$location.path('/dev/' + $scope.githubRepoName);
+    };
+
+    $scope.ChangeSize = function (size) {
+
+        document.getElementById('editor').style.fontSize = size + 'px';
+    };
+
+    $scope.Comment = function () {
+        ace.require("ace/ext/language_tools");
+        editor = ace.edit("editor");
+        editor.toggleCommentLines();
+    };
+
+    $scope.Indent = function () {
+        ace.require("ace/ext/language_tools");
+        editor = ace.edit("editor");
+        editor.indent();
     };
 
 });

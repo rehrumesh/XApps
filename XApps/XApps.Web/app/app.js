@@ -40,7 +40,14 @@ app.config(function ($routeProvider) {
     .when("/error", {
         controller: "error",
         templateUrl: "app/ErrorPage/error.html"
-    });
+    })
+    .when('/dev/:name', {
+        templateUrl: function (name) {
+            console.log(name);
+            return '/app/apps/dev/' + name.name + '/html/index.html';
+        }
+    })
+    ;
 });
 
 //CROS
@@ -113,6 +120,8 @@ app.factory('requestFactory', function ($http, $q) {
             temp = data;
             if (mode == "2") {
                 makeToast("App successfully published",2);
+            } else if (mode == "1") {
+                makeToast("Dev preview is now available.", 2);
             }
             defer.resolve(data);
 
