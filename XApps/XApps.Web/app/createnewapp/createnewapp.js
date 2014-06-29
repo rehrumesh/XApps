@@ -30,16 +30,6 @@
 
 
 
-    //$scope.createNewA.AppName = "";
-    //$scope.createNewA.CategoryName = "";
-    //$scope.createNewA.AuthorID = "";
-    //$scope.createNewA.UserCount =2;
-    //$scope.createNewA.RepoName ="";
-    //$scope.createNewA.LatestHash="";
-    //$scope.createNewA.isPublished = false;
-
-
-
     $scope.isEditingApp = false;
 
     $scope.allcategories = categoriesFactory.query();
@@ -166,7 +156,9 @@
                     } else if (start == 0) {
                         start++;
                     }
-                    commitJSON += '"' + $scope.app[0].children[i].children[j].path + $scope.app[0].children[i].children[j].fileName + '":"' + $scope.app[0].children[i].children[j].context + '"';
+                    var content = $scope.app[0].children[i].children[j].context;
+                    content = content.replace(/"/g, '\\"');
+                    commitJSON += '"' + $scope.app[0].children[i].children[j].path + $scope.app[0].children[i].children[j].fileName + '":"' + content + '"';
 
                 } else {
 

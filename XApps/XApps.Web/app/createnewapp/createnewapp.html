@@ -14,7 +14,7 @@
             <li class="dropdown" style="cursor:pointer">
                 <a data-toggle="dropdown" class="dropdown-toggle">File<b class="caret"></b></a>
                 <ul class="dropdown-menu">
-                    <li ng-show="!isEditingApp"><a data-toggle="modal" data-target="#myModal2">Create new app</a></li>
+                    <li ng-show="!isEditingApp"><a data-toggle="modal" data-target="#myModal2" data-ng-click="createNewApp">Create new app</a></li>
                     <li class="dropdown-submenu">
                         <a>New File</a>
                         <ul class="dropdown-menu">
@@ -306,6 +306,7 @@
         </div>
     </div>
 </div>
+
 <!-- CREATE TABLE Persons
 ( PersonID int,
 LastName varchar(255),
