@@ -3,7 +3,7 @@
     <div class="navbar-left">
         <ul class="nav navbar-nav">
             <li>
-                <a onclick="sidebar1show(), sidebar2hide();" href="#/">
+                <a onclick="sidebar1show(), sidebar2hide();" href="#/" data-ng-click="home()">
                     <i class="fa fa-home"></i> <span>Home</span>
 
                 </a>
@@ -14,7 +14,7 @@
             <li class="dropdown" style="cursor:pointer">
                 <a data-toggle="dropdown" class="dropdown-toggle">File<b class="caret"></b></a>
                 <ul class="dropdown-menu">
-                    <li ng-show="!isEditingApp"><a data-toggle="modal" data-target="#myModal2" data-ng-click="createNewApp">Create new app</a></li>
+                    <li ng-show="!isEditingApp"><a data-toggle="modal" data-target="#myModal2">Create new app</a></li>
                     <li class="dropdown-submenu">
                         <a>New File</a>
                         <ul class="dropdown-menu">
@@ -158,8 +158,7 @@
 </div>
 
 <!-- Modal -->
-<div class="modal fade" id="
-     " tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -185,7 +184,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-success" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" data-ng-click="createNewApp()">Create</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal" data-ng-click="createNewApp()">Create</button>
             </div>
         </div>
     </div>

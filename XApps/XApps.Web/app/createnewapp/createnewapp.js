@@ -46,7 +46,7 @@
         editor.getSession().setMode("ace/mode/javascript");
 
         editor.setShowPrintMargin(false);
-        editor.setReadOnly(false);
+        editor.setReadOnly(true);
 
         editor.setOptions({
             enableBasicAutocompletion: true,
@@ -97,8 +97,47 @@
     //Filetree : 2 -> JS
 
 
+    $scope.home = function() {
+        $scope.app = [
+            {
+                appName: "newapp",
+                children: [
+                    {
+                        folderName: "HTML",
+                        children: [
+                            
+                        ]
+                    },
 
+                    {
+                        folderName: "CSS",
+                        children: []
+                    },
 
+                    {
+                        folderName: "Javascript",
+                        children: []
+                    }
+                ]
+            }
+        ];
+        $scope.githubRepoName = "";
+        $scope.currentFile = "";
+        $scope.currentFileType = 0;     //0 HTML 1 CSS 2 JS
+        $scope.currentFilePath = "";
+        $scope.fileContent = "";
+        $scope.show_repo_list = false;
+        $scope.appCategory = null;
+        $scope.appDetails = {};
+        $scope.isRepoOnGitHub = false;
+
+        
+        $("ul#htmlfile").empty();
+        $("ul#cssfile").empty();
+        $("ul#jsfile").empty();
+        editor.setReadOnly(true);
+        editor.setValue("");
+    };
 
     function getFileFromApp(fileName, fileTree) {
         var tmpObj = null;
@@ -117,6 +156,7 @@
     }
 
     $scope.createNewApp = function () {
+        $scope.home();
         $scope.isEditingApp = true;
         //console.log($scope.createNewA);
         $scope.githubRepoName = $scope.createNewA.AppName;
@@ -126,7 +166,8 @@
         AppsFactory.save($scope.createNewA, function () {
             makeToast("App created successfully", 2);
             editor.setReadOnly(false);
-            $('#myModal2').popover('hide');
+            
+            $('span#treeappname').html($scope.githubRepoName);
 
 
         });
@@ -134,9 +175,7 @@
 
 
     };
-
-
-
+    
     $scope.saveGit = function () {
         var gh = new Octokit({
             username: $scope.githubUserName,
@@ -401,7 +440,7 @@
     };
 
     $scope.htmlClicked = function (tmpFile) {
-        //alert(tmpFile);
+        $scope.saveFile();
         $scope.currentFile = tmpFile;
 
         makeToast("Current working file : " + $scope.currentFile, 1);
@@ -414,7 +453,7 @@
     };
 
     $scope.jsClicked = function (tmpFile) {
-
+        $scope.saveFile();
         $scope.currentFile = tmpFile;
         makeToast("Current working file : " + $scope.currentFile, 1);
         editor.getSession().setMode("ace/mode/javascript");
@@ -425,7 +464,7 @@
     };
 
     $scope.cssClicked = function (tmpFile) {
-
+        $scope.saveFile();
         $scope.currentFile = tmpFile;
         makeToast("Current working file : " + $scope.currentFile, 1);
         editor.getSession().setMode("ace/mode/css");
@@ -455,6 +494,8 @@
     };
 
     $scope.openRepo = function (repo) {
+        $scope.home();
+
         $scope.show_repo_list = false;
         $scope.showloading_out = true;
         $scope.app[0].children[0].children = [];
@@ -469,6 +510,8 @@
         var counter1 = 0;
         var counter2 = 0;
 
+        $('span#treeappname').html(repo);
+        editor.setReadOnly(false);
         $http.get("https://api.github.com/repos/" + userName + "/" + repoName + "/git/trees/master?recursive=1")
             .success(function (data) {
                 $scope.githubRepoName = repoName;

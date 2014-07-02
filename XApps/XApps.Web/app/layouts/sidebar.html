@@ -72,26 +72,26 @@
             </script>
             <ul id="browser" class="filetree treeview-famfamfam">
                 <li>
-                    <span class="folder" ng-controller="createnewapp">{{app.appName}}</span>
+                    <span class="folder" id="treeappname">App</span>
                     <ul>
                         <li>
                             <span class="folder">HTML</span>
                             <ul id="htmlfile">
-                                <li data-ng-repeat="x in app[0].children[0].children"><span class="file"><a ng-click="htmlClicked(x.fileName)">{{x.fileName}}</a></span></li>
+                                <!--<li data-ng-repeat="x in app[0].children[0].children"><span class="file"><a ng-click="htmlClicked(x.fileName)">{{x.fileName}}</a></span></li>-->
 
                             </ul>
                         </li>
                         <li>
                             <span class="folder">CSS</span>
                             <ul id="cssfile">
-                                 <li data-ng-repeat="y in app[0].children[1].children"><span class="file"><a ng-click="htmlClicked(y.fileName)">{{y.fileName}}</a></span></li>
+                                 <!--<li data-ng-repeat="y in app[0].children[1].children"><span class="file"><a ng-click="htmlClicked(y.fileName)">{{y.fileName}}</a></span></li>-->
                             </ul>
                         </li>
 
                         <li>
                             <span class="folder">Javascript</span>
                             <ul id="jsfile">
-                                <li data-ng-repeat="z in app[0].children[2].children"><span class="file"><a ng-click="htmlClicked(z.fileName)">{{z.fileName}}</a></span></li>
+                                <!--<li data-ng-repeat="z in app[0].children[2].children"><span class="file"><a ng-click="htmlClicked(z.fileName)">{{z.fileName}}</a></span></li>-->
                             </ul>
                         </li>
                     </ul>
