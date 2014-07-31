@@ -1,4 +1,4 @@
-﻿app.controller('createnewapp', function ($scope, $compile, $q, $http,$location, requestFactory, AppsFactory, categoriesFactory, AppsByNameFactory, dynamics) {
+﻿app.controller('createnewapp', function ($scope, $compile, $q, $http,$location, requestFactory, AppsFactory, categoriesFactory, AppsByNameFactory, dynamics,userFactory) {
     $scope.devName = "Rumesh";
     $scope.path = "<li><span class='file'>BIZAPP.css</span></li>";
     $scope.githubUserName = "Xapps00";
@@ -16,7 +16,7 @@
     $scope.tempdir = "Hello";
     $scope.appDetails = {};
     $scope.isRepoOnGitHub = false;
-
+    $scope.userList = null;     //loaded whenpublishUserList function called.
 
     $scope.createNewA = {
         AppName: "App",
@@ -252,7 +252,8 @@
                             requestFactory.getResponse($scope.githubRepoName, 1);
                             $scope.showloading_in = false;
                             makeToast("Successfully Commited", 2);
-                        });
+                            $scope.isRepoOnGitHub = true;
+                    });
 
 
                 }
@@ -300,6 +301,7 @@
                                     requestFactory.getResponse($scope.githubRepoName, 1);
                                     $scope.showloading_in = false;
                                     makeToast("Successfully Commited", 2);
+                                    $scope.isRepoOnGitHub = true;
                                 });
                 } else {
                     user.createRepo($scope.githubRepoName, repoObj).then(
@@ -321,6 +323,7 @@
                                 requestFactory.getResponse($scope.githubRepoName, 1);
                                 $scope.showloading_in = false;
                                 makeToast("Successfully Commited", 2);
+                                $scope.isRepoOnGitHub = true;
 
                             });
 
@@ -347,6 +350,7 @@
                                 requestFactory.getResponse($scope.githubRepoName, 1);
                                 $scope.showloading_in = false;
                                 makeToast("Successfully Commited", 2);
+                                $scope.isRepoOnGitHub = true;
                             });
             }
 
@@ -648,9 +652,13 @@
 
     };
 
-    $scope.addAppDetailsToDb = function () { };
+    $scope.addAppDetailsToDb = function() {
+        //TO BE IMPLEMENT
+    };
 
-    $scope.updateAppDetails = function () { };
+    $scope.updateAppDetails = function() {
+        //TO BE IMPLEMENT
+    };
 
 
     $scope.ChangeTheme = function (theme1) {
@@ -739,6 +747,10 @@
         ace.require("ace/ext/language_tools");
         editor = ace.edit("editor");
         editor.indent();
+    };
+
+    $scope.publishUserList = function () {
+        $scope.userList = userFactory.query();
     };
 
 });

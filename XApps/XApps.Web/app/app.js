@@ -1,4 +1,18 @@
-﻿var app = angular.module('app', ['ngRoute', 'ngResource', 'ui.bootstrap']);
+﻿/**  
+  * @desc this class will hold functions for the main app module. 
+  * Other related factories also be defined here.
+  * 
+  * @author Rumesh Eranga
+  * @author Chamara Jayalath
+  * @author Sahan Mendis
+  * @author Tharaka Viswakula
+  * @author Isuru Anuradha
+  *
+  * 
+*/
+
+
+var app = angular.module('app', ['ngRoute', 'ngResource', 'ui.bootstrap']);
 
 //app.run(function ($rootScope, $templateCache) {
 //    $rootScope.$on('$routeChangeStart', function (event, next, current) {
@@ -8,6 +22,7 @@
 //    });
 //});
 
+//Route declaration
 app.config(function ($routeProvider) {
 
     $routeProvider.when("/", {
@@ -55,10 +70,20 @@ app.config(function($httpProvider) {
     delete $httpProvider.defaults.headers.common['X-Requested-With'];
 });
 
+/**
+* App factory to dynamically registar routes
+*
+*/
 app.factory('dynamics',function($route) {
 
     var dynamicsMethods = {};
 
+    /** 
+    * @desc Add a route to route configurator 
+    * @param string path - the path of the document 
+    * @param string route - required route
+    * @return route object
+    */
     dynamicsMethods.addRoute = function (path, route) {
         $route.routes[path] = angular.extend({
             reloadOnSearch: true
@@ -80,6 +105,12 @@ app.factory('dynamics',function($route) {
         return this;
     };
 
+
+    /** 
+    * @desc format route 
+    * @param string path - the path of the document 
+    * @return string route
+    */
     dynamicsMethods.pathRegExp = function(path, opts) {
         var insensitive = opts.caseInsensitiveMatch,
             ret = {
@@ -108,6 +139,11 @@ app.factory('dynamics',function($route) {
     return dynamicsMethods;
 });
 
+/**
+* Request factory will download apps to the server on following modes.
+* 1. published mode
+* 2. dev mode
+*/
 app.factory('requestFactory', function ($http, $q) {
 
     var obj = {};
