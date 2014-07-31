@@ -38,11 +38,13 @@
                     $rootScope.showLogout = true;
                     console.log(JSON.stringify(data));
                     var usr = userByUserNameFactory.query({ username: data.login });
-
-                    //console.log(usr);
+                    console.log("DB Details");
+                    console.log(usr);
+                    $rootScope.loogedInUser = usr;
                     usr.$promise.then(function (tempdata) {
                         console.log(tempdata);
                         console.info(JSON.stringify(data));
+                        $rootScope.loogedInUser = usr;
                         makeToast("Hi " + data.login + ".", 1);
                     }, function (reason) {
                         console.log("User not found. Adding to database");
@@ -57,6 +59,8 @@
                         var userInsert = userFactory.save(usrObj);
                         userInsert.$promise.then(function (result) {
                             makeToast("Hi " + data.login + ". Welcome to XApps. Please update your profile", 2);
+                            var usr2 = userByUserNameFactory.query({ username: data.login });
+                            $rootScope.loogedInUser = usr2;
                         }, function (result) {
                             makeToast("Could not create an account for you", 4);
                         });

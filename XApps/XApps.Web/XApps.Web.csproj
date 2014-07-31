@@ -68,6 +68,7 @@
     <Content Include="app\createnewapp\createnewapp.html" />
     <Content Include="app\createnewapp\createnewapp.js" />
     <Content Include="app\maincontroller.js" />
+    <Content Include="app\welcome\welcome.js" />
     <Content Include="Content\Custom\treeview\document.png" />
     <Content Include="Content\Custom\treeview\folder-horizontal.png" />
     <Content Include="Content\Custom\treeview\images\ajax-loader.gif" />
