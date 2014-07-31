@@ -7,14 +7,12 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
-using System.Web.Http.Cors;
 using System.Web.Http.Description;
 using XApps.WebApi.Models;
 using XApps.WebApi.DataContext;
 
 namespace XApps.WebApi.Controllers
 {
-    [EnableCors(origins: "http://localhost:6406", headers: "*", methods: "*")]
     public class AppController : ApiController
     {
         private XAppsDataContext db = new XAppsDataContext();
@@ -22,30 +20,17 @@ namespace XApps.WebApi.Controllers
         // GET api/App
         public IQueryable GetApps()
         {
-            var AppRe = db.Apps.Select(i => new { i.AppID, i.AppName, i.AuthorID, i.CategoryID, i.UserCount, i.RepoName, i.LatestHash, i.isPublished, i.description });
+            var AppRe = db.Apps.Select(i => new { i.AppID, i.AppName, i.AuthorID, i.CategoryID, i.RepoName, i.LatestHash, i.isPublished, i.description });
             return AppRe;
         }
 
         // GET api/App/5
         [ResponseType(typeof(App))]
-        
+
         public IHttpActionResult GetApp(int id)
         {
-            var AppRe = db.Apps.Select(i => new { i.AppID, i.AppName, i.AuthorID, i.CategoryID, i.UserCount, i.RepoName, i.LatestHash, i.isPublished, i.description });
-            var product = AppRe.FirstOrDefault((p) => p.AppID == id);
-            if (product == null)
-            {
-                return NotFound();
-            }
-            return Ok(product);
-        }
-
-        [ResponseType(typeof(App))]
-
-        public IHttpActionResult GetApp(string aName)
-        {
-            var AppRe = db.Apps.Select(i => new { i.AppID, i.AppName, i.AuthorID, i.CategoryID, i.UserCount, i.RepoName, i.LatestHash, i.isPublished });
-            var product = AppRe.FirstOrDefault((p) => p.AppName == aName);
+            var AppRe = db.Apps.Select(i => new { i.AppID, i.AppName, i.AuthorID, i.CategoryID, i.RepoName, i.LatestHash, i.isPublished, i.description });
+            var product = AppRe.Where((p) => p.AppID == id);
             if (product == null)
             {
                 return NotFound();
@@ -135,13 +120,31 @@ namespace XApps.WebApi.Controllers
         [ActionName("AppByAppName")]
         public IHttpActionResult GetAppByAppName(String AppName)
         {
-            var AppRe = db.Apps.Select(i => new { i.AppID, i.AppName, i.AuthorID, i.CategoryID, i.UserCount, i.RepoName, i.LatestHash, i.isPublished, i.description });
-            var product = AppRe.FirstOrDefault((p) => p.AppName == AppName);
+            var AppRe = db.Apps.Select(i => new { i.AppID, i.AppName, i.AuthorID, i.CategoryID, i.RepoName, i.LatestHash, i.isPublished, i.description });
+            var product = AppRe.Where((p) => p.AppName == AppName);
             if (product == null)
             {
                 return NotFound();
             }
             return Ok(product);
+        }
+
+        [ActionName("AppBycategory")]
+        public IHttpActionResult GetAppBycategory(String CategoryName) 
+        {
+            //get category id
+
+            var CatRe = db.Categories.Select(i => new { i.CategoryID, i.CategoryName });
+            var CatPro = CatRe.FirstOrDefault((p) => p.CategoryName == CategoryName);
+
+            var AppRe = db.Apps.Select(i => new { i.AppID, i.AppName, i.AuthorID, i.CategoryID, i.RepoName, i.LatestHash, i.isPublished, i.description });
+            var product = AppRe.Where((p) => p.CategoryID == CatPro.CategoryID);
+            if (product == null)
+            {
+                return NotFound();
+            }
+            return Ok(product);
+            
         }
     }
 }

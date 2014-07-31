@@ -31,7 +31,7 @@ namespace XApps.WebApi.Controllers
         public IHttpActionResult GetUserApp(int id)
         {
             var UserAppRe = db.UserApps.Select(i => new { i.UserID, i.AppID });
-            var userapp = UserAppRe.FirstOrDefault((p) => p.UserID == id);
+            var userapp = UserAppRe.Where((p) => p.UserID == id);
             if (userapp == null)
             {
                 return NotFound();
@@ -132,5 +132,21 @@ namespace XApps.WebApi.Controllers
         {
             return db.UserApps.Count(e => e.UserID == id) > 0;
         }
+
+        //Get all users of a given appID
+        /*
+         [ActionName("UsersByAppID")]
+         
+         public IHttpActionResult GetUsersByApp(int id)
+        {
+            var UserAppRe = db.UserApps.Select(i => new { i.UserID, i.AppID });
+            var userapp = UserAppRe.FirstOrDefault((p) => p.AppID == id);
+            if (userapp == null)
+            {
+                return NotFound();
+            }
+            return Ok(userapp);
+        }
+         */
     }
 }

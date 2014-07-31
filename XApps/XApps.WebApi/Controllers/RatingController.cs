@@ -31,7 +31,8 @@ namespace XApps.WebApi.Controllers
         public IHttpActionResult GetRating(int id)
         {
             var RatRe = db.Ratings.Select(i => new { i.AppID, i.UserID, i.Ratings });
-            var ratings = RatRe.FirstOrDefault((p) => p.AppID == id);
+            var ratings = RatRe.Where((p) => p.AppID == id);
+
             if (ratings == null)
             {
                 return NotFound();

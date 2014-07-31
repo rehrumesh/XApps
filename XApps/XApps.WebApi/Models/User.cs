@@ -16,7 +16,6 @@ namespace XApps.WebApi.Models
 
         public virtual ICollection<App> Apps { get; private set; }
         public virtual ICollection<UserApp> UserApps { get; private set; }
-        public virtual ICollection<Contributor> Contributors { get; private set; }
         public virtual ICollection<Rating> Ratings { get; private set; }
         public virtual ICollection<Feedback> Feedbacks { get; private set; }
     }

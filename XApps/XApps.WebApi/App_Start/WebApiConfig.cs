@@ -21,6 +21,13 @@ namespace XApps.WebApi
                 defaults: new { Appname = RouteParameter.Optional }
                 );
 
+            
+             config.Routes.MapHttpRoute(
+                name: "Action2Api",
+                routeTemplate: "api/{controller}/AppBycategory/{CategoryName}",
+                defaults: new { Appname = RouteParameter.Optional }
+                );
+
             config.Routes.MapHttpRoute(
                 name: "DefaultApi",
                 routeTemplate: "api/{controller}/{id}",
@@ -35,6 +42,15 @@ namespace XApps.WebApi
                 routeTemplate: "api/{controller}/UserByUserName/{UserName}",
                 defaults: new {UserName = RouteParameter.Optional }
                 );
+
+            //Getusersbyappid
+            /*
+            config.Routes.MapHttpRoute(
+                name: "UsersByAppIDApi",
+                routeTemplate: "api/{contoller}/UsersByAppID/{AppID}",
+                defaults: new { AppID = RouteParameter.Optional }
+                );
+             */ 
         }
     }
 }

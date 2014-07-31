@@ -31,7 +31,7 @@ namespace XApps.WebApi.Controllers
         public IHttpActionResult GetFeedback(int id)
         {
             var FeedRe = db.Feedbacks.Select(i => new { i.AppID, i.UserID, i.Feedbacks });
-            var feedback = FeedRe.FirstOrDefault((p) => p.AppID == id);
+            var feedback = FeedRe.Where((p) => p.AppID == id);
             if (feedback == null)
             {
                 return NotFound();

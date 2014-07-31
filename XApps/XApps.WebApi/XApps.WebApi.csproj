@@ -154,8 +154,6 @@
     <Compile Include="Controllers\AppsController.cs" />
     <Compile Include="Controllers\CategoriesController.cs" />
     <Compile Include="Controllers\CategoryController.cs" />
-    <Compile Include="Controllers\ContributorController.cs" />
-    <Compile Include="Controllers\ContributorsController.cs" />
     <Compile Include="Controllers\FeedbackController.cs" />
     <Compile Include="Controllers\FeedbacksController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -172,7 +170,6 @@
     </Compile>
     <Compile Include="Models\App.cs" />
     <Compile Include="Models\Category.cs" />
-    <Compile Include="Models\Contributor.cs" />
     <Compile Include="Models\Feedback.cs" />
     <Compile Include="Models\Rating.cs" />
     <Compile Include="Models\User.cs" />
@@ -233,11 +230,6 @@
     <Content Include="Views\Users\Details.cshtml" />
     <Content Include="Views\Users\Edit.cshtml" />
     <Content Include="Views\Users\Index.cshtml" />
-    <Content Include="Views\Contributors\Create.cshtml" />
-    <Content Include="Views\Contributors\Delete.cshtml" />
-    <Content Include="Views\Contributors\Details.cshtml" />
-    <Content Include="Views\Contributors\Edit.cshtml" />
-    <Content Include="Views\Contributors\Index.cshtml" />
     <Content Include="Views\UserApps\Create.cshtml" />
     <Content Include="Views\UserApps\Delete.cshtml" />
     <Content Include="Views\UserApps\Details.cshtml" />

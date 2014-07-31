@@ -12,7 +12,6 @@ namespace XApps.WebApi.DataContext
         public DbSet<XApps.WebApi.Models.App> Apps { get; set; }
         public DbSet<XApps.WebApi.Models.User> Users { get; set; }
         public DbSet<XApps.WebApi.Models.UserApp> UserApps { get; set; }
-        public DbSet<XApps.WebApi.Models.Contributor> Contributors { get; set; }
         public DbSet<XApps.WebApi.Models.Rating> Ratings { get; set; }
         public DbSet<XApps.WebApi.Models.Feedback> Feedbacks { get; set; }
         public DbSet<XApps.WebApi.Models.Category> Categories { get; set; }
