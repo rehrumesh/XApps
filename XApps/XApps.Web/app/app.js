@@ -26,8 +26,8 @@ var app = angular.module('app', ['ngRoute', 'ngResource', 'ui.bootstrap']);
 app.config(function ($routeProvider) {
 
     $routeProvider.when("/", {
-        controller: "dashboard",
-        templateUrl: "app/dashboard/dashboard.html"
+        controller: "welcome",
+        templateUrl: "app/welcome/welcome.html"
     })
 
     .when("/myapps", {
