@@ -1,17 +1,32 @@
-﻿<section class="content-header">
+﻿<section class="content-header row">
     <!--<script src="../apps/pub/Slideshare/javascript/my.js"></script>-->
-    <h1>
+    <!--<div class="row">-->
+    <h1 class="col-xs-12 col-md-8">
         Dashboard
     </h1>
+
+    <form action="#" method="get" class="col-xs-6 col-md-4">
+        <div class="input-group">
+            <input type="text" name="q" class="form-control" placeholder="Search..." data-ng-model="appName" />
+            <span class="input-group-btn">
+                <button type='submit' name='seach' id='search-btn' class="btn btn-flat"><i class="fa fa-search"></i></button>
+            </span>
+        </div>
+    </form>
+
+    <!--</div>-->
+
+
 </section>
 <section class="content">
     <div class="row">
-        <div class="col-lg-3 col-xs-6" ng-repeat="pApp in allapps" ng-if="pApp.isPublished">
+        <div class="col-lg-3 col-xs-6" ng-repeat="pApp in allapps | filter:appName" ng-if="pApp.isPublished">
 
             <!--can not give 'a' inside another 'a'-->
             <div class="small-box bg-aqua">
                 <div class="inner" ng-click="defineRoute(pApp.AppName)">
-                    <h1>{{pApp.AppName}}
+                    <h1>
+                        {{pApp.AppName}}
                     </h1>
                     <p>
                         <!--discription-->
@@ -25,7 +40,8 @@
 
                 </div>
 
-                <a data-toggle="modal" data-target="#popup" class="small-box-footer">More Info <i class="fa fa-arrow-circle-right"></i>
+                <a data-toggle="modal" data-target="#popup" class="small-box-footer">
+                    More Info <i class="fa fa-arrow-circle-right"></i>
                 </a>
                 <div class="small-box-footer">
                     <div class="rating">
@@ -66,5 +82,5 @@
 
 
 
-    
+
 </section>
