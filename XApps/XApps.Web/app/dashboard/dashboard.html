@@ -57,17 +57,31 @@
                             <h4 class="modal-title" id="H1">App Info</h4>
                         </div>
                         <div class="modal-body">
-                            App Name :   {{pApp.AppName}}
-                            <br />
-                            Rate App
+                            <div>
+                                <label class="control-label">App Name :   {{pApp.AppName}}</label>
+                            </div>
 
+                            <div>
+                                <label class="control-label">Rate App</label>
+                                <select class="Rating">
+                                    <option value="init"></option>
+                                    <option value="one">1</option>
+                                    <option value="two">2</option>
+                                    <option value="three">3</option>
+                                    <option value="four">4</option>
+                                    <option value="five">5</option>
+                                </select>
+                            </div>
 
-                            <div class="rating">
-                                <span>☆</span><span>☆</span><span>☆</span><span>☆</span><span>☆</span>
+                            <div>
+                                <label class="control-label">Feedback</label>
+                                <br />
+                                <textarea class="input-lg"></textarea>
                             </div>
 
                         </div>
                         <div class="modal-footer">
+                            <button type="button" class="btn btn-default">Save</button>
                             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                         </div>
                     </div>

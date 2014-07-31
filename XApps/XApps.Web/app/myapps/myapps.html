@@ -2,10 +2,20 @@
     $(sidebar1).show();
 </script>
             
-<section class="content-header">
-                <h1>
-                    My Apps
-                </h1>
+<section class="content-header row">
+    <h1 class="col-xs-12 col-md-8">
+        My Apps
+    </h1>
+    <!--search form-->
+
+    <form action="#" method="get" class="col-xs-6 col-md-4">
+        <div class="input-group">
+            <input type="text" name="q" class="form-control" placeholder="Search..." data-ng-model="appName" />
+            <span class="input-group-btn">
+                <button type='submit' name='seach' id='search-btn' class="btn btn-flat"><i class="fa fa-search"></i></button>
+            </span>
+        </div>
+    </form>
             </section>
 
 <section class="content">
@@ -14,7 +24,7 @@
 
     <div class="row">
         
-        <div class="col-lg-3 col-xs-6" ng-repeat="pApp in allapps | filter:{AuthorID : userID}" ng-if="pApp.isPublished">
+        <div class="col-lg-3 col-xs-6" ng-repeat="pApp in allapps | filter:{AuthorID : userID, AppName: appName}" ng-if="pApp.isPublished">
 
             <!--can not give 'a' inside another 'a'-->
             <div class="small-box bg-aqua">
