@@ -1,4 +1,4 @@
-﻿app.controller('myapps', function ($scope,$rootScope, categoriesFactory, AppsFactory) {
+﻿app.controller('myapps', function ($scope, $rootScope, categoriesFactory, AppsFactory, dynamics, $location) {
     $scope.allcategories = categoriesFactory.query();
     $scope.allapps = AppsFactory.query();
 
@@ -11,4 +11,16 @@
     };
 
     $scope.init();
+
+    $scope.defineRoute = function (appName) {
+
+        dynamics.addRoute('/' + appName, {
+            templateUrl: 'app/apps/pub/' + appName + '/html/index.html'
+        });
+
+        $location.path('/' + appName);
+
+
+
+    };
 });

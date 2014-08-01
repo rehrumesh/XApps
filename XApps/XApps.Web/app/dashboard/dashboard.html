@@ -15,10 +15,9 @@
                     </h1>
                     <p>
                         <!--discription-->
-                        Use for documenting
                         <br />
-                        <!--some introduction-->
-                        Available
+                        <br />
+                        
                     </p>
 
                     <!--change here add star rating-->
@@ -44,11 +43,10 @@
                             App Name :   {{pApp.AppName}}
                             <br />
                             Rate App
+                            <select ng-model="ratingValue" ng-options="r.name for r in Ratings"></select><br/>
+                            <button class="btn btn-primary" ng-click="setRating(pApp.AppID,ratingValue.id)">Rate</button>
 
-
-                            <div class="rating">
-                                <span>☆</span><span>☆</span><span>☆</span><span>☆</span><span>☆</span>
-                            </div>
+                            
 
                         </div>
                         <div class="modal-footer">

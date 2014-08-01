@@ -66,7 +66,8 @@ app.config(function ($routeProvider) {
 });
 
 //CROS
-app.config(function($httpProvider) {
+app.config(function ($httpProvider) {
+    $httpProvider.defaults.useXDomain = true;
     delete $httpProvider.defaults.headers.common['X-Requested-With'];
 });
 
@@ -174,7 +175,7 @@ app.factory('AppsFactory', function($resource) {
 });
 
 app.factory('AppsByNameFactory', function ($resource) {
-    return $resource('http://localhost:12666/api/App/AppByAppName/:appname',null, {'query': { method: 'GET', isArray: false } });//, query: { method: 'GET', isArray: false } 
+    return $resource('http://localhost:12666/api/App/AppByAppName/:appname', {}, {'query': { method: 'GET', isArray: true } });//, query: { method: 'GET', isArray: false } 
 });
 
 app.factory('categoriesFactory', function ($resource) {
@@ -187,6 +188,10 @@ app.factory('userFactory', function($resource) {
 
 app.factory('userByUserNameFactory', function ($resource) {
     return $resource('http://localhost:12666/api/user/userbyusername/:username', null, { 'query': { method: 'GET', isArray: false } });
+});
+
+app.factory('ratingFactory', function ($resource) {
+    return $resource('http://localhost:12666/api/rating/:id', null, { 'query': { method: 'GET', isArray: false } });
 });
 
 //new app factory for rating
