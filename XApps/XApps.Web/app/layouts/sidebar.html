@@ -1,17 +1,16 @@
 ﻿<div id="sidebar1" ng-controller="maincontroller">
     <section class="sidebar">
         <!-- search form -->
-        <form action="#" method="get" class="sidebar-form">
-            <div class="input-group">
-                <input type="text" name="q" class="form-control" placeholder="Search..." />
-                <span class="input-group-btn">
-                    <button type='submit' name='seach' id='search-btn' class="btn btn-flat"><i class="fa fa-search"></i></button>
-                </span>
-            </div>
-        </form>
+        <!--search bar-->
         <!-- /.search form -->
         <!-- sidebar menu: : style can be found in sidebar.less -->
         <ul class="sidebar-menu">
+
+
+            
+
+
+
             <!--changed class="active" to none-->
             <li>
                 <a href="#/dashboard">
@@ -27,10 +26,10 @@
             </li>
 
             <!--<li>
-                <a href="#/hotapps">
-                    <i class="fa fa-calendar"></i> <span>Hot Apps</span>
-                </a>
-            </li>-->
+            <a href="#/hotapps">
+                <i class="fa fa-calendar"></i> <span>Hot Apps</span>
+            </a>
+        </li>-->
             <!--added a create app sidebar menu item-->
             <li ng-if="user.login!='Login with Github'">
                 <a onclick="sidebar1hide(),sidebar2show();" href="#/createnewapp">
@@ -46,6 +45,8 @@
             </li>
 
         </ul>
+
+       
     </section>
 </div>
 

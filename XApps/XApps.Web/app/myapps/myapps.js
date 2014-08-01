@@ -4,7 +4,7 @@
 
     $scope.userID = 0;
 
-
+    //get userid
     $scope.init = function () {
         $scope.userID = $rootScope.loogedInUser.UserID;
         console.log($scope.searchText);
