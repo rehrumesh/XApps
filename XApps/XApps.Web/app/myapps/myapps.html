@@ -2,10 +2,20 @@
     $(sidebar1).show();
 </script>
             
-<section class="content-header">
-                <h1>
-                    My Apps
-                </h1>
+<section class="content-header row">
+    <h1 class="col-xs-12 col-md-8">
+        My Apps
+    </h1>
+    <!--search form-->
+
+    <form action="#" method="get" class="col-xs-6 col-md-4">
+        <div class="input-group">
+            <input type="text" name="q" class="form-control" placeholder="Search..." data-ng-model="appName" />
+            <span class="input-group-btn">
+                <button type='submit' name='seach' id='search-btn' class="btn btn-flat"><i class="fa fa-search"></i></button>
+            </span>
+        </div>
+    </form>
             </section>
 
 <section class="content">
@@ -14,43 +24,60 @@
 
     <div class="row">
         
-        <div ng-repeat="cat in allcategories" >
-            <div class="row littlebitside">
-                <h1>{{cat.CategoryName}}</h1> <br />
-                <div class="col-lg-3 col-xs-6" ng-repeat="pApp in allapps" ng-show="pApp.isPublished && (pApp.CategoryID == cat.CategoryID)">
+        <div class="col-lg-3 col-xs-6" ng-repeat="pApp in allapps | filter:{AuthorID : userID, AppName: appName}" ng-if="pApp.isPublished">
 
-                    <!--can not give 'a' inside another 'a'-->
-                    <div class="small-box bg-aqua">
-                        <div class="inner">
-                            <h1>
-                                {{pApp.AppName}} -- {{pApp.CategoryID}}
-                            </h1>
-                            <p>
-                                <!--discription-->
-                                Use for documenting
-                                <br />
-                                <!--some introduction-->
-                                Available
-                            </p>
+            <!--can not give 'a' inside another 'a'-->
+            <div class="small-box bg-aqua">
+                <div class="inner" ng-click="defineRoute(pApp.AppName)">
+                    <h1>
+                        {{pApp.AppName}}
+                    </h1>
+                    <p>
+                        <!--discription-->
+                        {{pApp.Description}}
+                        <br />
+                        
+                    </p>
 
-                            <!--change here add star rating-->
+                    <!--change here add star rating-->
 
+                </div>
+
+                <a data-toggle="modal" data-target="#popup" class="small-box-footer">
+                    More Info <i class="fa fa-arrow-circle-right"></i>
+                </a>
+                <div class="small-box-footer">
+                    <div class="rating">
+                        <span>☆</span><span>☆</span><span>☆</span><span>☆</span><span>☆</span>
+                    </div>
+                </div>
+            </div>
+            <div class="modal fade" id="popup" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                            <h4 class="modal-title" id="H1">App Info</h4>
                         </div>
+                        <div class="modal-body">
+                            App Name :   {{pApp.AppName}}
+                            <br />
+                            Rate App
 
-                        <a href="#" class="small-box-footer">
-                            More info <i class="fa fa-arrow-circle-right"></i>
-                        </a>
-                        <div class="small-box-footer">
+
                             <div class="rating">
                                 <span>☆</span><span>☆</span><span>☆</span><span>☆</span><span>☆</span>
                             </div>
+
                         </div>
-
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        </div>
                     </div>
-
-
                 </div>
             </div>
+
+
         </div>
 
         

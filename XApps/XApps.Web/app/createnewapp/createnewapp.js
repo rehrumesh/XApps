@@ -161,6 +161,7 @@
         //console.log($scope.createNewA);
         $scope.githubRepoName = $scope.createNewA.AppName;
         $scope.createNewA.RepoName = $scope.createNewA.AppName;
+        $scope.createNewA.isPublished = true;
         //$scope.createNewA.CategoryName = "News";
         //alert(JSON.stringify($scope.createNewA));
         AppsFactory.save($scope.createNewA, function () {
@@ -632,7 +633,6 @@
                 AppName: obj.AppName,
                 AurthorID: obj.AurthorID,
                 CategoryID: obj.CategoryID,
-                UserCount: obj.UserCount,
                 RepoName: obj.RepoName,
                 LatestHash: obj.LatestHash,
                 isPublished: true,
@@ -641,10 +641,12 @@
             $scope.appDetails = tempObj;
             //alert(JSON.stringify(tempObj));
 
-            AppsFactory.update({ id: obj.AppID }, tempObj, function () {
-                //makeToast("App details updated", 2);
-                requestFactory.getResponse($scope.githubRepoName, 2);
-            });
+
+            requestFactory.getResponse($scope.githubRepoName, 2);
+            //AppsFactory.update({ id: obj.AppID }, tempObj, function () {
+            //    //makeToast("App details updated", 2);
+            //    requestFactory.getResponse($scope.githubRepoName, 2);
+            //});
         });
 
         //alert(JSON.stringify(a));

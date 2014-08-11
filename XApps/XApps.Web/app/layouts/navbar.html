@@ -25,7 +25,7 @@
 
                             <div ng-show="showLogout" >
                                 <div class="pull-left">
-                                    <a data-toggle="modal" data-target="#popup" class="btn btn-default btn-flat">Profile</a>
+                                    <a data-toggle="modal" data-target="#popupprofile" class="btn btn-default btn-flat">Profile</a>
                                 </div>
                                 <div class="pull-right">
                                     <a href="#" class="btn btn-default btn-flat" ng-click="user_logout()">Sign out</a>
@@ -48,28 +48,52 @@
 
     </nav>
 
-      <div class="modal fade" id="popup" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                            <h4 class="modal-title" id="H1">App Info</h4>
-                        </div>
-                        <div class="modal-body">
-                            App Name : 
-                            <br />
-                            Rate App
-
-
-                            <div class="rating">
-                                <span>☆</span><span>☆</span><span>☆</span><span>☆</span><span>☆</span>
-                            </div>
-
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
+      
 </header>
+
+<!--popup for profile-->
+<div class="modal fade open" id="popupprofile" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h2 class="modal-title" id="myModalLabel">Profile</h2>
+            </div>
+            <div class="modal-body">
+                <form name="Form_1" class="form-horizontal">
+                    <fieldset>
+                        <!-- profile picture-->
+                        <div class="control-group">
+                            <div>
+                                <img src="{{user.avatar_url}}" width="150" height="150" style="display:inline;" ng-show="showLogout" />
+                            </div>
+                            <label class="control-label">Profile Picture</label>
+                        </div>
+                        <br />
+                        <div class="control-group">
+                            <label class="control-label">Uesr Name :</label>
+                            <span>{{user.login}}</span>
+                        </div>
+                        <br />
+                        <div class="control-group">
+                            <label class="control-label">Email :</label>
+                        </div>
+                        <br />
+                        <div class="control-group">
+                            <label class="control-label">Designation : </label>
+                        </div>
+                        <br />
+                        <div class="control-group">
+                            <label class="control-label">Department : </label>
+                        </div>
+                        <!-- Button -->
+                    </fieldset>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default">Edit</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
