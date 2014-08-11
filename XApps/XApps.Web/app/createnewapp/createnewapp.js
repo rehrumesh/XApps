@@ -480,7 +480,7 @@
     };
 
 
-    $scope.loadRepo = function () {
+    $scope.loadRepo = function () { // in this function all information of the user's repositories are loaded
         $scope.showloading_in = true;
         var userName = $scope.githubUserName;
         $scope.repoList;
