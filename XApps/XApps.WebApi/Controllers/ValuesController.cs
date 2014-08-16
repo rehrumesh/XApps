@@ -8,7 +8,7 @@ using System.Web.Http.Cors;
 
 namespace XApps.WebApi.Controllers
 {
-    [EnableCors(origins: "http://localhost:6406", headers: "*", methods: "*")]
+    [EnableCors(origins: "*", headers: "*", methods: "*")]
     public class ValuesController : ApiController
     {
         // GET api/values

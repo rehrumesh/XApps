@@ -12,7 +12,7 @@ using XApps.WebApi.DataContext;
 
 namespace XApps.WebApi.Controllers
 {
-    [EnableCors(origins: "http://localhost:6406", headers: "*", methods: "*")]
+    [EnableCors(origins: "*", headers: "*", methods: "*")]
     public class UserAppsController : Controller
     {
         private XAppsDataContext db = new XAppsDataContext();

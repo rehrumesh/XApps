@@ -11,6 +11,7 @@ using XApps.WebApi.DataContext;
 
 namespace XApps.WebApi.Controllers
 {
+    [EnableCors(origins: "*", headers: "*", methods: "*")]
     public class RatingsController : Controller
     {
         private XAppsDataContext db = new XAppsDataContext();
